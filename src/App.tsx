@@ -1,11 +1,10 @@
-import React from 'react';
-import logo from './logo.svg';
 import './App.module.scss';
+import AppNavigator from './navigator/Navigator';
 
 function App() {
   return (
     <div className="App">
-
+      <AppNavigator />
     </div>
   );
 }

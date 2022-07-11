@@ -2,11 +2,12 @@
 @import 'tailwindcss/components';
 @import 'tailwindcss/utilities';
 
-body {
+$primary-color: #28404A;
+
+* {
+  box-sizing: border-box;
   margin: 0;
-  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen',
-    'Ubuntu', 'Cantarell', 'Fira Sans', 'Droid Sans', 'Helvetica Neue',
-    sans-serif;
+  font-family: 'Avenir-Book', sans-serif;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
 }
@@ -14,4 +15,70 @@ body {
 code {
   font-family: source-code-pro, Menlo, Monaco, Consolas, 'Courier New',
     monospace;
+}
+
+a,
+p,
+span,
+ul,
+li,
+label,
+input,
+textarea,
+button {
+  font-size: 12px;
+  font-family: 'Avenir-Book', sans-serif;
+}
+
+h1,
+h2,
+h3,
+h4,
+h5,
+h6 {
+  font-size: 17px;
+  font-family: 'Gilroy-Bold', sans-serif;
+}
+
+@font-face {
+  font-family: 'Avenir-Book';
+  src: local("Avenir-Book"), url('./static/fonts/avenir/Avenir-Book.otf') format('opentype');
+}
+
+@font-face {
+  font-family: 'Gilroy-Bold';
+  src: local("Gilroy-Bold"),  url('./static/fonts/gilroy/Gilroy-Bold.ttf') format('truetype');
+}
+
+::-moz-selection {
+  color: #FFFFFF;
+  background: $primary-color;
+}
+
+::selection {
+  color: #FFFFFF;
+  background: $primary-color;
+}
+
+a:link,
+a:visited,
+a:hover,
+a:active {
+  color: $primary-color;
+}
+
+a:link {
+  text-decoration: none;
+}
+
+a:visited {
+  text-decoration: none;
+}
+
+a:hover {
+  text-decoration: underline;
+}
+
+a:active {
+  text-decoration: underline;
 }
