@@ -8,6 +8,23 @@ import clsx from 'clsx';
 
 import MHTextInput from './MHTextInput';
 
+type InputProps = {
+  label: string;
+  startAdornment?: React.ReactNode;
+  placeholder: string;
+  type: string;
+  name?: string;
+  value?: string;
+  onChange?: (event: React.ChangeEvent<HTMLInputElement>) => void;
+  onBlur?: (event: React.FocusEvent<HTMLInputElement>) => void;
+  error?: string;
+  disabled?: boolean;
+  required?: boolean;
+  fullWidth?: boolean;
+  multiline?: boolean;
+  rows?: number;
+  rowsMax?: number;
+};
 
 const Label = styled(
   ({
@@ -34,23 +51,19 @@ const Label = styled(
     const showRequiredError = dirty && required && !filled;
 
     return (
-      <p
+      <label
         className={clsx(
           className,
           error || showRequiredError ? 'invalid' : ''
         )}>
         {children}
         {/* {required ? ' *' : ''} */}
-      </p>
+      </label>
     );
   }
 )`
   font-size: 0.875rem;
   margin-bottom: 4px;
-
-  &.invalid {
-    color: red;
-  }
 `;
 
 const HelperText = styled((props: {}) => {
@@ -70,22 +83,31 @@ const HelperText = styled((props: {}) => {
   const { required, filled } = formControlContext;
   const showRequiredError = dirty && required && !filled;
 
-  return showRequiredError ? <p {...props}>This field is required.</p> : null;
-})`
-  font-size: 0.875rem;
-`;
+  return showRequiredError ? (
+    <p
+      {...props}
+      className={clsx('invalid')}
+      style={{
+        color: 'red',
+        fontSize: '0.875rem'
+      }}>
+      This field is required.
+    </p>
+  ) : null;
+})``;
 
-export default function MHFormControl(props: {
-  label: string;
-  startAdornment?: React.ReactNode;
-  placeholder: string;
-}) {
-  const { label, startAdornment, placeholder } = props;
+export default function MHFormControl(props: InputProps) {
+  const { label, startAdornment, placeholder, type } = props;
 
   return (
-    <FormControlUnstyled defaultValue="">
+    <FormControlUnstyled defaultValue="" required className="mb-5">
       <Label>{label}</Label>
-      <MHTextInput startAdornment={startAdornment} placeholder={placeholder} />
+      <MHTextInput
+        id="outlined-start-adornment"
+        startAdornment={startAdornment}
+        placeholder={placeholder}
+        type={type}
+      />
       <HelperText />
     </FormControlUnstyled>
   );

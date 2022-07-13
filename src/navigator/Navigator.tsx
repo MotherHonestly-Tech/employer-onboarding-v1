@@ -2,17 +2,19 @@ import React from 'react';
 import { Route, Switch } from 'react-router-dom';
 
 import AuthNavigator from './AuthNavigator';
-import { Component } from '../models/component.model';
+import Interests from '../pages/Onboarding/Interests';
+import { FnComponent } from '../models/component.model';
 
-const AppNavigator: Component<{}> = (props) => {
+const AppNavigator: FnComponent<{}> = (props) => {
   return (
     <React.Fragment>
       <Switch>
+        <Route path="/onboarding" component={Interests} />
+        <Route path="/dashboard" exact></Route>
+
         <Route path="/">
           <AuthNavigator />
         </Route>
-
-        <Route path="/dashboard" exact></Route>
       </Switch>
     </React.Fragment>
   );

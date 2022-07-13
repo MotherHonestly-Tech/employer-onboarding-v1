@@ -2,26 +2,27 @@ import React from 'react';
 
 import Button from '@mui/material/Button';
 
-import { Component } from '../../models/component.model';
+import { FnComponent } from '../../models/component.model';
 
 type Props = {
   disabled?: boolean;
   sx: object;
+  variant?: 'text' | 'outlined' | 'contained' | undefined;
 };
 
-const MHButton: Component<Props> = (props) => {
+const MHButton: FnComponent<Props> = ({ sx, variant, children }) => {
   return (
     <Button
       color={'primary'}
-      variant="contained"
+      variant={variant || 'contained'}
       sx={{
         p: 1.8,
-        ...props.sx
+        ...sx
       }}
       size="large"
       disableElevation
       fullWidth>
-      {props.children}
+      {children}
     </Button>
   );
 };

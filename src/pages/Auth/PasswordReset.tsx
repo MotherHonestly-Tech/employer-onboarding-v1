@@ -2,16 +2,17 @@ import React from 'react';
 
 import Paper from '@mui/material/Paper';
 import Box from '@mui/material/Box';
+import Typography from '@mui/material/Typography';
 
 import MHButton from '../../components/Form/MHButton';
 import MHFormControl from '../../components/Form/MHFormControl';
 import RoundedLogoIcon from '../../theme/icons/RoundedLogo';
 
 import { ReactComponent as KeyIcon } from '../../static/svg/key.svg';
-import { Component } from '../../models/component.model';
-import { BGImage } from '../../models/image.model';
+import { FnComponent } from '../../models/component.model';
+import { BGImage } from '../../models/background-image.model';
 
-const PasswordReset: Component<{ onRouteChange: (image: BGImage) => void }> = (
+const PasswordReset: FnComponent<{ onRouteChange: (image: BGImage) => void }> = (
   props
 ) => {
   const { onRouteChange } = props;
@@ -30,18 +31,28 @@ const PasswordReset: Component<{ onRouteChange: (image: BGImage) => void }> = (
         sx={{
           px: 8,
           py: 5,
-          width: '60%'
+          width: '100%',
+          maxWidth: 'sm'
         }}>
         <Box sx={{}}>
           <RoundedLogoIcon>
             <KeyIcon width="1rem" />
           </RoundedLogoIcon>
 
-          <h1 className="text-center my-4">Set new password</h1>
+          <Typography variant="h3" my={4} align="center" gutterBottom>
+            Set new password
+          </Typography>
 
-          <MHFormControl label="Password" placeholder="Password" />
+          {/* <h1 className="text-center my-4">Set new password</h1> */}
 
           <MHFormControl
+            type="password"
+            label="Password"
+            placeholder="Password"
+          />
+
+          <MHFormControl
+            type="password"
             label="Confirm Password"
             placeholder="Confirm Password"
           />
