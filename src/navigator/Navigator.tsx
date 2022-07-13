@@ -10,7 +10,7 @@ const AppNavigator: FnComponent<{}> = (props) => {
     <React.Fragment>
       <Switch>
         <Route path="/onboarding" component={Interests} />
-        <Route path="/dashboard" exact></Route>
+        {/* <Route path="/dashboard" exact></Route> */}
 
         <Route path="/">
           <AuthNavigator />
