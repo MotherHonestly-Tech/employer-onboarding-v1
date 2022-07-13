@@ -23,14 +23,15 @@ const StyledInputRoot = styled('div')(
     border: 1px solid #EEEEEE;
     align-items: center;
     justify-content: center;
-    margin-bottom: 16px;
-  
-    &.${inputUnstyledClasses.focused} {
-      outline: 3px solid #EEEEEE;
+    margin-bottom: 8px;
+    transition: all 0.4s ease-in;
+
+    .Mui-focused > &.MuiInput-root.MuiInput-formControl {
+      border: 1px solid ${grey[500]};
     }
-  
+
     &:hover {
-      border-color: #EEEEEE;
+      border-color: ${grey[300]};
     }
   `
 );
@@ -41,7 +42,7 @@ const StyledInputElement = styled('input')(
     font-weight: 400;
     line-height: 1.5;
     flex-grow: 1;
-    color: ${theme.palette.mode === 'dark' ? grey[300] : grey[900]};
+    color: ${grey[900]};
     background: inherit;
     border: none;
     border-radius: inherit;

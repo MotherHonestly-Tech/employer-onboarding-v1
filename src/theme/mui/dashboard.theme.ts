@@ -1,14 +1,16 @@
 import { createTheme } from '@mui/material/styles';
 import { red } from '@mui/material/colors';
 
+const primaryColor = '#28404A';
 
 export const theme = createTheme({
   palette: {
     primary: {
-      main: '#28404A'
+      main: primaryColor,
+      light: '#FFFFFF'
     },
     secondary: {
-      main: '#EEEEEE'
+      main: '#F2EC2C'
     },
     error: {
       main: red.A400
@@ -31,10 +33,12 @@ export const theme = createTheme({
           textTransform: 'none',
           padding: '6px 12px',
           ':hover': {
-            backgroundColor: '#28404A'
+            backgroundColor: '#F2EC2C',
+            color: primaryColor
           },
           ':active': {
-            backgroundColor: '#28404A'
+            backgroundColor: '#F2EC2C',
+            color: primaryColor
           },
           transition: '0.32s ease-out'
         }
@@ -51,6 +55,56 @@ export const theme = createTheme({
       },
       defaultProps: {
         square: true
+      }
+    },
+    MuiTypography: {
+      styleOverrides: {
+        h1: {
+          fontSize: '1.6rem',
+          fontFamily: 'Gilroy-Bold',
+          color: primaryColor
+        },
+        h2: {
+          fontSize: '1.4rem',
+          fontFamily: 'Gilroy-Bold',
+          color: primaryColor
+        },
+        h3: {
+          fontSize: '1.2rem',
+          fontFamily: 'Gilroy-Bold',
+          color: primaryColor
+        },
+        h4: {
+          fontSize: '1rem',
+          fontFamily: 'Gilroy-Bold',
+          color: primaryColor
+        },
+        subtitle1: {
+          fontSize: '1rem',
+          fontFamily: 'Gilroy-Regular',
+          color: '#6F6F6F',
+          fontWeight: 300
+        },
+        subtitle2: {
+          fontSize: '1rem',
+          fontFamily: 'Gilroy-Regular',
+          color: '#B9B9B9',
+          fontWeight: 300
+        },
+        body1: {
+          fontSize: '0.85rem',
+          fontFamily: 'Avenir-Book',
+          color: '#717171'
+        },
+        body2: {
+          fontSize: '0.85rem',
+          fontFamily: 'Avenir-Book',
+          color: '#717171',
+          fontWeight: 300
+        }
+      },
+      defaultProps: {
+
       }
     }
   }

@@ -5,53 +5,76 @@ import Box from '@mui/material/Box';
 import Grid from '@mui/material/Grid';
 import Stack from '@mui/material/Stack';
 
+import SignIn from '../pages/Auth/SignIn';
 import ForgotPassword from '../pages/Auth/ForgotPassword';
 import ResetLinkSuccess from '../pages/Auth/ResetLinkSuccess';
 import PasswordReset from '../pages/Auth/PasswordReset';
-
+import ResetSuccess from '../pages/Auth/ResetSuccess';
 import MHLogoIcon from '../theme/icons/Logo';
-import { Component } from '../models/component.model';
+
+import { FnComponent } from '../models/component.model';
 import { theme } from '../theme/mui/dashboard.theme';
-import { BGImage } from '../models/image.model';
+import { BGImage } from '../models/background-image.model';
 
-
-const AuthNavigator: Component = () => {
+const AuthNavigator: FnComponent = () => {
   const [image, setImage] = React.useState<BGImage>({} as BGImage);
+  const backgroundColor = React.useRef(theme.palette.background.default);
 
-  const changeImageHandler = React.useCallback(({ imageSrc, imageAlt }: BGImage) => {
-    setImage({
-      imageSrc,
-      imageAlt
-    });
-  }, []);
+  const changeImageHandler = React.useCallback(
+    ({ imageSrc, imageAlt, background }: BGImage) => {
+      setImage({
+        imageSrc,
+        imageAlt
+      });
+      backgroundColor.current = !background
+        ? theme.palette.background.default
+        : (background as string);
+    },
+    []
+  );
 
   return (
     <React.Fragment>
       <Box sx={{ flexGrow: 1 }}>
-        <Grid container spacing={0} sx={{ height: '100vh' }}>
+        <Grid container spacing={0} sx={{ minHeight: '100vh' }}>
           <Grid
             item
             xs={8}
             sx={{
-              backgroundColor: theme.palette.background.default,
+              backgroundColor: backgroundColor.current,
               position: 'relative'
             }}>
-            <MHLogoIcon />
+            <Box
+              component={'div'}
+              sx={{
+                position: 'absolute',
+                top: 70,
+                left: 0,
+                right: 0
+              }}>
+              <MHLogoIcon />
+            </Box>
 
             <Stack
               direction="column"
               justifyContent="center"
               alignItems="center"
-              sx={{ height: '100vh', px: 6 }}>
+              sx={{ minHeight: '100vh', px: 6 }}>
               <Switch>
+                <Route path="/" exact>
+                  <SignIn onRouteChange={changeImageHandler} />
+                </Route>
                 <Route path="/forgot-password" exact>
                   <ForgotPassword onRouteChange={changeImageHandler} />
                 </Route>
                 <Route path="/forgot-password/user-email">
                   <ResetLinkSuccess onRouteChange={changeImageHandler} />
                 </Route>
-                <Route path="/password-reset">
+                <Route path="/password-reset" exact>
                   <PasswordReset onRouteChange={changeImageHandler} />
+                </Route>
+                <Route path="/password-reset/success">
+                  <ResetSuccess onRouteChange={changeImageHandler} />
                 </Route>
               </Switch>
             </Stack>

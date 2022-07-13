@@ -2,16 +2,17 @@ import React from 'react';
 
 import Box from '@mui/material/Box';
 import Paper from '@mui/material/Paper';
+import Typography from '@mui/material/Typography';
 
 import MHButton from '../../components/Form/MHButton';
 import MHFormControl from '../../components/Form/MHFormControl';
 import InputAdornment from '../../components/Form/InputAdornment';
 
 import { ReactComponent as MailIcon } from '../../static/svg/mail.svg';
-import { Component } from '../../models/component.model';
-import { BGImage } from '../../models/image.model';
+import { FnComponent } from '../../models/component.model';
+import { BGImage } from '../../models/background-image.model';
 
-const ForgotPassword: Component<{
+const ForgotPassword: FnComponent<{
   onRouteChange: (image: BGImage) => void;
 }> = (props) => {
   const { onRouteChange } = props;
@@ -29,22 +30,38 @@ const ForgotPassword: Component<{
       <Paper
         sx={{
           p: 8,
-          width: '60%'
+          width: '100%',
+          maxWidth: 'sm'
         }}>
         <Box sx={{}}>
-          <h1 className="text-center mb-10">Reset your password</h1>
+          <Typography variant="h1" component="h1" gutterBottom mb={1}>
+            Forgot your password?
+          </Typography>
 
-          <MHFormControl
-            label="Email address"
-            placeholder="Enter your email address"
-            startAdornment={
-              <InputAdornment>
-                <MailIcon width="1.2rem" />
-              </InputAdornment>
-            }
-          />
+          <Typography variant="subtitle1" component={'div'} gutterBottom mb={2}>
+            Let's get you into your account
+          </Typography>
 
-          <MHButton sx={{}}>Reset my password</MHButton>
+          <Typography variant="body2" component={'div'} gutterBottom mb={3}>
+            Submit your email address and we'll send you a link to reset your
+            password
+          </Typography>
+
+          <Box component={'form'}>
+            <MHFormControl
+              type="email"
+              label="Email address"
+              placeholder="Enter your email address"
+              startAdornment={
+                <InputAdornment>
+                  <MailIcon width="1rem" />
+                </InputAdornment>
+              }
+            />
+            <MHButton sx={{}}>Reset my password</MHButton>
+          </Box>
+
+
         </Box>
       </Paper>
     </React.Fragment>
