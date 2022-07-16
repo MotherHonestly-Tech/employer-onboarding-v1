@@ -24,7 +24,7 @@ const SignIn: FnComponent<{ onRouteChange: (image: BGImage) => void }> = (
   React.useEffect(() => {
     onRouteChange({
       imageSrc:
-        'https://res.cloudinary.com/mother-honestly/image/upload/v1657561738/juliane-liebermann-O-RKu3Aqnsw_aqqcs8.png',
+        'https://res.cloudinary.com/mother-honestly/image/upload/v1657835660/juliane-liebermann-O-RKu3Aqnsw-unsplash_1_zv7sov.png',
       imageAlt: 'Juliane Liebermann',
       background: theme.palette.background.paper
     });

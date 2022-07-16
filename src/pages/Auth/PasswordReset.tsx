@@ -20,7 +20,7 @@ const PasswordReset: FnComponent<{ onRouteChange: (image: BGImage) => void }> = 
   React.useEffect(() => {
     onRouteChange({
       imageSrc:
-        'https://res.cloudinary.com/mother-honestly/image/upload/v1657531435/lex-lvrs-4N5huJDOydQ_hjsd3a.png',
+        'https://res.cloudinary.com/mother-honestly/image/upload/v1657836331/alex-lvrs-4N5huJDOydQ-unsplash_1_1_qubnfw.png',
       imageAlt: 'Lex Lvrs'
     });
   }, [onRouteChange]);

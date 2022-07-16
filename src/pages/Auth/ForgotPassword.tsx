@@ -20,7 +20,7 @@ const ForgotPassword: FnComponent<{
   React.useEffect(() => {
     onRouteChange({
       imageSrc:
-        'https://res.cloudinary.com/mother-honestly/image/upload/v1657513169/lawrence-crayton-KXOaNSU63NE_x387ju.png',
+        'https://res.cloudinary.com/mother-honestly/image/upload/v1657836148/lawrence-crayton-KXOaNSU63NE-unsplash_1_c4copk.png',
       imageAlt: 'Lwrence Crayton'
     });
   }, [onRouteChange]);

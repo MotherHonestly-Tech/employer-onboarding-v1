@@ -10,7 +10,7 @@ import ForgotPassword from '../pages/Auth/ForgotPassword';
 import ResetLinkSuccess from '../pages/Auth/ResetLinkSuccess';
 import PasswordReset from '../pages/Auth/PasswordReset';
 import ResetSuccess from '../pages/Auth/ResetSuccess';
-import MHLogoIcon from '../theme/icons/Logo';
+import MHLogoIcon from '../theme/icons/MHLogo';
 
 import { FnComponent } from '../models/component.model';
 import { theme } from '../theme/mui/dashboard.theme';
@@ -39,7 +39,7 @@ const AuthNavigator: FnComponent = () => {
         <Grid container spacing={0} sx={{ minHeight: '100vh' }}>
           <Grid
             item
-            xs={8}
+            xs={6}
             sx={{
               backgroundColor: backgroundColor.current,
               position: 'relative'
@@ -80,7 +80,7 @@ const AuthNavigator: FnComponent = () => {
             </Stack>
           </Grid>
 
-          <Grid item xs={4}>
+          <Grid item xs={6}>
             <Box
               component="div"
               sx={{
@@ -89,7 +89,7 @@ const AuthNavigator: FnComponent = () => {
               }}>
               <img
                 src={image.imageSrc}
-                alt="background"
+                alt={image.imageAlt}
                 style={{
                   width: '100%',
                   height: '100%',
