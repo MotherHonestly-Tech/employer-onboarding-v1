@@ -9,7 +9,7 @@ import Typography from '@mui/material/Typography';
 import MHInterestCheckbox from '../../components/Form/MHInterestCheckbox';
 import MHButton from '../../components/Form/MHButton';
 
-import MHLogoIcon from '../../theme/icons/Logo';
+import MHLogoIcon from '../../theme/icons/MHLogo';
 import { theme } from '../../theme/mui/dashboard.theme';
 
 const Interests = () => {

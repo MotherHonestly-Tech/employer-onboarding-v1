@@ -19,7 +19,7 @@ const ResetSuccess: FnComponent<{
   React.useEffect(() => {
     onRouteChange({
       imageSrc:
-        'https://res.cloudinary.com/mother-honestly/image/upload/v1657559254/youssef-naddam-iJ2IG8ckCpA_wp7apa.png',
+        'https://res.cloudinary.com/mother-honestly/image/upload/v1657836372/youssef-naddam-iJ2IG8ckCpA-unsplash_1_gzadsw.png',
       imageAlt: 'Youssef Naddam'
     });
   }, [onRouteChange]);

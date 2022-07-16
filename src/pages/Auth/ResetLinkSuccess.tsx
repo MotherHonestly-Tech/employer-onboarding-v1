@@ -20,7 +20,7 @@ const ResetLinkSuccess: FnComponent<{
   React.useEffect(() => {
     onRouteChange({
       imageSrc:
-        'https://res.cloudinary.com/mother-honestly/image/upload/v1657522220/sai-de-silva-httxBNGKapo_j9nhg0.png',
+        'https://res.cloudinary.com/mother-honestly/image/upload/v1657836298/sai-de-silva-httxBNGKapo-unsplash_1_arojoi.png',
       imageAlt: 'Sai de Silva'
     });
   }, [onRouteChange]);

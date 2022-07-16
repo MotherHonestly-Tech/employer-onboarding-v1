@@ -10,7 +10,8 @@ export const theme = createTheme({
       light: '#FFFFFF'
     },
     secondary: {
-      main: '#F2EC2C'
+      main: '#F2EC2C',
+      light: '#B6B6B6'
     },
     error: {
       main: red.A400
@@ -103,8 +104,23 @@ export const theme = createTheme({
           fontWeight: 300
         }
       },
-      defaultProps: {
-
+      defaultProps: {}
+    },
+    MuiAppBar: {
+      styleOverrides: {
+        root: {
+          backgroundColor: '#FFFFFF',
+          boxShadow: '0px 4px 15px rgba(221, 221, 221, 0.25)',
+          paddingBlock: 7
+        }
+      }
+    },
+    MuiDrawer: {
+      styleOverrides: {
+        paper: {
+          backgroundColor: '#FFFFFF',
+          opacity: 1,
+        }
       }
     }
   }
