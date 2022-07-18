@@ -5,6 +5,7 @@ import Box from '@mui/material/Box';
 import Paper from '@mui/material/Paper';
 import MuiLink from '@mui/material/Link';
 import Typography from '@mui/material/Typography';
+import { useFormControlUnstyledContext } from '@mui/base/FormControlUnstyled';
 
 import MHFormControl from '../../components/Form/MHFormControl';
 import MHButton from '../../components/Form/MHButton';
@@ -15,11 +16,41 @@ import { ReactComponent as LockIcon } from '../../static/svg/lock.svg';
 import { BGImage } from '../../models/background-image.model';
 import { FnComponent } from '../../models/component.model';
 import { theme } from '../../theme/mui/dashboard.theme';
+import * as formReducer from '../../store/reducers/form';
+import * as validators from '../../utils/validators';
 
 const SignIn: FnComponent<{ onRouteChange: (image: BGImage) => void }> = (
   props
 ) => {
   const { onRouteChange } = props;
+  const emailFormControlContext = useFormControlUnstyledContext();
+  const emailInputRef = React.useRef<HTMLDivElement>(null);
+
+  const [formState, dispatch] = React.useReducer(formReducer.formReducer, {
+    email: {
+      value: '',
+      valid: false,
+      required: true,
+      validating: false,
+      validators: [
+        {
+          validator: (value: string) => validators.email(value)
+        }
+      ]
+    },
+    password: {
+      value: '',
+      valid: false,
+      required: true,
+      validating: false,
+      validators: [
+        {
+          validator: (value: string) => validators.password(value)
+        }
+      ]
+    },
+    formIsValid: false
+  });
 
   React.useEffect(() => {
     onRouteChange({
@@ -32,6 +63,22 @@ const SignIn: FnComponent<{ onRouteChange: (image: BGImage) => void }> = (
 
   const preventDefault = (event: React.SyntheticEvent) =>
     event.preventDefault();
+
+  const signinHandler = (event: React.ChangeEvent<HTMLFormElement>) => {
+    emailInputRef.current!.focus();
+    preventDefault(event);
+    if (!formState.formIsValid) {
+      return;
+    }
+  };
+
+  const inputChangeHandler = (event: React.ChangeEvent<HTMLInputElement>) => {
+    dispatch({
+      type: formReducer.SET_FORM_DATA,
+      value: event.target.value,
+      id: event.target.id
+    });
+  };
 
   return (
     <React.Fragment>
@@ -59,19 +106,24 @@ const SignIn: FnComponent<{ onRouteChange: (image: BGImage) => void }> = (
             <p>Welcome back! Please enter your details.</p> */}
           </Box>
 
-          <Box component={'form'}>
+          <Box component={'form'} onSubmit={signinHandler}>
             <MHFormControl
+              ref={emailInputRef}
+              id="email"
               type="email"
               label="Email address"
               placeholder="Enter your email"
+              onChange={inputChangeHandler}
               startAdornment={
                 <InputAdornment>
                   <MailIcon width="1rem" />
                 </InputAdornment>
               }
+              required
             />
 
             <MHFormControl
+              id="password"
               type="password"
               label="Password"
               placeholder="Password"
@@ -80,6 +132,8 @@ const SignIn: FnComponent<{ onRouteChange: (image: BGImage) => void }> = (
                   <LockIcon width="1.2rem" />
                 </InputAdornment>
               }
+              onChange={() => {}}
+              required
             />
 
             <Box
@@ -94,7 +148,7 @@ const SignIn: FnComponent<{ onRouteChange: (image: BGImage) => void }> = (
               </MuiLink>
             </Box>
 
-            <MHButton sx={{}}>Sign in</MHButton>
+            <MHButton sx={{}} type="submit">Sign in</MHButton>
           </Box>
         </Box>
       </Paper>

@@ -1,6 +1,7 @@
 import * as React from 'react';
 
 import FormControlUnstyled, {
+  FormControlUnstyledState,
   useFormControlUnstyledContext
 } from '@mui/base/FormControlUnstyled';
 import { styled } from '@mui/system';
@@ -9,13 +10,14 @@ import clsx from 'clsx';
 import MHTextInput from './MHTextInput';
 
 type InputProps = {
+  id: string;
   label: string;
   startAdornment?: React.ReactNode;
   placeholder: string;
   type: string;
   name?: string;
   value?: string;
-  onChange?: (event: React.ChangeEvent<HTMLInputElement>) => void;
+  onChange: (event: React.ChangeEvent<HTMLInputElement>) => void;
   onBlur?: (event: React.FocusEvent<HTMLInputElement>) => void;
   error?: string;
   disabled?: boolean;
@@ -24,6 +26,11 @@ type InputProps = {
   multiline?: boolean;
   rows?: number;
   rowsMax?: number;
+  email?: boolean;
+  min?: number;
+  max?: number;
+  minLength?: number;
+  maxLength?: number;
 };
 
 const Label = styled(
@@ -64,6 +71,10 @@ const Label = styled(
 )`
   font-size: 0.875rem;
   margin-bottom: 4px;
+
+  &.invalid {
+    color: red;
+  }
 `;
 
 const HelperText = styled((props: {}) => {
@@ -96,19 +107,43 @@ const HelperText = styled((props: {}) => {
   ) : null;
 })``;
 
-export default function MHFormControl(props: InputProps) {
-  const { label, startAdornment, placeholder, type } = props;
+const MHFormControl = React.forwardRef((props: InputProps, ref) => {
+  const controlRef = React.useRef<HTMLInputElement>(null);
+  const {
+    id,
+    type,
+    label,
+    required,
+    placeholder,
+    startAdornment,
+    onChange
+  } = props;
+
+
+  React.useImperativeHandle(ref, () => ({
+    focus: () => {
+      (controlRef.current as HTMLInputElement).focus();
+    }
+  }));
 
   return (
-    <FormControlUnstyled defaultValue="" required className="mb-5">
+    <FormControlUnstyled
+      defaultValue=""
+      required={required}
+      className="mb-5"
+      >
       <Label>{label}</Label>
       <MHTextInput
-        id="outlined-start-adornment"
+        id={id}
         startAdornment={startAdornment}
         placeholder={placeholder}
         type={type}
+        onChange={(event) => onChange(event)}
+        ref={controlRef}
       />
       <HelperText />
     </FormControlUnstyled>
   );
-}
+});
+
+export default MHFormControl;

@@ -11,12 +11,6 @@ import { styled } from '@mui/material/styles';
 import { drawerWidth } from '../../utils/constants';
 import { FnComponent } from '../../models/component.model';
 
-interface RouterLinkProps {
-  icon?: React.ReactElement;
-  primary: string;
-  to: string;
-}
-
 const SideDrawer = styled(MuiDrawer, {
   shouldForwardProp: (prop) => prop !== 'open'
 })(({ theme, open }) => ({
@@ -27,7 +21,6 @@ const SideDrawer = styled(MuiDrawer, {
     height: '100vh',
     padding: theme.spacing(3),
     background: '#F1F7F8',
-    borderWidth: 1,
     boxShadow: '2px 4px 4px 0px #B7B7B740',
     transition: theme.transitions.create('width', {
       easing: theme.transitions.easing.sharp,

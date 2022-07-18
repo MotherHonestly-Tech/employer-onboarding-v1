@@ -123,6 +123,7 @@ const WalletBalance = () => {
                 }}>
                 Total Credit{' '}
                 <Typography
+                  component="span"
                   sx={{
                     display: 'inline',
                     font: 'inherit',
@@ -153,6 +154,7 @@ const WalletBalance = () => {
                 }}>
                 Total Payout{' '}
                 <Typography
+                component="span"
                   sx={{
                     display: 'inline',
                     font: 'inherit',

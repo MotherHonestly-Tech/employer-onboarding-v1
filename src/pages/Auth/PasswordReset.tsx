@@ -12,9 +12,9 @@ import { ReactComponent as KeyIcon } from '../../static/svg/key.svg';
 import { FnComponent } from '../../models/component.model';
 import { BGImage } from '../../models/background-image.model';
 
-const PasswordReset: FnComponent<{ onRouteChange: (image: BGImage) => void }> = (
-  props
-) => {
+const PasswordReset: FnComponent<{
+  onRouteChange: (image: BGImage) => void;
+}> = (props) => {
   const { onRouteChange } = props;
 
   React.useEffect(() => {
@@ -46,16 +46,20 @@ const PasswordReset: FnComponent<{ onRouteChange: (image: BGImage) => void }> = 
           {/* <h1 className="text-center my-4">Set new password</h1> */}
 
           <MHFormControl
+            id="password"
             type="password"
             label="Password"
             placeholder="Password"
-          />
+            onChange={() => {}}
+            />
 
           <MHFormControl
+            id="password"
             type="password"
             label="Confirm Password"
             placeholder="Confirm Password"
-          />
+            onChange={() => {}}
+            />
 
           <MHButton sx={{}}>Reset password</MHButton>
         </Box>
