@@ -8,12 +8,14 @@ type Props = {
   disabled?: boolean;
   sx: object;
   variant?: 'text' | 'outlined' | 'contained' | undefined;
+  type?: "button" | "submit" | "reset" | undefined;
 };
 
-const MHButton: FnComponent<Props> = ({ sx, variant, children }) => {
+const MHButton: FnComponent<Props> = ({ sx, variant, children, type }) => {
   return (
     <Button
       color={'primary'}
+      type={type || 'button'}
       variant={variant || 'contained'}
       sx={{
         p: 1.8,

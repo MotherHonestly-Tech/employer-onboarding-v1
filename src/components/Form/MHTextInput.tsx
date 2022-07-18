@@ -1,7 +1,12 @@
 import React from 'react';
 
-import InputUnstyled, { InputUnstyledProps, inputUnstyledClasses } from '@mui/base/InputUnstyled';
+import InputUnstyled, {
+  InputUnstyledProps,
+  inputUnstyledClasses
+} from '@mui/base/InputUnstyled';
+import { useFormControlUnstyledContext } from '@mui/base/FormControlUnstyled';
 import { styled } from '@mui/system';
+import clsx from 'clsx';
 
 const grey = {
   50: '#F3F6F9',
@@ -36,23 +41,66 @@ const StyledInputRoot = styled('div')(
   `
 );
 
-const StyledInputElement = styled('input')(
-  ({ theme }) => `
-    font-size: 0.875rem;
-    font-weight: 400;
-    line-height: 1.5;
-    flex-grow: 1;
-    color: ${grey[900]};
-    background: inherit;
-    border: none;
-    border-radius: inherit;
-    padding: 12px 12px;
-    outline: 0;
-  `
-);
+const StyledInputElement = styled(
+  React.forwardRef(
+    (
+      {
+        children,
+        className,
+        ...others
+      }: {
+        children?: React.ReactNode;
+        className?: string;
+      },
+      ref
+    ) => {
+      const inputRef = React.useRef<HTMLInputElement>(null);
 
-const MHTextInput = (props: InputUnstyledProps) => {
+      React.useImperativeHandle(ref, () => {
+        return {
+          focus: () => (inputRef.current as HTMLInputElement).focus()
+        };
+      });
+
+      return <input className={clsx(className)} {...others} ref={inputRef} />;
+    }
+  )
+)`
+  display: block;
+  font-size: 0.875rem;
+  font-weight: 400;
+  line-height: 1.5;
+  flex-grow: 1;
+  color: ${grey[900]};
+  background: inherit;
+  border: none;
+  border-radius: inherit;
+  padding: 12px 12px;
+  outline: 0;
+`;
+
+const MHTextInput = React.forwardRef((props: InputUnstyledProps, ref) => {
   const { components, ...others } = props;
+  const inputRef = React.useRef<HTMLInputElement>(null);
+  const formControlContext = useFormControlUnstyledContext();
+
+  React.useEffect(() => {
+    console.log(inputRef);
+  }, []);
+
+  React.useImperativeHandle(ref, () => ({
+    focus: () => {
+      console.log(inputRef);
+      (inputRef.current as HTMLInputElement).focus();
+    }
+  }));
+
+  if (formControlContext === undefined) {
+    return null;
+  }
+
+  const { onChange, onFocus, onBlur } = formControlContext;
+
   return (
     <React.Fragment>
       <InputUnstyled
@@ -61,10 +109,14 @@ const MHTextInput = (props: InputUnstyledProps) => {
           Input: StyledInputElement,
           ...components
         }}
+        onChange={onChange}
+        onFocus={onFocus}
+        onBlur={onBlur}
+        ref={inputRef}
         {...others}
       />
     </React.Fragment>
   );
-};
+});
 
 export default MHTextInput;

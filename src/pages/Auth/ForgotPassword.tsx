@@ -49,6 +49,7 @@ const ForgotPassword: FnComponent<{
 
           <Box component={'form'}>
             <MHFormControl
+            id="email"
               type="email"
               label="Email address"
               placeholder="Enter your email address"
@@ -57,11 +58,10 @@ const ForgotPassword: FnComponent<{
                   <MailIcon width="1rem" />
                 </InputAdornment>
               }
+              onChange={() => {}}
             />
             <MHButton sx={{}}>Reset my password</MHButton>
           </Box>
-
-
         </Box>
       </Paper>
     </React.Fragment>
