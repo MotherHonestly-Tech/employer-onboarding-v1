@@ -8,18 +8,21 @@ import { BrowserRouter } from 'react-router-dom';
 import { ThemeProvider } from '@mui/material/styles';
 
 import { theme } from './theme/mui/dashboard.theme';
+import { AuthContextProvider } from './store/context/auth-context';
 
 const root = ReactDOM.createRoot(
   document.getElementById('root') as HTMLElement
 );
 root.render(
-  <ThemeProvider theme={theme}>
-    <BrowserRouter>
-      <React.StrictMode>
-        <App />
-      </React.StrictMode>
-    </BrowserRouter>
-  </ThemeProvider>
+  <AuthContextProvider>
+    <ThemeProvider theme={theme}>
+      <BrowserRouter>
+        <React.StrictMode>
+          <App />
+        </React.StrictMode>
+      </BrowserRouter>
+    </ThemeProvider>
+  </AuthContextProvider>
 );
 
 // If you want to start measuring performance in your app, pass a function

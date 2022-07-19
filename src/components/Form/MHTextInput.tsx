@@ -47,14 +47,47 @@ const StyledInputElement = styled(
       {
         children,
         className,
+        type,
+        onChange,
         ...others
       }: {
         children?: React.ReactNode;
         className?: string;
+        type: string;
+        onChange: (e: React.ChangeEvent<HTMLInputElement>) => {};
       },
       ref
     ) => {
       const inputRef = React.useRef<HTMLInputElement>(null);
+      const cursorPosition = React.useRef<{
+        start: number | null;
+        end: number | null;
+      }>({
+        start: 0,
+        end: 0
+      });
+
+      React.useEffect(() => {
+        if (
+          inputRef &&
+          inputRef.current &&
+          (type === 'password' || type === 'text')
+        ) {
+          inputRef.current.setSelectionRange(cursorPosition.current.end, cursorPosition.current.end) 
+          // = cursorPosition.current.start;
+          // inputRef.current.selectionEnd = cursorPosition.current.end;
+        }
+      });
+
+      const setCursorPosition = (
+        event: React.ChangeEvent<HTMLInputElement>
+      ) => {
+        cursorPosition.current = {
+          start: event.target.selectionStart,
+          end: event.target.selectionEnd
+        };
+        onChange && onChange(event);
+      };
 
       React.useImperativeHandle(ref, () => {
         return {
@@ -62,7 +95,15 @@ const StyledInputElement = styled(
         };
       });
 
-      return <input className={clsx(className)} {...others} ref={inputRef} />;
+      return (
+        <input
+          className={clsx(className)}
+          onChange={setCursorPosition}
+          type={type}
+          ref={inputRef}
+          {...others}
+        />
+      );
     }
   )
 )`
@@ -85,14 +126,11 @@ const MHTextInput = React.forwardRef((props: InputUnstyledProps, ref) => {
   const formControlContext = useFormControlUnstyledContext();
 
   React.useEffect(() => {
-    console.log(inputRef);
+    // console.log(inputRef);
   }, []);
 
   React.useImperativeHandle(ref, () => ({
-    focus: () => {
-      console.log(inputRef);
-      (inputRef.current as HTMLInputElement).focus();
-    }
+    inputEl: inputRef.current as HTMLInputElement
   }));
 
   if (formControlContext === undefined) {

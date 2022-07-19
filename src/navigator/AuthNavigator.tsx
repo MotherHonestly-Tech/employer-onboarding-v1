@@ -1,5 +1,5 @@
 import React from 'react';
-import { Route, Switch } from 'react-router-dom';
+import { Redirect, Route, Switch } from 'react-router-dom';
 
 import Box from '@mui/material/Box';
 import Grid from '@mui/material/Grid';
@@ -75,6 +75,10 @@ const AuthNavigator: FnComponent = () => {
                 </Route>
                 <Route path="/password-reset/success">
                   <ResetSuccess onRouteChange={changeImageHandler} />
+                </Route>
+
+                <Route path="*">
+                  <Redirect to="/" />
                 </Route>
               </Switch>
             </Stack>

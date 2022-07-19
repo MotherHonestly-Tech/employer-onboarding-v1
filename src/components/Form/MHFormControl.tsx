@@ -13,12 +13,16 @@ type InputProps = {
   id: string;
   label: string;
   startAdornment?: React.ReactNode;
+  endAdornment?: React.ReactNode;
   placeholder: string;
   type: string;
   name?: string;
   value?: string;
+  autoFocus?: boolean;
+  dirty?: boolean;
   onChange: (event: React.ChangeEvent<HTMLInputElement>) => void;
   onBlur?: (event: React.FocusEvent<HTMLInputElement>) => void;
+  onFocus?: (event: React.FocusEvent<HTMLInputElement>) => void;
   error?: string;
   disabled?: boolean;
   required?: boolean;
@@ -71,10 +75,6 @@ const Label = styled(
 )`
   font-size: 0.875rem;
   margin-bottom: 4px;
-
-  &.invalid {
-    color: red;
-  }
 `;
 
 const HelperText = styled((props: {}) => {
@@ -100,12 +100,14 @@ const HelperText = styled((props: {}) => {
       className={clsx('invalid')}
       style={{
         color: 'red',
-        fontSize: '0.875rem'
+        fontSize: '0.85rem'
       }}>
       This field is required.
     </p>
   ) : null;
-})``;
+})`
+  font-size: 0.75rem;
+`;
 
 const MHFormControl = React.forwardRef((props: InputProps, ref) => {
   const controlRef = React.useRef<HTMLInputElement>(null);
@@ -116,14 +118,13 @@ const MHFormControl = React.forwardRef((props: InputProps, ref) => {
     required,
     placeholder,
     startAdornment,
+    endAdornment,
+    autoFocus,
     onChange
   } = props;
 
-
   React.useImperativeHandle(ref, () => ({
-    focus: () => {
-      (controlRef.current as HTMLInputElement).focus();
-    }
+    inputEl: controlRef.current as HTMLInputElement
   }));
 
   return (
@@ -131,15 +132,16 @@ const MHFormControl = React.forwardRef((props: InputProps, ref) => {
       defaultValue=""
       required={required}
       className="mb-5"
-      >
+      ref={controlRef}>
       <Label>{label}</Label>
       <MHTextInput
         id={id}
         startAdornment={startAdornment}
+        endAdornment={endAdornment}
         placeholder={placeholder}
         type={type}
         onChange={(event) => onChange(event)}
-        ref={controlRef}
+        autoFocus={autoFocus}
       />
       <HelperText />
     </FormControlUnstyled>
