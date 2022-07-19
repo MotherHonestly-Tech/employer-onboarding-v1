@@ -3,6 +3,7 @@ import { environment } from '../../env';
 import useHttp from '../../hooks/use-http';
 
 import { Token, User } from '../../models/user.model';
+import { decrypt, encrypt } from '../../utils/utils';
 
 const AUTH_LOCATION = 'Sn61y6yYDiIxkur0JT';
 const TOKEN_VALIDITY = 60 * 60000;
@@ -39,13 +40,13 @@ const computeExpirationInMilliSecs = (expirationTime: Date) => {
 };
 
 const retrieveStoredToken = () => {
-  const storedToken: StoredToken = JSON.parse(
-    localStorage.getItem(AUTH_LOCATION) as string
-  );
+  const encStoredToken: string = localStorage.getItem(AUTH_LOCATION) as string;
 
-  if (!storedToken) {
+  if (!encStoredToken) {
     return null;
   }
+
+  const storedToken: StoredToken = JSON.parse(decrypt(encStoredToken));
 
   const expirationTimeInMilliSecs = computeExpirationInMilliSecs(
     storedToken.tokenExpirationDate as Date
@@ -93,7 +94,7 @@ export const AuthContextProvider = ({
         })
       },
       () => {}
-    )
+    );
   }, [user, logout]);
 
   const loginHandler = (token: Token) => {
@@ -106,7 +107,7 @@ export const AuthContextProvider = ({
       tokenExpirationDate: expirationTime
     };
 
-    localStorage.setItem(AUTH_LOCATION, JSON.stringify(storedToken));
+    localStorage.setItem(AUTH_LOCATION, encrypt(JSON.stringify(storedToken)));
   };
 
   const setExpirationTimer = React.useCallback(
