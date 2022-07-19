@@ -1,22 +1,25 @@
-import React from 'react';
+import React from "react";
 
-import InputUnstyled, { InputUnstyledProps, inputUnstyledClasses } from '@mui/base/InputUnstyled';
-import { styled } from '@mui/system';
+import InputUnstyled, {
+  InputUnstyledProps,
+  inputUnstyledClasses,
+} from "@mui/base/InputUnstyled";
+import { styled } from "@mui/system";
 
 const grey = {
-  50: '#F3F6F9',
-  100: '#E7EBF0',
-  200: '#E0E3E7',
-  300: '#CDD2D7',
-  400: '#B2BAC2',
-  500: '#A0AAB4',
-  600: '#6F7E8C',
-  700: '#3E5060',
-  800: '#2D3843',
-  900: '#1A2027'
+  50: "#F3F6F9",
+  100: "#E7EBF0",
+  200: "#E0E3E7",
+  300: "#CDD2D7",
+  400: "#B2BAC2",
+  500: "#A0AAB4",
+  600: "#6F7E8C",
+  700: "#3E5060",
+  800: "#2D3843",
+  900: "#1A2027",
 };
 
-const StyledInputRoot = styled('div')(
+const StyledInputRoot = styled("div")(
   ({ theme }) => `
     display: flex;
     font-weight: 400;
@@ -36,7 +39,7 @@ const StyledInputRoot = styled('div')(
   `
 );
 
-const StyledInputElement = styled('input')(
+const StyledInputElement = styled("input")(
   ({ theme }) => `
     font-size: 0.875rem;
     font-weight: 400;
@@ -59,7 +62,7 @@ const MHTextInput = (props: InputUnstyledProps) => {
         components={{
           Root: StyledInputRoot,
           Input: StyledInputElement,
-          ...components
+          ...components,
         }}
         {...others}
       />

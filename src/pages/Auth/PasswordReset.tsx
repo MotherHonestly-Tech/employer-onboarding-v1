@@ -1,27 +1,27 @@
-import React from 'react';
+import React from "react";
 
-import Paper from '@mui/material/Paper';
-import Box from '@mui/material/Box';
-import Typography from '@mui/material/Typography';
+import Paper from "@mui/material/Paper";
+import Box from "@mui/material/Box";
+import Typography from "@mui/material/Typography";
 
-import MHButton from '../../components/Form/MHButton';
-import MHFormControl from '../../components/Form/MHFormControl';
-import RoundedLogoIcon from '../../theme/icons/RoundedLogo';
+import MHButton from "../../components/Form/MHButton";
+import MHFormControl from "../../components/Form/MHFormControl";
+import RoundedLogoIcon from "../../theme/icons/RoundedLogo";
 
-import { ReactComponent as KeyIcon } from '../../static/svg/key.svg';
-import { FnComponent } from '../../models/component.model';
-import { BGImage } from '../../models/background-image.model';
+import { ReactComponent as KeyIcon } from "../../static/svg/key.svg";
+import { FnComponent } from "../../models/component.model";
+import { BGImage } from "../../models/background-image.model";
 
-const PasswordReset: FnComponent<{ onRouteChange: (image: BGImage) => void }> = (
-  props
-) => {
+const PasswordReset: FnComponent<{
+  onRouteChange: (image: BGImage) => void;
+}> = (props) => {
   const { onRouteChange } = props;
 
   React.useEffect(() => {
     onRouteChange({
       imageSrc:
-        'https://res.cloudinary.com/mother-honestly/image/upload/v1657836331/alex-lvrs-4N5huJDOydQ-unsplash_1_1_qubnfw.png',
-      imageAlt: 'Lex Lvrs'
+        "https://res.cloudinary.com/mother-honestly/image/upload/v1657836331/alex-lvrs-4N5huJDOydQ-unsplash_1_1_qubnfw.png",
+      imageAlt: "Lex Lvrs",
     });
   }, [onRouteChange]);
 
@@ -31,9 +31,10 @@ const PasswordReset: FnComponent<{ onRouteChange: (image: BGImage) => void }> = 
         sx={{
           px: 8,
           py: 5,
-          width: '100%',
-          maxWidth: 'sm'
-        }}>
+          width: "100%",
+          maxWidth: "sm",
+        }}
+      >
         <Box sx={{}}>
           <RoundedLogoIcon>
             <KeyIcon width="1rem" />

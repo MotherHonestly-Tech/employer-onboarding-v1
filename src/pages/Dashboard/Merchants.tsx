@@ -1,9 +1,7 @@
-import React from 'react'
+import React from "react";
 
 const Merchants = () => {
-  return (
-    <div>Merchants</div>
-  )
-}
+  return <div>Merchants</div>;
+};
 
-export default Merchants
+export default Merchants;

@@ -1,16 +1,17 @@
-import * as React from 'react';
+import * as React from "react";
 
 import FormControlUnstyled, {
-  useFormControlUnstyledContext
-} from '@mui/base/FormControlUnstyled';
-import { styled } from '@mui/system';
-import clsx from 'clsx';
+  useFormControlUnstyledContext,
+} from "@mui/base/FormControlUnstyled";
+import { styled } from "@mui/system";
+import clsx from "clsx";
 
-import MHTextInput from './MHTextInput';
+import MHTextInput from "./MHTextInput";
 
 type InputProps = {
   label: string;
   startAdornment?: React.ReactNode;
+  endAdornment?: React.ReactNode;
   placeholder: string;
   type: string;
   name?: string;
@@ -29,7 +30,7 @@ type InputProps = {
 const Label = styled(
   ({
     children,
-    className
+    className,
   }: {
     children?: React.ReactNode;
     className?: string;
@@ -52,10 +53,8 @@ const Label = styled(
 
     return (
       <label
-        className={clsx(
-          className,
-          error || showRequiredError ? 'invalid' : ''
-        )}>
+        className={clsx(className, error || showRequiredError ? "invalid" : "")}
+      >
         {children}
         {/* {required ? ' *' : ''} */}
       </label>
@@ -86,18 +85,19 @@ const HelperText = styled((props: {}) => {
   return showRequiredError ? (
     <p
       {...props}
-      className={clsx('invalid')}
+      className={clsx("invalid")}
       style={{
-        color: 'red',
-        fontSize: '0.875rem'
-      }}>
+        color: "red",
+        fontSize: "0.875rem",
+      }}
+    >
       This field is required.
     </p>
   ) : null;
 })``;
 
 export default function MHFormControl(props: InputProps) {
-  const { label, startAdornment, placeholder, type } = props;
+  const { label, endAdornment, startAdornment, placeholder, type } = props;
 
   return (
     <FormControlUnstyled defaultValue="" required className="mb-5">
@@ -105,6 +105,7 @@ export default function MHFormControl(props: InputProps) {
       <MHTextInput
         id="outlined-start-adornment"
         startAdornment={startAdornment}
+        endAdornment={endAdornment}
         placeholder={placeholder}
         type={type}
       />
