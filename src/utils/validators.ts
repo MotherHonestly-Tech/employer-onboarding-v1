@@ -27,9 +27,9 @@ export const max = (max: number) => (value: string) => {
 };
 
 export const minLength = (minLength: number) => (value: string) => {
-  return value.length < minLength;
+  return value.length >= minLength;
 };
 
 export const maxLength = (maxLength: number) => (value: string) => {
-  return value.length > maxLength;
+  return value.length <= maxLength;
 };

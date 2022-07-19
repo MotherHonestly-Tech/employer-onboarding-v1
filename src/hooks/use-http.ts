@@ -1,5 +1,7 @@
 import React from 'react';
 
+import { HttpStatusCode } from '../models/http-status-codes';
+
 const useHttp = () => {
   const [loading, setLoading] = React.useState(false);
   const [error, setError] = React.useState(null);
@@ -25,6 +27,11 @@ const useHttp = () => {
         }
 
         const responseData = await response.json();
+
+        if (response.status && response.status !== HttpStatusCode.Ok) {
+          throw new Error(responseData.message);
+        }
+
         responseHandlerFn(responseData);
       } catch (error: any) {
         setError(error.message || 'Something went wrong');

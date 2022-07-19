@@ -1,4 +1,5 @@
 export const SET_FORM_DATA = 'SET_FORM_DATA';
+export const MARK_FORM_DIRTY = 'MARK_FORM_DIRTY';
 
 type Validator = (value: string) => boolean;
 
@@ -32,6 +33,17 @@ export const formReducer = (state: any, action: any) => {
       return {
         ...updatedState,
         formIsValid
+      };
+
+    case MARK_FORM_DIRTY:
+      const updatedFormDataDirty = {
+        ...state[action.id],
+        dirty: true
+      };
+
+      return {
+        ...state,
+        [action.id]: updatedFormDataDirty
       };
     default:
       return state;

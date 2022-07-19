@@ -13,24 +13,34 @@ import InputAdornment from '../../components/Form/InputAdornment';
 
 import { ReactComponent as MailIcon } from '../../static/svg/mail.svg';
 import { ReactComponent as LockIcon } from '../../static/svg/lock.svg';
+import { ReactComponent as VisibilityIcon } from '../../static/svg/visibility.svg';
+import { ReactComponent as VisibilityOffIcon } from '../../static/svg/visibility-off.svg';
 import { BGImage } from '../../models/background-image.model';
 import { FnComponent } from '../../models/component.model';
 import { theme } from '../../theme/mui/dashboard.theme';
 import * as formReducer from '../../store/reducers/form';
 import * as validators from '../../utils/validators';
+import useHttp from '../../hooks/use-http';
+import { environment } from '../../env';
+import IconButton from '../../components/Form/IconButtonUnstyled';
+import AuthContext from '../../store/context/auth-context';
 
 const SignIn: FnComponent<{ onRouteChange: (image: BGImage) => void }> = (
   props
 ) => {
+  const [showPassword, setShowPassword] = React.useState<boolean>(false);
   const { onRouteChange } = props;
+
+  const authCtx = React.useContext(AuthContext);
   const emailFormControlContext = useFormControlUnstyledContext();
-  const emailInputRef = React.useRef<HTMLDivElement>(null);
+  const { loading, error, sendHttpRequest: signIn } = useHttp();
 
   const [formState, dispatch] = React.useReducer(formReducer.formReducer, {
     email: {
       value: '',
       valid: false,
       required: true,
+      dirty: false,
       validating: false,
       validators: [
         {
@@ -42,10 +52,11 @@ const SignIn: FnComponent<{ onRouteChange: (image: BGImage) => void }> = (
       value: '',
       valid: false,
       required: true,
+      dirty: false,
       validating: false,
       validators: [
         {
-          validator: (value: string) => validators.password(value)
+          validator: (value: string) => validators.minLength(8)(value)
         }
       ]
     },
@@ -59,17 +70,36 @@ const SignIn: FnComponent<{ onRouteChange: (image: BGImage) => void }> = (
       imageAlt: 'Juliane Liebermann',
       background: theme.palette.background.paper
     });
-  }, [onRouteChange]);
+  }, [onRouteChange, emailFormControlContext]);
 
   const preventDefault = (event: React.SyntheticEvent) =>
     event.preventDefault();
 
-  const signinHandler = (event: React.ChangeEvent<HTMLFormElement>) => {
-    emailInputRef.current!.focus();
+  const signinHandler = async (event: React.ChangeEvent<HTMLFormElement>) => {
+    // emailInputRef.current!.focus();
     preventDefault(event);
+
     if (!formState.formIsValid) {
       return;
     }
+
+    signIn(
+      environment.API_BASE_URL + 'employee/dashboard/login',
+      {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json'
+        },
+        body: JSON.stringify({
+          email: formState.email.value,
+          password: formState.password.value
+        })
+      },
+      (data: any) => {
+        console.log(data);
+        authCtx.login(data.token);
+      }
+    );
   };
 
   const inputChangeHandler = (event: React.ChangeEvent<HTMLInputElement>) => {
@@ -79,6 +109,19 @@ const SignIn: FnComponent<{ onRouteChange: (image: BGImage) => void }> = (
       id: event.target.id
     });
   };
+
+  const handleClickShowPassword = (
+    event: React.MouseEvent<HTMLButtonElement>
+  ) => {
+    preventDefault(event);
+    setShowPassword((prevState) => !prevState);
+  };
+
+  // const handleMouseDownPassword = (
+  //   event: React.MouseEvent<HTMLButtonElement>
+  // ) => {
+  //   // preventDefault(event);
+  // };
 
   return (
     <React.Fragment>
@@ -106,13 +149,15 @@ const SignIn: FnComponent<{ onRouteChange: (image: BGImage) => void }> = (
             <p>Welcome back! Please enter your details.</p> */}
           </Box>
 
-          <Box component={'form'} onSubmit={signinHandler}>
+          {/* autoComplete="off"
+            noValidate */}
+          <Box component={'form'} onSubmit={signinHandler} >
             <MHFormControl
-              ref={emailInputRef}
               id="email"
               type="email"
               label="Email address"
               placeholder="Enter your email"
+              dirty={formState.email.dirty}
               onChange={inputChangeHandler}
               startAdornment={
                 <InputAdornment>
@@ -120,19 +165,32 @@ const SignIn: FnComponent<{ onRouteChange: (image: BGImage) => void }> = (
                 </InputAdornment>
               }
               required
+              autoFocus
             />
 
             <MHFormControl
               id="password"
-              type="password"
+              type={showPassword ? 'text' : 'password'}
               label="Password"
               placeholder="Password"
+              dirty={formState.password.dirty}
+              onChange={inputChangeHandler}
               startAdornment={
                 <InputAdornment>
                   <LockIcon width="1.2rem" />
                 </InputAdornment>
               }
-              onChange={() => {}}
+              endAdornment={
+                <InputAdornment>
+                  <IconButton onClick={handleClickShowPassword}>
+                    {showPassword ? (
+                      <VisibilityOffIcon width="1rem" height="1rem" />
+                    ) : (
+                      <VisibilityIcon width="1rem" height="1rem" />
+                    )}
+                  </IconButton>
+                </InputAdornment>
+              }
               required
             />
 
@@ -148,7 +206,9 @@ const SignIn: FnComponent<{ onRouteChange: (image: BGImage) => void }> = (
               </MuiLink>
             </Box>
 
-            <MHButton sx={{}} type="submit">Sign in</MHButton>
+            <MHButton sx={{}} type="submit">
+              Sign in
+            </MHButton>
           </Box>
         </Box>
       </Paper>

@@ -6,8 +6,11 @@ import Interests from '../pages/Onboarding/Interests';
 
 import { FnComponent } from '../models/component.model';
 import DashboardNavigator from './DashboardNavigator';
+import AuthContext from '../store/context/auth-context';
 
 const AppNavigator: FnComponent<{}> = (props) => {
+  const authCtx = React.useContext(AuthContext);
+
   return (
     <React.Fragment>
       <Switch>
