@@ -11,6 +11,7 @@ type Props = {
   variant?: 'text' | 'outlined' | 'contained' | undefined;
   type?: 'button' | 'submit' | 'reset' | undefined;
   loading?: boolean;
+  onClick?: () => void;
 };
 
 const MHButton: FnComponent<Props> = ({
@@ -19,8 +20,13 @@ const MHButton: FnComponent<Props> = ({
   children,
   type,
   loading,
-  disabled
+  disabled,
+  onClick
 }) => {
+  const buttonClickHandler = () => {
+    onClick && onClick();
+  };
+
   return (
     <Button
       color={'primary'}
@@ -33,6 +39,7 @@ const MHButton: FnComponent<Props> = ({
       size="large"
       disableElevation
       disabled={loading || disabled}
+      onClick={buttonClickHandler}
       fullWidth>
       {loading ? <LoadingIndicator /> : children}
     </Button>
