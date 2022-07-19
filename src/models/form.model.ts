@@ -1,4 +1,8 @@
 export type Form = {
+  [key: string]: FormControl | boolean;
+};
+
+type FormControl = {
   value: string;
   valid: boolean;
   required: boolean;
@@ -6,6 +10,6 @@ export type Form = {
   validators: Validator[];
 };
 
-type Validator = {
+export type Validator = {
   validator: (value: string) => boolean;
 };

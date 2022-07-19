@@ -5,11 +5,13 @@ import Box from '@mui/material/Box';
 import Paper from '@mui/material/Paper';
 import MuiLink from '@mui/material/Link';
 import Typography from '@mui/material/Typography';
-import { useFormControlUnstyledContext } from '@mui/base/FormControlUnstyled';
+import Alert from '@mui/material/Alert';
 
 import MHFormControl from '../../components/Form/MHFormControl';
 import MHButton from '../../components/Form/MHButton';
 import InputAdornment from '../../components/Form/InputAdornment';
+import IconButton from '../../components/Form/IconButtonUnstyled';
+import useHttp from '../../hooks/use-http';
 
 import { ReactComponent as MailIcon } from '../../static/svg/mail.svg';
 import { ReactComponent as LockIcon } from '../../static/svg/lock.svg';
@@ -20,9 +22,7 @@ import { FnComponent } from '../../models/component.model';
 import { theme } from '../../theme/mui/dashboard.theme';
 import * as formReducer from '../../store/reducers/form';
 import * as validators from '../../utils/validators';
-import useHttp from '../../hooks/use-http';
 import { environment } from '../../env';
-import IconButton from '../../components/Form/IconButtonUnstyled';
 import AuthContext from '../../store/context/auth-context';
 
 const SignIn: FnComponent<{ onRouteChange: (image: BGImage) => void }> = (
@@ -32,7 +32,6 @@ const SignIn: FnComponent<{ onRouteChange: (image: BGImage) => void }> = (
   const { onRouteChange } = props;
 
   const authCtx = React.useContext(AuthContext);
-  const emailFormControlContext = useFormControlUnstyledContext();
   const { loading, error, sendHttpRequest: signIn } = useHttp();
 
   const [formState, dispatch] = React.useReducer(formReducer.formReducer, {
@@ -70,7 +69,7 @@ const SignIn: FnComponent<{ onRouteChange: (image: BGImage) => void }> = (
       imageAlt: 'Juliane Liebermann',
       background: theme.palette.background.paper
     });
-  }, [onRouteChange, emailFormControlContext]);
+  }, [onRouteChange]);
 
   const preventDefault = (event: React.SyntheticEvent) =>
     event.preventDefault();
@@ -149,15 +148,24 @@ const SignIn: FnComponent<{ onRouteChange: (image: BGImage) => void }> = (
             <p>Welcome back! Please enter your details.</p> */}
           </Box>
 
+          {error && (
+            <Alert
+              severity="error"
+              sx={{
+                mb: 3
+              }}>
+              Invalid email or password
+            </Alert>
+          )}
+
           {/* autoComplete="off"
             noValidate */}
-          <Box component={'form'} onSubmit={signinHandler} >
+          <Box component={'form'} onSubmit={signinHandler}>
             <MHFormControl
               id="email"
               type="email"
               label="Email address"
               placeholder="Enter your email"
-              dirty={formState.email.dirty}
               onChange={inputChangeHandler}
               startAdornment={
                 <InputAdornment>
@@ -173,7 +181,6 @@ const SignIn: FnComponent<{ onRouteChange: (image: BGImage) => void }> = (
               type={showPassword ? 'text' : 'password'}
               label="Password"
               placeholder="Password"
-              dirty={formState.password.dirty}
               onChange={inputChangeHandler}
               startAdornment={
                 <InputAdornment>
@@ -206,7 +213,7 @@ const SignIn: FnComponent<{ onRouteChange: (image: BGImage) => void }> = (
               </MuiLink>
             </Box>
 
-            <MHButton sx={{}} type="submit">
+            <MHButton sx={{}} type="submit" loading={loading}>
               Sign in
             </MHButton>
           </Box>
