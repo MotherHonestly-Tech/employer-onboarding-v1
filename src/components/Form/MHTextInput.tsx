@@ -6,7 +6,6 @@ import InputUnstyled, {
 } from '@mui/base/InputUnstyled';
 import { useFormControlUnstyledContext } from '@mui/base/FormControlUnstyled';
 import { styled } from '@mui/system';
-import clsx from 'clsx';
 
 const grey = {
   50: '#F3F6F9',
@@ -41,72 +40,7 @@ const StyledInputRoot = styled('div')(
   `
 );
 
-const StyledInputElement = styled(
-  React.forwardRef(
-    (
-      {
-        children,
-        className,
-        type,
-        onChange,
-        ...others
-      }: {
-        children?: React.ReactNode;
-        className?: string;
-        type: string;
-        onChange: (e: React.ChangeEvent<HTMLInputElement>) => {};
-      },
-      ref
-    ) => {
-      const inputRef = React.useRef<HTMLInputElement>(null);
-      const cursorPosition = React.useRef<{
-        start: number | null;
-        end: number | null;
-      }>({
-        start: 0,
-        end: 0
-      });
-
-      React.useEffect(() => {
-        if (
-          inputRef &&
-          inputRef.current &&
-          (type === 'password' || type === 'text')
-        ) {
-          inputRef.current.setSelectionRange(cursorPosition.current.end, cursorPosition.current.end) 
-          // = cursorPosition.current.start;
-          // inputRef.current.selectionEnd = cursorPosition.current.end;
-        }
-      });
-
-      const setCursorPosition = (
-        event: React.ChangeEvent<HTMLInputElement>
-      ) => {
-        cursorPosition.current = {
-          start: event.target.selectionStart,
-          end: event.target.selectionEnd
-        };
-        onChange && onChange(event);
-      };
-
-      React.useImperativeHandle(ref, () => {
-        return {
-          focus: () => (inputRef.current as HTMLInputElement).focus()
-        };
-      });
-
-      return (
-        <input
-          className={clsx(className)}
-          onChange={setCursorPosition}
-          type={type}
-          ref={inputRef}
-          {...others}
-        />
-      );
-    }
-  )
-)`
+const StyledInputElement = styled('input')`
   display: block;
   font-size: 0.875rem;
   font-weight: 400;
@@ -139,6 +73,16 @@ const MHTextInput = React.forwardRef((props: InputUnstyledProps, ref) => {
 
   const { onChange, onFocus, onBlur } = formControlContext;
 
+  const inputChangeHandler = (event: React.ChangeEvent<HTMLInputElement>) => {
+    props.onChange && props.onChange(event);
+    onChange && onChange(event);
+  };
+
+  const inputBlurHandler = (event: React.FocusEvent<HTMLInputElement>) => {
+    props.onBlur && props.onBlur(event);
+    onBlur && onBlur();
+  }
+
   return (
     <React.Fragment>
       <InputUnstyled
@@ -147,9 +91,9 @@ const MHTextInput = React.forwardRef((props: InputUnstyledProps, ref) => {
           Input: StyledInputElement,
           ...components
         }}
-        onChange={onChange}
+        onChange={inputChangeHandler}
+        onBlur={inputBlurHandler}
         onFocus={onFocus}
-        onBlur={onBlur}
         ref={inputRef}
         {...others}
       />

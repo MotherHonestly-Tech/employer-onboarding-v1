@@ -109,30 +109,45 @@ const HelperText = styled((props: {}) => {
   font-size: 0.75rem;
 `;
 
-const MHFormControl = React.forwardRef((props: InputProps, ref) => {
-  const controlRef = React.useRef<HTMLInputElement>(null);
+const ErrorTip = (props: { error: string }) => {
+  const formControlContext = useFormControlUnstyledContext();
+
+  if (formControlContext === undefined) {
+    return null;
+  }
+
+  const { filled } = formControlContext;
+
+  return props.error && filled ? (
+    <p
+      className={clsx('invalid')}
+      style={{
+        color: 'red',
+        fontSize: '0.85rem'
+      }}>
+      {props.error}
+    </p>
+  ) : null;
+};
+
+const MHFormControl = (props: InputProps) => {
   const {
     id,
     type,
+    value,
     label,
     required,
     placeholder,
     startAdornment,
     endAdornment,
     autoFocus,
-    onChange
+    error,
+    onChange,
+    onBlur
   } = props;
 
-  React.useImperativeHandle(ref, () => ({
-    inputEl: controlRef.current as HTMLInputElement
-  }));
-
   return (
-    <FormControlUnstyled
-      defaultValue=""
-      required={required}
-      className="mb-5"
-      ref={controlRef}>
+    <FormControlUnstyled defaultValue="" value={value} required={required} className="mb-5">
       <Label>{label}</Label>
       <MHTextInput
         id={id}
@@ -140,12 +155,14 @@ const MHFormControl = React.forwardRef((props: InputProps, ref) => {
         endAdornment={endAdornment}
         placeholder={placeholder}
         type={type}
-        onChange={(event) => onChange(event)}
+        onChange={onChange}
+        onBlur={onBlur}
         autoFocus={autoFocus}
       />
       <HelperText />
+      <ErrorTip error={error as string} />
     </FormControlUnstyled>
   );
-});
+};
 
 export default MHFormControl;

@@ -4,8 +4,8 @@ import Box from '@mui/material/Box';
 import Typography from '@mui/material/Typography';
 import Grid from '@mui/material/Grid';
 
-import WalletBalance from '../../components/UI/WalletBalance';
-import Consultant from '../../components/UI/Consultant';
+import WalletBalance from '../../components/Dashboard/WalletBalance';
+import Consultant from '../../components/Dashboard/Consultant';
 
 const Dashboard = () => {
   return (

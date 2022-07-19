@@ -71,7 +71,7 @@ export const AuthContextProvider = ({
   const [token, setToken] = React.useState<Token | null>(initialToken);
   const [user, setUser] = React.useState<User | null>(null);
 
-  const { loading, error, sendHttpRequest: logout } = useHttp();
+  const { sendHttpRequest: logout } = useHttp();
 
   const logoutHandler = React.useCallback(() => {
     setToken(null);
