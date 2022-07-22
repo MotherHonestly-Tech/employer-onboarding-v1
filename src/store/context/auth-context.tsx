@@ -1,9 +1,9 @@
 import * as React from 'react';
-import { environment } from '../../env';
+
 import useHttp from '../../hooks/use-http';
 
 import { Token, User } from '../../models/user.model';
-import { decrypt, encrypt } from '../../utils/utils';
+import { decrypt, encrypt, getURLWithQueryParams } from '../../utils/utils';
 
 const AUTH_LOCATION = 'Sn61y6yYDiIxkur0JT';
 const TOKEN_VALIDITY = 60 * 60000;
@@ -72,6 +72,8 @@ export const AuthContextProvider = ({
   const [user, setUser] = React.useState<User | null>(null);
 
   const { sendHttpRequest: logout } = useHttp();
+  const { sendHttpRequest: resetToken } = useHttp();
+  const { sendHttpRequest: getUser } = useHttp();
 
   const logoutHandler = React.useCallback(() => {
     setToken(null);
@@ -83,7 +85,7 @@ export const AuthContextProvider = ({
     localStorage.removeItem(AUTH_LOCATION);
 
     logout(
-      environment.API_BASE_URL + 'employee/dashboard/logout',
+      process.env.REACT_APP_API_BASE_URL + 'employee/dashboard/logout',
       {
         method: 'POST',
         headers: {
@@ -112,16 +114,57 @@ export const AuthContextProvider = ({
 
   const setExpirationTimer = React.useCallback(
     (expirationTime: Date) => {
-      expirationTimer = setTimeout(() => {
-        logoutHandler();
-      }, computeExpirationInMilliSecs(expirationTime));
+      if (tokenData)
+        expirationTimer = setTimeout(() => {
+          logoutHandler();
+        }, computeExpirationInMilliSecs(expirationTime));
     },
-    [logoutHandler]
+    [logoutHandler, tokenData]
   );
 
   React.useEffect(() => {
     setExpirationTimer(tokenData?.tokenExpirationDate as Date);
   }, [tokenData, setExpirationTimer]);
+
+  const getUserProfile = (uuid: string) => {
+    return getUser(
+      getURLWithQueryParams(
+        process.env.REACT_APP_API_BASE_URL + 'employee/profile/',
+        {
+          uuid
+        }
+      ),
+      {
+        method: 'GET',
+        headers: {
+          'Content-Type': 'application/json',
+          'Authorization': `Bearer ${token?.accessToken}`
+        }
+      },
+      (response: User) => {
+        console.log(response);
+      }
+    );
+  };
+
+  const generateNewToken = React.useCallback(
+    (refreshToken: string) => {
+      resetToken(
+        process.env.REACT_APP_API_BASE_URL + 'auth/token/new',
+        {
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/json',
+            Authorization: `Bearer ${token?.refreshToken}`
+          }
+        },
+        (responseData: Token) => {
+          console.log(responseData);
+        }
+      );
+    },
+    [resetToken, token]
+  );
 
   const contextValue: AuthContextType = {
     token: token,

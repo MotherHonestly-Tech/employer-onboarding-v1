@@ -58,7 +58,8 @@ const ResetLinkSuccess: FnComponent<{
           <MHButton
             sx={{
               mb: 2
-            }}>
+            }}
+            fullWidth>
             Open email app
           </MHButton>
 

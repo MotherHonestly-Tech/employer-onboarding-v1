@@ -158,6 +158,7 @@ const MHFormControl = (props: InputProps) => {
         onChange={onChange}
         onBlur={onBlur}
         autoFocus={autoFocus}
+        className="mb-2"
       />
       <HelperText />
       <ErrorTip error={error as string} />

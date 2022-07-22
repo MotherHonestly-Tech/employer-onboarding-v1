@@ -1,5 +1,5 @@
 import React from 'react';
-import { Link } from 'react-router-dom';
+import { Link, useHistory } from 'react-router-dom';
 
 import Box from '@mui/material/Box';
 import Paper from '@mui/material/Paper';
@@ -22,14 +22,16 @@ import { FnComponent } from '../../models/component.model';
 import { theme } from '../../theme/mui/dashboard.theme';
 import * as formReducer from '../../store/reducers/form';
 import * as validators from '../../utils/validators';
-import { environment } from '../../env';
 import AuthContext from '../../store/context/auth-context';
+import useTitle from '../../hooks/use-title';
 
-const SignIn: FnComponent<{ onRouteChange: (image: BGImage) => void }> = (
+const SignIn: FnComponent<{ onRouteChange: (image: BGImage) => void, title: string }> = (
   props
 ) => {
   const [showPassword, setShowPassword] = React.useState<boolean>(false);
   const { onRouteChange } = props;
+  const history = useHistory();
+  useTitle(props.title);
 
   const authCtx = React.useContext(AuthContext);
   const { loading, error, sendHttpRequest: signIn } = useHttp();
@@ -63,6 +65,7 @@ const SignIn: FnComponent<{ onRouteChange: (image: BGImage) => void }> = (
   });
 
   React.useEffect(() => {
+    console.log(process.env)
     onRouteChange({
       imageSrc:
         'https://res.cloudinary.com/mother-honestly/image/upload/v1657835660/juliane-liebermann-O-RKu3Aqnsw-unsplash_1_zv7sov.png',
@@ -83,7 +86,7 @@ const SignIn: FnComponent<{ onRouteChange: (image: BGImage) => void }> = (
     }
 
     signIn(
-      environment.API_BASE_URL + 'employee/dashboard/login',
+      process.env.REACT_APP_API_BASE_URL + 'employee/dashboard/login',
       {
         method: 'POST',
         headers: {
@@ -97,6 +100,7 @@ const SignIn: FnComponent<{ onRouteChange: (image: BGImage) => void }> = (
       (data: any) => {
         console.log(data);
         authCtx.login(data.token);
+        history.push('/organization/onboarding');
       }
     );
   };
@@ -213,7 +217,7 @@ const SignIn: FnComponent<{ onRouteChange: (image: BGImage) => void }> = (
               </MuiLink>
             </Box>
 
-            <MHButton sx={{}} type="submit" loading={loading}>
+            <MHButton sx={{}} type="submit" loading={loading} fullWidth>
               Sign in
             </MHButton>
           </Box>

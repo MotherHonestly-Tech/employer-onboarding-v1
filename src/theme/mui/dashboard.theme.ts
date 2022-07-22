@@ -10,7 +10,7 @@ export const theme = createTheme({
       light: '#FFFFFF'
     },
     secondary: {
-      main: '#F2EC2C',
+      main: '#F4EE46',
       light: '#B6B6B6'
     },
     error: {
@@ -119,7 +119,63 @@ export const theme = createTheme({
       styleOverrides: {
         paper: {
           backgroundColor: '#FFFFFF',
-          opacity: 1,
+          opacity: 1
+        }
+      }
+    },
+    MuiTable: {
+      styleOverrides: {
+        root: {
+          backgroundColor: '#FFFFFF',
+          boxShadow: '0px 4px 15px rgba(221, 221, 221, 0.25)',
+          paddingBlock: 7,
+          borderRadius: 0,
+          border: 'none',
+          '&:hover': {
+            backgroundColor: '#FFFFFF',
+            boxShadow: '0px 4px 15px rgba(221, 221, 221, 0.25)',
+            paddingBlock: 7,
+            borderRadius: 0,
+            border: 'none',
+            display: 'table',
+            width: '100%',
+            height: '100%',
+            cursor: 'pointer'
+          }
+        }
+      }
+    },
+    MuiTableCell: {
+      styleOverrides: {
+        root: {
+          padding: '0px',
+          border: 'none',
+          borderRadius: 0,
+          backgroundColor: '#FFFFFF',
+          boxShadow: '0px 4px 15px rgba(221, 221, 221, 0.25)',
+          '&:hover': {
+            backgroundColor: '#FFFFFF',
+            boxShadow: '0px 4px 15px rgba(221, 221, 221, 0.25)',
+            paddingBlock: 7,
+            borderRadius: 0,
+            border: 'none',
+            display: 'table',
+            width: '100%',
+            height: '100%',
+            cursor: 'pointer',
+            '& $content': {
+              color: primaryColor,
+              fontWeight: 'bold',
+              fontSize: '0.85rem',
+              fontFamily: 'Avenir-Book',
+              textTransform: 'uppercase',
+              padding: '0px',
+              border: 'none',
+              borderRadius: 0,
+              backgroundColor: '#FFFFFF',
+              boxShadow: '0px 4px 15px rgba(221, 221, 221, 0.25)'
+            }
+          }
         }
       }
     }

@@ -79,36 +79,34 @@ const ListStyled = styled(
   // }
 }));
 
-const Indicator = styled('div')(
-  ({ theme }) => ({
-    position: 'absolute',
-    height: 52,
-    display: 'block',
-    left: 0,
-    top: 0,
-    width: 6,
-    backgroundColor: theme.palette.primary.main,
-    borderTopRightRadius: '.4rem',
-    borderBottomRightRadius: '.4rem',
-    transition: '0.5s',
-    transform: 'translateY(0)',
-    '.MuiListItem-root.active:nth-of-type(2) ~ &': {
-      transform: `translateY(${52}px)`
-    },
-    '.MuiListItem-root.active:nth-of-type(3) ~ &': {
-      transform: `translateY(${52 * 2}px)`
-    },
-    '.MuiListItem-root.active:nth-of-type(4) ~ &': {
-      transform: `translateY(${52 * 3}px)`
-    },
-    '.MuiListItem-root.active:nth-of-type(5) ~ &': {
-      transform: `translateY(${52 * 4}px)`
-    },
-    '.MuiListItem-root.active:nth-of-type(6) ~ &': {
-      transform: `translateY(${52 * 5}px)`
-    },
-  })
-);
+const Indicator = styled('div')(({ theme }) => ({
+  position: 'absolute',
+  height: 52,
+  display: 'block',
+  left: 0,
+  top: 0,
+  width: 6,
+  backgroundColor: theme.palette.primary.main,
+  borderTopRightRadius: '.4rem',
+  borderBottomRightRadius: '.4rem',
+  transition: '0.5s',
+  transform: 'translateY(0)',
+  '.MuiListItem-root.active:nth-of-type(2) ~ &': {
+    transform: `translateY(${52}px)`
+  },
+  '.MuiListItem-root.active:nth-of-type(3) ~ &': {
+    transform: `translateY(${52 * 2}px)`
+  },
+  '.MuiListItem-root.active:nth-of-type(4) ~ &': {
+    transform: `translateY(${52 * 3}px)`
+  },
+  '.MuiListItem-root.active:nth-of-type(5) ~ &': {
+    transform: `translateY(${52 * 4}px)`
+  },
+  '.MuiListItem-root.active:nth-of-type(6) ~ &': {
+    transform: `translateY(${52 * 5}px)`
+  }
+}));
 
 const ListItemStyled = styled(ListItem)<{
   component?: React.ElementType;
@@ -128,7 +126,6 @@ const RouterLink = (props: RouterLinkProps) => {
       to={to}
       alignItems="center"
       sx={{
-        
         '& svg': {
           color: 'secondary.light',
           transition: '0.5s',
@@ -136,7 +133,7 @@ const RouterLink = (props: RouterLinkProps) => {
         },
         '&.active svg': {
           color: 'primary.main',
-          transition: '.5s',
+          transition: '.5s'
         },
         '&:hover': {
           textDecoration: 'none'
@@ -177,11 +174,9 @@ const RouterLink = (props: RouterLinkProps) => {
   );
 };
 
-const MainSidebar: FnComponent<{ sx?: object}> = ({ sx }) => {
-  const position = React.useRef(1);
-
+const MainSidebar: FnComponent<{ sx?: object }> = ({ sx }) => {
   return (
-    <SideDrawer variant="permanent" open={true} style={{...sx}}>
+    <SideDrawer variant="permanent" open={true} style={{ ...sx }}>
       <Toolbar />
 
       <ListStyled component="nav" sx={{}} disablePadding>
@@ -191,7 +186,6 @@ const MainSidebar: FnComponent<{ sx?: object}> = ({ sx }) => {
           icon={<DashboardIcon />}
           primary="Dashboard"
           to="/organization/dashboard"
-
         />
         <RouterLink
           icon={<WalletIcon />}

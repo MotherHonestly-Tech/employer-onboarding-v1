@@ -1,14 +1,16 @@
 import React from 'react';
-import { useLocation } from 'react-router-dom';
+import { useHistory, useLocation } from 'react-router-dom';
 
 import Paper from '@mui/material/Paper';
 import Box from '@mui/material/Box';
 import Typography from '@mui/material/Typography';
+import Alert from '@mui/material/Alert';
 
 import MHButton from '../../components/Form/MHButton';
 import MHFormControl from '../../components/Form/MHFormControl';
 import RoundedLogoIcon from '../../theme/icons/RoundedLogo';
 import useInput from '../../hooks/use-input';
+import useHttp from '../../hooks/use-http';
 
 import { ReactComponent as KeyIcon } from '../../static/svg/key.svg';
 import { FnComponent } from '../../models/component.model';
@@ -21,6 +23,12 @@ const PasswordReset: FnComponent<{
   const { onRouteChange } = props;
   const location = useLocation();
   const queryParams = new URLSearchParams(location.search);
+  const token = queryParams.get('token');
+
+  const history = useHistory();
+
+  const { sendHttpRequest: activateEmp } = useHttp();
+  const { loading, error, sendHttpRequest: resetPassword } = useHttp();
 
   const {
     value: enteredPassword,
@@ -61,13 +69,25 @@ const PasswordReset: FnComponent<{
   }
 
   React.useEffect(() => {
-    console.log(queryParams.get('abc'));
     onRouteChange({
       imageSrc:
         'https://res.cloudinary.com/mother-honestly/image/upload/v1657836331/alex-lvrs-4N5huJDOydQ-unsplash_1_1_qubnfw.png',
       imageAlt: 'Lex Lvrs'
     });
-  }, [onRouteChange]);
+
+    activateEmp(
+      process.env.REACT_APP_API_BASE_URL + 'employee/dashboard/activate',
+      {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+          Authorization: `Bearer ${token}`
+        },
+        body: JSON.stringify({})
+      },
+      (data: any) => {}
+    );
+  }, [onRouteChange, activateEmp, token]);
 
   const preventDefault = (event: React.SyntheticEvent) =>
     event.preventDefault();
@@ -78,6 +98,23 @@ const PasswordReset: FnComponent<{
     if (!formIsValid) {
       return;
     }
+
+    resetPassword(
+      process.env.REACT_APP_API_BASE_URL + 'employee/dashboard/password/new',
+      {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+          Authorization: `Bearer ${token}`
+        },
+        body: JSON.stringify({
+          password: enteredPassword
+        })
+      },
+      (data: any) => {
+        history.push('/password-reset/success');
+      }
+    );
   };
 
   return (
@@ -97,6 +134,16 @@ const PasswordReset: FnComponent<{
           <Typography variant="h3" my={4} align="center" gutterBottom>
             Set new password
           </Typography>
+
+          {error && (
+            <Alert
+              severity="error"
+              sx={{
+                mb: 3
+              }}>
+              {error}
+            </Alert>
+          )}
 
           <Box component={'form'} onSubmit={setPasswordHandler}>
             <MHFormControl
@@ -124,7 +171,7 @@ const PasswordReset: FnComponent<{
               required
             />
 
-            <MHButton sx={{}} type="submit">
+            <MHButton sx={{}} type="submit" loading={loading} fullWidth>
               Reset password
             </MHButton>
           </Box>

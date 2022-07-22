@@ -57,7 +57,7 @@ const WalletBalance = () => {
         px={0}
         pt={5}
         pb={2.5}
-        borderRadius={(theme) => theme.shape.borderRadius}
+        borderRadius={(theme) => (theme.shape.borderRadius as number) - 2}
         position="relative"
         overflow={'hidden'}
         zIndex={1}>

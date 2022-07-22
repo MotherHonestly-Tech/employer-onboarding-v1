@@ -1,4 +1,5 @@
 import React from 'react';
+import { NavLink } from 'react-router-dom';
 
 import Container from '@mui/material/Container';
 import Grid from '@mui/material/Grid';
@@ -114,14 +115,28 @@ const Interests = () => {
               />
             </Stack>
 
-            <Grid container spacing={2} mt={4}>
-              <Grid item xs>
-                <MHButton sx={{}} variant="outlined">Skip</MHButton>
-              </Grid>
-              <Grid item xs>
-                <MHButton sx={{}}>{"Finish"}</MHButton>
-              </Grid>
-            </Grid>
+            <Stack
+              direction={'row'}
+              justifyContent="center"
+              spacing={8}
+              mt={4}>
+              <MHButton
+                sx={{
+                  textAlign: 'center',
+                  px: 12
+                }}
+                variant="outlined">
+                Skip
+              </MHButton>
+
+              <MHButton
+                sx={{
+                  textAlign: 'center',
+                  px: 12
+                }}>
+                {'Finish'}
+              </MHButton>
+            </Stack>
           </Stack>
         </Grid>
       </Grid>

@@ -3,18 +3,23 @@ import React from 'react';
 import Box from '@mui/material/Box';
 import Paper from '@mui/material/Paper';
 import Typography from '@mui/material/Typography';
+import MuiLink from '@mui/material/Link';
+import Stack from '@mui/material/Stack';
 
 import MHButton from '../../components/Form/MHButton';
 
 import { ReactComponent as CheckmarkIcon } from '../../static/svg/check-mark-rounded.svg';
+import { ReactComponent as ArrowLeftIcon } from '../../static/svg/arrow-left.svg';
 import RoundedLogoIcon from '../../theme/icons/RoundedLogo';
 import { FnComponent } from '../../models/component.model';
 import { BGImage } from '../../models/background-image.model';
+import { Link, useHistory } from 'react-router-dom';
 
 const ResetSuccess: FnComponent<{
   onRouteChange: (image: BGImage) => void;
 }> = (props) => {
   const { onRouteChange } = props;
+  const history = useHistory();
 
   React.useEffect(() => {
     onRouteChange({
@@ -44,7 +49,7 @@ const ResetSuccess: FnComponent<{
             Password reset
           </Typography>
 
-          <Typography variant="body1" mt={2} mb={4} mx="auto" maxWidth={.75}>
+          <Typography variant="body1" mt={2} mb={4} mx="auto" maxWidth={0.75}>
             Your password has been successfully reset. Click below to log in
             magically
           </Typography>
@@ -59,11 +64,22 @@ const ResetSuccess: FnComponent<{
           <MHButton
             sx={{
               mb: 2
-            }}>
+            }}
+            onClick={() => history.push('/')}
+            fullWidth>
             Continue
           </MHButton>
 
-          <p className="mb-5">Back to log in</p>
+          <Stack
+            direction="row"
+            spacing={1}
+            justifyContent="center"
+            alignItems="center">
+            <ArrowLeftIcon />
+            <MuiLink component={Link} href="" to="/">
+              Back to log in
+            </MuiLink>
+          </Stack>
         </Box>
       </Paper>
     </React.Fragment>

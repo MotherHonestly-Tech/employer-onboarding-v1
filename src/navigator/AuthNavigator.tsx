@@ -62,7 +62,7 @@ const AuthNavigator: FnComponent = () => {
               sx={{ minHeight: '100vh', px: 6 }}>
               <Switch>
                 <Route path="/" exact>
-                  <SignIn onRouteChange={changeImageHandler} />
+                  <SignIn onRouteChange={changeImageHandler} title="Sign in to your account" />
                 </Route>
                 <Route path="/forgot-password" exact>
                   <ForgotPassword onRouteChange={changeImageHandler} />
