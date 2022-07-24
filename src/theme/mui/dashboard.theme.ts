@@ -1,5 +1,5 @@
 import { createTheme } from '@mui/material/styles';
-import { red } from '@mui/material/colors';
+import { red, common } from '@mui/material/colors';
 
 const primaryColor = '#28404A';
 
@@ -7,10 +7,10 @@ export const theme = createTheme({
   palette: {
     primary: {
       main: primaryColor,
-      light: '#FFFFFF'
+      light: common.white
     },
     secondary: {
-      main: '#F2EC2C',
+      main: '#F4EE46',
       light: '#B6B6B6'
     },
     error: {
@@ -18,8 +18,24 @@ export const theme = createTheme({
     },
     background: {
       default: '#F5F5F5',
-      paper: '#FFFFFF'
+      paper: common.white
     }
+    // action: {
+    //   active: primaryColor,
+    //   hover: primaryColor,
+    //   selected: primaryColor,
+    //   disabled: '#F5F5F5',
+    //   disabledBackground: '#F5F5F5',
+    //   focus: primaryColor,
+    // }
+  },
+  typography: {
+    fontFamily: 'Avenir-Book, sans-serif',
+    // fontSize: 16,
+    fontWeightLight: 300,
+    fontWeightRegular: 400,
+    fontWeightMedium: 500,
+    fontWeightBold: 700
   },
   components: {
     // Name of the component
@@ -109,7 +125,7 @@ export const theme = createTheme({
     MuiAppBar: {
       styleOverrides: {
         root: {
-          backgroundColor: '#FFFFFF',
+          backgroundColor: common.white,
           boxShadow: '0px 4px 15px rgba(221, 221, 221, 0.25)',
           paddingBlock: 7
         }
@@ -118,10 +134,66 @@ export const theme = createTheme({
     MuiDrawer: {
       styleOverrides: {
         paper: {
-          backgroundColor: '#FFFFFF',
-          opacity: 1,
+          backgroundColor: common.white,
+          opacity: 1
         }
       }
     }
+    // MuiTable: {
+    //   styleOverrides: {
+    //     root: {
+    //       backgroundColor: common.white,
+    //       boxShadow: '0px 4px 15px rgba(221, 221, 221, 0.25)',
+    //       paddingBlock: 7,
+    //       borderRadius: 0,
+    //       border: 'none',
+    //       '&:hover': {
+    //         backgroundColor: common.white,
+    //         boxShadow: '0px 4px 15px rgba(221, 221, 221, 0.25)',
+    //         paddingBlock: 7,
+    //         borderRadius: 0,
+    //         border: 'none',
+    //         display: 'table',
+    //         width: '100%',
+    //         height: '100%',
+    //         cursor: 'pointer'
+    //       }
+    //     }
+    //   }
+    // },
+    // MuiTableCell: {
+    //   styleOverrides: {
+    //     root: {
+    //       padding: '0px',
+    //       border: 'none',
+    //       borderRadius: 0,
+    //       backgroundColor: common.white,
+    //       boxShadow: '0px 4px 15px rgba(221, 221, 221, 0.25)',
+    //       '&:hover': {
+    //         backgroundColor: common.white,
+    //         boxShadow: '0px 4px 15px rgba(221, 221, 221, 0.25)',
+    //         paddingBlock: 7,
+    //         borderRadius: 0,
+    //         border: 'none',
+    //         display: 'table',
+    //         width: '100%',
+    //         height: '100%',
+    //         cursor: 'pointer',
+    //         '& $content': {
+    //           color: primaryColor,
+    //           fontWeight: 'bold',
+    //           fontSize: '0.85rem',
+    //           fontFamily: 'Avenir-Book',
+    //           textTransform: 'uppercase',
+    //           padding: '0px',
+    //           border: 'none',
+    //           borderRadius: 0,
+    //           backgroundColor: common.white,
+    //           boxShadow: '0px 4px 15px rgba(221, 221, 221, 0.25)'
+    //         }
+    //       }
+    //     }
+    //   }
+    // }
   }
 });

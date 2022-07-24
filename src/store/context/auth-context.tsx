@@ -1,8 +1,8 @@
 import * as React from 'react';
-import { environment } from '../../env';
+
 import useHttp from '../../hooks/use-http';
 
-import { Token, User } from '../../models/user.model';
+import { Employee, Token, User } from '../../models/user.model';
 import { decrypt, encrypt } from '../../utils/utils';
 
 const AUTH_LOCATION = 'Sn61y6yYDiIxkur0JT';
@@ -12,22 +12,29 @@ let expirationTimer: any;
 type StoredToken = {
   token: Token;
   tokenExpirationDate: Date | string;
+  uuid: number;
 };
 
 type AuthContextType = {
   isAuthenticated: boolean;
   token: Token | null;
+  userId: number | null;
   user: User | null;
-  login: (token: Token) => void;
+  isOnboarded: boolean;
+  login: (token: Token, uuid: number) => void;
   logout: () => void;
+  synchronizeUser: (emp: Employee) => void;
 };
 
 const AuthContext = React.createContext<AuthContextType>({
   isAuthenticated: false,
   token: null,
+  userId: null,
   user: null,
-  login: (token: Token) => {},
-  logout: () => {}
+  isOnboarded: false,
+  login: (token: Token, uuid: number) => {},
+  logout: () => {},
+  synchronizeUser: (emp: Employee) => {}
 });
 
 const computeExpirationInMilliSecs = (expirationTime: Date) => {
@@ -67,11 +74,15 @@ export const AuthContextProvider = ({
 }) => {
   const tokenData = retrieveStoredToken();
   let initialToken = !!tokenData ? tokenData.token : null;
+  let initialUserId = !!tokenData ? tokenData.uuid : null;
 
   const [token, setToken] = React.useState<Token | null>(initialToken);
+  const [userId, setUserId] = React.useState<number | null>(initialUserId);
   const [user, setUser] = React.useState<User | null>(null);
 
+
   const { sendHttpRequest: logout } = useHttp();
+  const { sendHttpRequest: resetToken } = useHttp();
 
   const logoutHandler = React.useCallback(() => {
     setToken(null);
@@ -83,7 +94,7 @@ export const AuthContextProvider = ({
     localStorage.removeItem(AUTH_LOCATION);
 
     logout(
-      environment.API_BASE_URL + 'employee/dashboard/logout',
+      process.env.REACT_APP_API_BASE_URL + 'employee/dashboard/logout',
       {
         method: 'POST',
         headers: {
@@ -97,14 +108,16 @@ export const AuthContextProvider = ({
     );
   }, [user, logout]);
 
-  const loginHandler = (token: Token) => {
+  const loginHandler = (token: Token, uuid: number) => {
     setToken(token);
+    setUserId(uuid);
     const expirationTime = new Date(new Date().getTime() + TOKEN_VALIDITY);
     setExpirationTimer(expirationTime);
 
     const storedToken: StoredToken = {
       token,
-      tokenExpirationDate: expirationTime
+      tokenExpirationDate: expirationTime,
+      uuid
     };
 
     localStorage.setItem(AUTH_LOCATION, encrypt(JSON.stringify(storedToken)));
@@ -112,23 +125,59 @@ export const AuthContextProvider = ({
 
   const setExpirationTimer = React.useCallback(
     (expirationTime: Date) => {
-      expirationTimer = setTimeout(() => {
-        logoutHandler();
-      }, computeExpirationInMilliSecs(expirationTime));
+      if (tokenData)
+        expirationTimer = setTimeout(() => {
+          logoutHandler();
+        }, computeExpirationInMilliSecs(expirationTime));
     },
-    [logoutHandler]
+    [logoutHandler, tokenData]
   );
 
   React.useEffect(() => {
     setExpirationTimer(tokenData?.tokenExpirationDate as Date);
   }, [tokenData, setExpirationTimer]);
 
+  const generateNewToken = React.useCallback(
+    (refreshToken: string) => {
+      resetToken(
+        process.env.REACT_APP_API_BASE_URL + 'auth/token/new',
+        {
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/json',
+            Authorization: `Bearer ${token?.refreshToken}`
+          }
+        },
+        (responseData: Token) => {
+          console.log(responseData);
+        }
+      );
+    },
+    [resetToken, token]
+  );
+
+  const synchronizeUser = React.useCallback((responseData: Employee) => {
+    const { firstName, lastName, email } = responseData;
+    const user = new User(
+      Number(userId),
+      firstName,
+      lastName,
+      email,
+      tokenData?.token as Token,
+      tokenData?.tokenExpirationDate as Date
+    );
+    setUser(user);
+  }, [tokenData, userId]);
+
   const contextValue: AuthContextType = {
     token: token,
     isAuthenticated: !!token,
+    userId: userId,
     user: user,
+    isOnboarded: !!(user?.firstName && user?.lastName),
     login: loginHandler,
-    logout: logoutHandler
+    logout: logoutHandler,
+    synchronizeUser
   };
 
   return (

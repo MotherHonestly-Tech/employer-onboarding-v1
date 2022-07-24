@@ -1,6 +1,7 @@
 import React from 'react';
 
 import Typography from '@mui/material/Typography';
+import CircularProgress from '@mui/material/CircularProgress';
 import { styled } from '@mui/system';
 
 const Overlay = styled('div')(
@@ -45,6 +46,16 @@ const LoaderStyled = styled('div')(
 const LoadingIndicator = () => {
   return (
     <React.Fragment>
+      {/* <CircularProgress
+        color="primary"
+        size={25}
+        thickness={4.2}
+        aria-describedby="loading"
+        sx={{
+          opacity: 0.5,
+          mr: 1.5
+        }}
+      /> */}
       <LoaderStyled />
       <Typography>Loading...</Typography>
     </React.Fragment>

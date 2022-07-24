@@ -1,5 +1,6 @@
 import React from 'react';
-import { Switch, Route } from 'react-router-dom';
+import { Switch, Route, useRouteMatch, Redirect } from 'react-router-dom';
+import Startup from '../components/Dashboard/Startup';
 
 import Layout from '../components/Layout/Layout';
 import Coaching from '../pages/Dashboard/Coaching';
@@ -7,28 +8,49 @@ import Dashboard from '../pages/Dashboard/Dashboard';
 import Merchants from '../pages/Dashboard/Merchants';
 import Resources from '../pages/Dashboard/Resources';
 import Wallet from '../pages/Dashboard/Wallet';
+import AuthContext from '../store/context/auth-context';
 
 const DashboardNavigator = () => {
+  const authCtx = React.useContext(AuthContext);
+  const { path } = useRouteMatch();
+
+  if (!authCtx.user?.firstName && !authCtx.user?.lastName) {
+    return <Startup />;
+  }
+
+  if (!authCtx.isOnboarded) {
+    return (
+      <Redirect
+        to={{
+          pathname: '/onboarding',
+          state: { from: { pathname: '/dashboard' } }
+        }}
+      />
+    );
+  }
+
   return (
-    <Layout>
-      <Switch>
-        <Route path="/organization/dashboard" exact>
-          <Dashboard />
-        </Route>
-        <Route path="/organization/wallet" exact>
-          <Wallet />
-        </Route>
-        <Route path="/organization/merchants" exact>
-          <Merchants />
-        </Route>
-        <Route path="/organization/resources" exact>
-          <Resources />
-        </Route>
-        <Route path="/organization/coaching" exact>
-          <Coaching />
-        </Route>
-      </Switch>
-    </Layout>
+    <React.Fragment>
+      <Layout>
+        <Switch>
+          <Route path={`${path}/dashboard`} exact>
+            <Dashboard />
+          </Route>
+          <Route path={`${path}/wallet`} exact>
+            <Wallet />
+          </Route>
+          <Route path={`${path}/merchants`} exact>
+            <Merchants />
+          </Route>
+          <Route path={`${path}/resources`} exact>
+            <Resources />
+          </Route>
+          <Route path={`${path}/coaching`} exact>
+            <Coaching />
+          </Route>
+        </Switch>
+      </Layout>
+    </React.Fragment>
   );
 };
 

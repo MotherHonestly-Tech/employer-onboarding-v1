@@ -2,15 +2,16 @@ import React from 'react';
 
 import Button from '@mui/material/Button';
 
-import LoadingIndicator from '../../components/UI/LoadingIndicator';
+import LoadingIndicator from '../UI/LoadingIndicator';
 import { FnComponent } from '../../models/component.model';
 
 type Props = {
-  disabled?: boolean;
   sx: object;
+  disabled?: boolean;
   variant?: 'text' | 'outlined' | 'contained' | undefined;
   type?: 'button' | 'submit' | 'reset' | undefined;
   loading?: boolean;
+  fullWidth?: boolean;
   onClick?: () => void;
 };
 
@@ -21,6 +22,7 @@ const MHButton: FnComponent<Props> = ({
   type,
   loading,
   disabled,
+  fullWidth,
   onClick
 }) => {
   const buttonClickHandler = () => {
@@ -37,10 +39,11 @@ const MHButton: FnComponent<Props> = ({
         ...sx
       }}
       size="large"
-      disableElevation
       disabled={loading || disabled}
       onClick={buttonClickHandler}
-      fullWidth>
+      fullWidth={fullWidth}
+      disableElevation
+      >
       {loading ? <LoadingIndicator /> : children}
     </Button>
   );

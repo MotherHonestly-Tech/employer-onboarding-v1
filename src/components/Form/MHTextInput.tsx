@@ -27,11 +27,14 @@ const StyledInputRoot = styled('div')(
     border: 1px solid #EEEEEE;
     align-items: center;
     justify-content: center;
-    margin-bottom: 8px;
     transition: all 0.4s ease-in;
 
     .Mui-focused > &.MuiInput-root.MuiInput-formControl {
       border: 1px solid ${grey[500]};
+    }
+
+    &.MuiInput-root.Mui-focused {
+      border: 1px solid ${grey[300]};
     }
 
     &:hover {
@@ -54,33 +57,23 @@ const StyledInputElement = styled('input')`
   outline: 0;
 `;
 
-const MHTextInput = React.forwardRef((props: InputUnstyledProps, ref) => {
+const MHTextInput = React.forwardRef((props: InputUnstyledProps, ref: React.ForwardedRef<HTMLDivElement>) => {
   const { components, ...others } = props;
-  const inputRef = React.useRef<HTMLInputElement>(null);
-  const formControlContext = useFormControlUnstyledContext();
 
   React.useEffect(() => {
     // console.log(inputRef);
   }, []);
 
-  React.useImperativeHandle(ref, () => ({
-    inputEl: inputRef.current as HTMLInputElement
-  }));
-
-  if (formControlContext === undefined) {
-    return null;
-  }
-
-  const { onChange, onFocus, onBlur } = formControlContext;
+  // const { onChange, onFocus, onBlur } = formControlContext;
 
   const inputChangeHandler = (event: React.ChangeEvent<HTMLInputElement>) => {
     props.onChange && props.onChange(event);
-    onChange && onChange(event);
+    // onChange && onChange(event);
   };
 
   const inputBlurHandler = (event: React.FocusEvent<HTMLInputElement>) => {
     props.onBlur && props.onBlur(event);
-    onBlur && onBlur();
+    // onBlur && onBlur();
   }
 
   return (
@@ -93,8 +86,7 @@ const MHTextInput = React.forwardRef((props: InputUnstyledProps, ref) => {
         }}
         onChange={inputChangeHandler}
         onBlur={inputBlurHandler}
-        onFocus={onFocus}
-        ref={inputRef}
+        ref={ref}
         {...others}
       />
     </React.Fragment>

@@ -4,7 +4,7 @@ import Box from '@mui/material/Box';
 
 import { FnComponent } from '../../models/component.model';
 
-const DashedLogo: FnComponent<{ sx: object }> = ({ sx, children }) => {
+const DashedIcon: FnComponent<{ sx: object }> = ({ sx, children }) => {
   return (
     <Box
       component="div"
@@ -28,4 +28,4 @@ const DashedLogo: FnComponent<{ sx: object }> = ({ sx, children }) => {
   );
 };
 
-export default DashedLogo;
+export default DashedIcon;

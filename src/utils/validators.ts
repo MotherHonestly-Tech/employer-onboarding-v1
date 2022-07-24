@@ -14,15 +14,15 @@ export const matchingFields = (value: string) => (matchingValue: string) => {
 };
 
 export const required = (value: string) => {
-  return value !== undefined && value.trim().length === 0;
+  return value !== undefined && value.trim().length !== 0;
 };
 
 export const min = (min: number) => (value: string) => {
-  return +value < min;
+  return +value >= min;
 };
 
 export const max = (max: number) => (value: string) => {
-  return +value > max;
+  return +value <= max;
 };
 
 export const minLength = (minLength: number) => (value: string) => {

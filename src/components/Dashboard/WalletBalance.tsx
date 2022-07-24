@@ -9,8 +9,8 @@ import { styled } from '@mui/material/styles';
 
 import { ReactComponent as ArrowUpIcon } from '../../static/svg/arrow-up.svg';
 import { ReactComponent as ArrowDownIcon } from '../../static/svg/arrow-down.svg';
-import DashedLogo from '../../theme/icons/DashedLogo';
 import { ReactComponent as CashIcon } from '../../static/svg/cash.svg';
+import DashedIcon from '../../theme/icons/DashedIcon';
 
 const BackgroundOverlay = styled((props) => (
   <Box
@@ -54,24 +54,25 @@ const WalletBalance = () => {
     <Zoom in>
       <Box
         bgcolor={'#F4EE46'}
-        px={0}
-        pt={5}
-        pb={2.5}
-        borderRadius={(theme) => theme.shape.borderRadius}
+        borderRadius={(theme) => (theme.shape.borderRadius as number) - 2}
         position="relative"
         overflow={'hidden'}
-        zIndex={1}>
+        zIndex={1}
+        height="100%"
+        display="flex"
+        justifyContent={'center'}
+        flexDirection="column">
         <BackgroundOverlay />
 
         <Box position="relative">
-          <DashedLogo
+          <DashedIcon
             sx={{
               position: 'absolute',
               left: '10%',
               top: -5
             }}>
             <CashIcon />
-          </DashedLogo>
+          </DashedIcon>
 
           <Typography
             align="center"
@@ -107,7 +108,7 @@ const WalletBalance = () => {
           </Typography>
         </Box>
 
-        <Grid container direction="row" px={2} mt={1}>
+        <Grid container direction="row" px={2} mt={3}>
           <Grid item xs zeroMinWidth>
             <Stack direction="row" alignItems="center" spacing={0}>
               <ArrowUpIcon />
