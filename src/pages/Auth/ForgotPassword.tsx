@@ -5,7 +5,7 @@ import Paper from '@mui/material/Paper';
 import Typography from '@mui/material/Typography';
 import Alert from '@mui/material/Alert';
 
-import MHButton from '../../components/Form/MHButton';
+import MHButton from '../../components/Button/MHButton';
 import MHFormControl from '../../components/Form/MHFormControl';
 import InputAdornment from '../../components/Form/InputAdornment';
 import useInput from '../../hooks/use-input';

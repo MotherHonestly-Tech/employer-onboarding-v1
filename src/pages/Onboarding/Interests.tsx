@@ -8,7 +8,7 @@ import Box from '@mui/material/Box';
 import Typography from '@mui/material/Typography';
 
 import MHInterestCheckbox from '../../components/Form/MHInterestCheckbox';
-import MHButton from '../../components/Form/MHButton';
+import MHButton from '../../components/Button/MHButton';
 
 import MHLogoIcon from '../../theme/icons/MHLogo';
 import { theme } from '../../theme/mui/dashboard.theme';
@@ -71,7 +71,7 @@ const Interests = () => {
               <MHInterestCheckbox
                 fill="#B5B4D6"
                 label="Career"
-                stroke="#FFFFFF"
+                stroke={theme.palette.common.white}
               />
               <MHInterestCheckbox
                 fill="#F7DAA0"
@@ -86,7 +86,7 @@ const Interests = () => {
               <MHInterestCheckbox
                 fill="#B27771"
                 label="Postpartum"
-                stroke="#FFFFFF"
+                stroke={theme.palette.common.white}
               />
               <MHInterestCheckbox
                 fill="#F7DAA0"

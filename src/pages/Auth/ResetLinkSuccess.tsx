@@ -4,7 +4,7 @@ import Box from '@mui/material/Box';
 import Paper from '@mui/material/Paper';
 import Typography from '@mui/material/Typography';
 
-import MHButton from '../../components/Form/MHButton';
+import MHButton from '../../components/Button/MHButton';
 
 import RoundedLogoIcon from '../../theme/icons/RoundedLogo';
 import { ReactComponent as MailIcon } from '../../static/svg/mail.svg';

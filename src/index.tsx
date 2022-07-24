@@ -14,15 +14,15 @@ const root = ReactDOM.createRoot(
   document.getElementById('root') as HTMLElement
 );
 root.render(
-  <AuthContextProvider>
-    <ThemeProvider theme={theme}>
-      <BrowserRouter>
+  <BrowserRouter>
+    <AuthContextProvider>
+      <ThemeProvider theme={theme}>
         <React.StrictMode>
           <App />
         </React.StrictMode>
-      </BrowserRouter>
-    </ThemeProvider>
-  </AuthContextProvider>
+      </ThemeProvider>
+    </AuthContextProvider>
+  </BrowserRouter>
 );
 
 // If you want to start measuring performance in your app, pass a function

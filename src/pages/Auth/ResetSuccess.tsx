@@ -6,7 +6,7 @@ import Typography from '@mui/material/Typography';
 import MuiLink from '@mui/material/Link';
 import Stack from '@mui/material/Stack';
 
-import MHButton from '../../components/Form/MHButton';
+import MHButton from '../../components/Button/MHButton';
 
 import { ReactComponent as CheckmarkIcon } from '../../static/svg/check-mark-rounded.svg';
 import { ReactComponent as ArrowLeftIcon } from '../../static/svg/arrow-left.svg';

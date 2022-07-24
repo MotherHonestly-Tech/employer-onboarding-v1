@@ -7,13 +7,16 @@ import Grid from '@mui/material/Grid';
 import WalletBalance from '../../components/Dashboard/WalletBalance';
 import Consultant from '../../components/Dashboard/Consultant';
 import RecentTransactions from '../../components/Dashboard/RecentTransactions';
+import AuthContext from '../../store/context/auth-context';
 
 const Dashboard = () => {
+  const authCtx = React.useContext(AuthContext);
+
   return (
     <React.Fragment>
       <Box mb={4}>
         <Typography variant="h2" my={1} gutterBottom>
-          Welcome Damian!
+          Welcome {authCtx.user?.firstName}!
         </Typography>
 
         <Typography variant="body1" gutterBottom>
@@ -22,11 +25,15 @@ const Dashboard = () => {
         </Typography>
       </Box>
 
-      <Grid container spacing={2}>
-        <Grid item xs={4} lg={4.5}>
+      <Grid
+        container
+        columnSpacing={2}
+        direction="row"
+        alignItems="stretch">
+        <Grid item xs={4} lg={5}>
           <WalletBalance />
         </Grid>
-        <Grid item xs={8} lg={7.5}>
+        <Grid item xs={8} lg={7}>
           <RecentTransactions />
         </Grid>
       </Grid>

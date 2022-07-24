@@ -2,7 +2,7 @@ import React from 'react';
 
 import Button from '@mui/material/Button';
 
-import LoadingIndicator from '../../components/UI/LoadingIndicator';
+import LoadingIndicator from '../UI/LoadingIndicator';
 import { FnComponent } from '../../models/component.model';
 
 type Props = {

@@ -5,15 +5,15 @@ import MuiAppBar, { AppBarProps as MuiAppBarProps } from '@mui/material/AppBar';
 import Toolbar from '@mui/material/Toolbar';
 import Stack from '@mui/material/Stack';
 import Typography from '@mui/material/Typography';
-import Button from '@mui/material/Button';
 import Avatar from '@mui/material/Avatar';
 import { styled } from '@mui/material/styles';
 
 import SearchField from '../Form/SearchField';
 import MHPrimaryLogo from '../../theme/icons/MHPrimaryLogo';
-import IconButtonUnstyled from '../Form/IconButtonUnstyled';
+import IconButtonUnstyled from '../Button/IconButtonUnstyled';
 import { ReactComponent as BellIcon } from '../../static/svg/notification-bell.svg';
 import { ReactComponent as CaretDownIcon } from '../../static/svg/caret-down.svg';
+import AuthContext from '../../store/context/auth-context';
 
 interface AppBarProps extends MuiAppBarProps {
   open?: boolean;
@@ -36,6 +36,8 @@ const AppBarStyled = styled(MuiAppBar, {
 }));
 
 const AppBar = () => {
+  const authCtx = React.useContext(AuthContext);
+
   return (
     <Box sx={{ flexGrow: 1 }}>
       <AppBarStyled position="fixed" open={true}>
@@ -55,11 +57,12 @@ const AppBar = () => {
                   alt="Remy Sharp"
                   src="https://res.cloudinary.com/mother-honestly/image/upload/v1657976885/christina-wocintechchat-com-0Zx1bDv5BNY-unsplash_dxhylh.png"
                   variant="rounded"
-                  sx={{
-               
-                  }}
+                  sx={{}}
                 />
-                <Typography color="primary">Terry Parker</Typography>
+                <Typography color="primary">
+                  {authCtx.user?.firstName}&nbsp;
+                  {authCtx.user?.lastName}
+                </Typography>
 
                 <CaretDownIcon />
               </Stack>

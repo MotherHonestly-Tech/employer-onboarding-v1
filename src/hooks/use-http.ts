@@ -10,7 +10,10 @@ const useHttp = () => {
     async (
       endpoint: string,
       requestConfig: RequestInit,
-      responseHandlerFn: Function
+      responseHandlerFn: Function,
+      config?: {
+        errorMessage: string
+      }
     ) => {
       setLoading(true);
       setError(null);
@@ -22,9 +25,9 @@ const useHttp = () => {
           body: requestConfig.body || null
         });
 
-        if (!response.ok) {
-          throw new Error('Response failed!');
-        }
+        // if (!response.ok) {
+        //   throw new Error('Response failed!');
+        // }
 
         const responseData = await response.json();
 
@@ -34,7 +37,7 @@ const useHttp = () => {
 
         responseHandlerFn(responseData);
       } catch (error: any) {
-        setError(error.message || 'Something went wrong');
+        setError(config?.errorMessage || error.message || 'Something went wrong');
       }
 
       setLoading(false);

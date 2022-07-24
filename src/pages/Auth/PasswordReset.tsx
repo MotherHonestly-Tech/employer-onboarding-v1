@@ -6,13 +6,14 @@ import Box from '@mui/material/Box';
 import Typography from '@mui/material/Typography';
 import Alert from '@mui/material/Alert';
 
-import MHButton from '../../components/Form/MHButton';
+import MHButton from '../../components/Button/MHButton';
 import MHFormControl from '../../components/Form/MHFormControl';
 import RoundedLogoIcon from '../../theme/icons/RoundedLogo';
 import useInput from '../../hooks/use-input';
 import useHttp from '../../hooks/use-http';
 
 import { ReactComponent as KeyIcon } from '../../static/svg/key.svg';
+import { ReactComponent as InvalidLinkIcon } from '../../static/svg/share_link_re_54rx.svg';
 import { FnComponent } from '../../models/component.model';
 import { BGImage } from '../../models/background-image.model';
 import * as validators from '../../utils/validators';
@@ -75,18 +76,19 @@ const PasswordReset: FnComponent<{
       imageAlt: 'Lex Lvrs'
     });
 
-    activateEmp(
-      process.env.REACT_APP_API_BASE_URL + 'employee/dashboard/activate',
-      {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
-          Authorization: `Bearer ${token}`
+    if (token)
+      activateEmp(
+        process.env.REACT_APP_API_BASE_URL + 'employee/dashboard/activate',
+        {
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/json',
+            Authorization: `Bearer ${token}`
+          },
+          body: JSON.stringify({})
         },
-        body: JSON.stringify({})
-      },
-      (data: any) => {}
-    );
+        (data: any) => {}
+      );
   }, [onRouteChange, activateEmp, token]);
 
   const preventDefault = (event: React.SyntheticEvent) =>
@@ -112,7 +114,7 @@ const PasswordReset: FnComponent<{
         })
       },
       (data: any) => {
-        history.push('/password-reset/success');
+        history.push('/reset-password/jdd/success');
       }
     );
   };

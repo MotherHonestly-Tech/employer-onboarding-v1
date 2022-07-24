@@ -3,9 +3,9 @@ import React from 'react';
 import Box from '@mui/material/Box';
 
 import MHTextInput from '../Form/MHTextInput';
-import MHButton from './MHButton';
+import MHButton from '../Button/MHButton';
 import InputAdornment from './InputAdornment';
-import IconButtonUnstyled from './IconButtonUnstyled';
+import IconButtonUnstyled from '../Button/IconButtonUnstyled';
 import useInput from '../../hooks/use-input';
 
 import { ReactComponent as ArrowRightIcon } from '../../static/svg/arrow-right-thick.svg';

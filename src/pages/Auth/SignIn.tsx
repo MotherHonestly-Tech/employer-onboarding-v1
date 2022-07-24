@@ -8,10 +8,11 @@ import Typography from '@mui/material/Typography';
 import Alert from '@mui/material/Alert';
 
 import MHFormControl from '../../components/Form/MHFormControl';
-import MHButton from '../../components/Form/MHButton';
+import MHButton from '../../components/Button/MHButton';
 import InputAdornment from '../../components/Form/InputAdornment';
-import IconButton from '../../components/Form/IconButtonUnstyled';
+import IconButton from '../../components/Button/IconButtonUnstyled';
 import useHttp from '../../hooks/use-http';
+import useTitle from '../../hooks/use-title';
 
 import { ReactComponent as MailIcon } from '../../static/svg/mail.svg';
 import { ReactComponent as LockIcon } from '../../static/svg/lock.svg';
@@ -23,11 +24,12 @@ import { theme } from '../../theme/mui/dashboard.theme';
 import * as formReducer from '../../store/reducers/form';
 import * as validators from '../../utils/validators';
 import AuthContext from '../../store/context/auth-context';
-import useTitle from '../../hooks/use-title';
+import { HttpResponse } from '../../models/api.interface';
 
-const SignIn: FnComponent<{ onRouteChange: (image: BGImage) => void, title: string }> = (
-  props
-) => {
+const SignIn: FnComponent<{
+  onRouteChange: (image: BGImage) => void;
+  title: string;
+}> = (props) => {
   const [showPassword, setShowPassword] = React.useState<boolean>(false);
   const { onRouteChange } = props;
   const history = useHistory();
@@ -65,7 +67,7 @@ const SignIn: FnComponent<{ onRouteChange: (image: BGImage) => void, title: stri
   });
 
   React.useEffect(() => {
-    console.log(process.env)
+    // console.log(process.env)
     onRouteChange({
       imageSrc:
         'https://res.cloudinary.com/mother-honestly/image/upload/v1657835660/juliane-liebermann-O-RKu3Aqnsw-unsplash_1_zv7sov.png',
@@ -97,10 +99,11 @@ const SignIn: FnComponent<{ onRouteChange: (image: BGImage) => void, title: stri
           password: formState.password.value
         })
       },
-      (data: any) => {
-        console.log(data);
-        authCtx.login(data.token);
-        history.push('/organization/onboarding');
+      (response: HttpResponse<any>) => {
+        console.log(response.data);
+        authCtx.login(response.data.token, response.data.uuid);
+        
+        history.push('/organization/dashboard');
       }
     );
   };
@@ -158,7 +161,7 @@ const SignIn: FnComponent<{ onRouteChange: (image: BGImage) => void, title: stri
               sx={{
                 mb: 3
               }}>
-              Invalid email or password
+              {error}
             </Alert>
           )}
 
@@ -212,7 +215,7 @@ const SignIn: FnComponent<{ onRouteChange: (image: BGImage) => void, title: stri
               }}
               mb={3}
               onClick={preventDefault}>
-              <MuiLink component={Link} href="" to="/forgot-password">
+              <MuiLink component={Link} href="" to="/auth/forgot-password">
                 Forgot password?
               </MuiLink>
             </Box>

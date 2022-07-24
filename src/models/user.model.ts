@@ -21,3 +21,11 @@ export interface Token {
   accessToken: string;
   refreshToken: string;
 }
+
+export type Employee = {
+  uuid: number;
+  firstName: string;
+  lastName: string;
+  email: string;
+  role: string;
+}

@@ -1,13 +1,13 @@
 import React from 'react';
-import { Route, Switch } from 'react-router-dom';
+import { Redirect, Route, Switch } from 'react-router-dom';
 
 import AuthNavigator from './AuthNavigator';
-import Interests from '../pages/Onboarding/Interests';
-
-import { FnComponent } from '../models/component.model';
 import DashboardNavigator from './DashboardNavigator';
-import AuthContext from '../store/context/auth-context';
 import NotFound from '../pages/Not-Found/404';
+
+import AuthContext from '../store/context/auth-context';
+import { FnComponent } from '../models/component.model';
+import OnboardingNavigator from './OnboardingNavigator';
 
 const AppNavigator: FnComponent<{}> = (props) => {
   const authCtx = React.useContext(AuthContext);
@@ -15,19 +15,55 @@ const AppNavigator: FnComponent<{}> = (props) => {
   return (
     <React.Fragment>
       <Switch>
-        <Route path="/organization/onboarding" component={Interests} />
+        <Route
+          path="/"
+          render={(routeProps) =>
+            authCtx.isAuthenticated ? (
+              <Redirect
+                to={{
+                  pathname: '/organization/dashboard',
+                  state: { from: routeProps.location }
+                }}
+              />
+            ) : (
+              <Redirect
+                to={{
+                  pathname: '/auth',
+                  state: { from: routeProps.location }
+                }}
+              />
+            )
+          }
+          exact
+        />
 
-        <Route path="/organization">
-          <DashboardNavigator />
-        </Route>
-
-        <Route path="/404" exact>
-          <NotFound />
-        </Route>
-
-        <Route path="/">
+        <Route path="/auth">
           <AuthNavigator />
         </Route>
+
+        {/* <Route path={`/onboarding`} component={OnboardingNavigator} exact /> */}
+        <Route path="/onboarding">
+          {authCtx.isAuthenticated ? (
+            <OnboardingNavigator />
+          ) : (
+            <Redirect to="/auth" />
+          )}
+        </Route>
+
+        <Route path="/organization">
+          {authCtx.isAuthenticated ? (
+            <DashboardNavigator />
+          ) : (
+            <Redirect to="/auth" />
+          )}
+        </Route>
+
+        <Route path="*">
+          <NotFound />
+        </Route>
+        {/* <Route path="*">
+          <Redirect to="/404" />
+        </Route> */}
       </Switch>
     </React.Fragment>
   );

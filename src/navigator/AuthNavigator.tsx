@@ -1,5 +1,5 @@
 import React from 'react';
-import { Redirect, Route, Switch } from 'react-router-dom';
+import { Redirect, Route, Switch, useRouteMatch } from 'react-router-dom';
 
 import Box from '@mui/material/Box';
 import Grid from '@mui/material/Grid';
@@ -19,6 +19,8 @@ import { BGImage } from '../models/background-image.model';
 const AuthNavigator: FnComponent = () => {
   const [image, setImage] = React.useState<BGImage>({} as BGImage);
   const backgroundColor = React.useRef(theme.palette.background.default);
+
+  const { path } = useRouteMatch();
 
   const changeImageHandler = React.useCallback(
     ({ imageSrc, imageAlt, background }: BGImage) => {
@@ -61,24 +63,30 @@ const AuthNavigator: FnComponent = () => {
               alignItems="center"
               sx={{ minHeight: '100vh', px: 6 }}>
               <Switch>
-                <Route path="/" exact>
-                  <SignIn onRouteChange={changeImageHandler} title="Sign in to your account" />
+                <Route path={`${path}/sign-in`}>
+                  <SignIn
+                    onRouteChange={changeImageHandler}
+                    title="Sign in to your account"
+                  />
                 </Route>
-                <Route path="/forgot-password" exact>
+                <Route path={`${path}/forgot-password`} exact>
                   <ForgotPassword onRouteChange={changeImageHandler} />
                 </Route>
-                <Route path="/forgot-password/user-email" exact>
+                <Route path={`${path}/forgot-password/reset-link`} exact>
                   <ResetLinkSuccess onRouteChange={changeImageHandler} />
                 </Route>
-                <Route path="/password-reset" exact>
+                <Route path={`${path}/reset-password`} exact>
                   <PasswordReset onRouteChange={changeImageHandler} />
                 </Route>
-                <Route path="/password-reset/success" exact>
+                <Route path={`${path}/reset-password/jdd/success`} exact>
                   <ResetSuccess onRouteChange={changeImageHandler} />
                 </Route>
 
+                <Route path={`${path}`} exact>
+                  <Redirect to={`${path}/sign-in`} />
+                </Route>
                 <Route path="*">
-                  <Redirect to="/" />
+                  <Redirect to={`${path}/sign-in`} />
                 </Route>
               </Switch>
             </Stack>
