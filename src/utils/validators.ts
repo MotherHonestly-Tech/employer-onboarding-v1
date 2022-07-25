@@ -32,3 +32,7 @@ export const minLength = (minLength: number) => (value: string) => {
 export const maxLength = (maxLength: number) => (value: string) => {
   return value.length <= maxLength;
 };
+
+export function text(value: string) {
+    throw new Error("Function not implemented.");
+}

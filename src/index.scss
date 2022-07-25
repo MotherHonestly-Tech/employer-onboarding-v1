@@ -12,6 +12,13 @@ $primary-color: #28404A;
   -moz-osx-font-smoothing: grayscale;
 }
 
+#customized-dialog-title{
+  color: #28404A;
+  text-align: center;
+  font-size: 23px;
+  font-family: 'Gilroy-Medium', sans-serif;
+}
+
 code {
   font-family: source-code-pro, Menlo, Monaco, Consolas, 'Courier New',
     monospace;

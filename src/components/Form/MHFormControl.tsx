@@ -1,13 +1,13 @@
-import * as React from 'react';
+import * as React from "react";
 
 import FormControlUnstyled, {
   FormControlUnstyledState,
-  useFormControlUnstyledContext
-} from '@mui/base/FormControlUnstyled';
-import { styled } from '@mui/system';
-import clsx from 'clsx';
+  useFormControlUnstyledContext,
+} from "@mui/base/FormControlUnstyled";
+import { styled } from "@mui/system";
+import clsx from "clsx";
 
-import MHTextInput from './MHTextInput';
+import MHTextInput from "./MHTextInput";
 
 type InputProps = {
   id: string;
@@ -23,7 +23,7 @@ type InputProps = {
   onChange: (event: React.ChangeEvent<HTMLInputElement>) => void;
   onBlur?: (event: React.FocusEvent<HTMLInputElement>) => void;
   onFocus?: (event: React.FocusEvent<HTMLInputElement>) => void;
-  error?: string;
+  error?: string | boolean;
   disabled?: boolean;
   required?: boolean;
   fullWidth?: boolean;
@@ -40,7 +40,7 @@ type InputProps = {
 const Label = styled(
   ({
     children,
-    className
+    className,
   }: {
     children?: React.ReactNode;
     className?: string;
@@ -63,10 +63,8 @@ const Label = styled(
 
     return (
       <label
-        className={clsx(
-          className,
-          error || showRequiredError ? 'invalid' : ''
-        )}>
+        className={clsx(className, error || showRequiredError ? "invalid" : "")}
+      >
         {children}
         {/* {required ? ' *' : ''} */}
       </label>
@@ -97,11 +95,12 @@ const HelperText = styled((props: {}) => {
   return showRequiredError ? (
     <p
       {...props}
-      className={clsx('invalid')}
+      className={clsx("invalid")}
       style={{
-        color: 'red',
-        fontSize: '0.85rem'
-      }}>
+        color: "red",
+        fontSize: "0.85rem",
+      }}
+    >
       This field is required.
     </p>
   ) : null;
@@ -120,11 +119,12 @@ const ErrorTip = (props: { error: string }) => {
 
   return props.error && filled ? (
     <p
-      className={clsx('invalid')}
+      className={clsx("invalid")}
       style={{
-        color: 'red',
-        fontSize: '0.85rem'
-      }}>
+        color: "red",
+        fontSize: "0.85rem",
+      }}
+    >
       {props.error}
     </p>
   ) : null;
@@ -142,12 +142,18 @@ const MHFormControl = (props: InputProps) => {
     endAdornment,
     autoFocus,
     error,
+    rows,
     onChange,
-    onBlur
+    onBlur,
   } = props;
 
   return (
-    <FormControlUnstyled defaultValue="" value={value} required={required} className="mb-5">
+    <FormControlUnstyled
+      defaultValue=""
+      value={value}
+      required={required}
+      className="mb-5"
+    >
       <Label>{label}</Label>
       <MHTextInput
         id={id}
@@ -158,6 +164,7 @@ const MHFormControl = (props: InputProps) => {
         onChange={onChange}
         onBlur={onBlur}
         autoFocus={autoFocus}
+        rows={rows}
       />
       <HelperText />
       <ErrorTip error={error as string} />
