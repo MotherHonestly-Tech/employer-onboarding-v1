@@ -15,7 +15,6 @@ const DashboardNavigator = () => {
   const { path } = useRouteMatch();
 
   if (!authCtx.user) {
-    console.log(authCtx.user)
     return <Startup />;
   }
 

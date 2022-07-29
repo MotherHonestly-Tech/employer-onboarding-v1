@@ -66,7 +66,7 @@ const Onboarding = () => {
     setActiveStepIndex((prevIndex) => prevIndex - 1);
   };
 
-  const { userId, token, user } = authCtx;
+  const { userId, token, user, updateUserData } = authCtx;
   const { employee } = onboardingCtx;
 
   const empData = React.useMemo(() => employee, [employee]);
@@ -104,6 +104,10 @@ const Onboarding = () => {
         body: JSON.stringify(reqPayload)
       },
       (response: HttpResponse<any>) => {
+        updateUserData({
+          firstName: String(empData?.firstName),
+          lastName: String(empData?.lastName)
+        });
         history.push('/onboarding/interests');
       }
     );
