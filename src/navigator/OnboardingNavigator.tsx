@@ -11,7 +11,7 @@ const OnboardingNavigator = () => {
   const { path } = useRouteMatch();
   const authCtx = React.useContext(AuthContext);
 
-  if (!authCtx.user?.firstName && !authCtx.user?.lastName) {
+  if (!authCtx.user) {
     // console.log('authCtx.user', authCtx.user);
     return <Startup />;
   }

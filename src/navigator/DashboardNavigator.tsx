@@ -14,7 +14,8 @@ const DashboardNavigator = () => {
   const authCtx = React.useContext(AuthContext);
   const { path } = useRouteMatch();
 
-  if (!authCtx.user?.firstName && !authCtx.user?.lastName) {
+  if (!authCtx.user) {
+    console.log(authCtx.user)
     return <Startup />;
   }
 
