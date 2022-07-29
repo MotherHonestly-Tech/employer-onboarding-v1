@@ -17,7 +17,8 @@ const Startup = () => {
   const fetchUser = React.useCallback(async () => {
     await getUser(
       getURLWithQueryParams(
-        process.env.REACT_APP_API_BASE_URL + 'employee/dashboard/employee/token/uuid',
+        process.env.REACT_APP_API_BASE_URL +
+          'employee/dashboard/employee/token/uuid',
         {
           uuid: String(userId)
         }
