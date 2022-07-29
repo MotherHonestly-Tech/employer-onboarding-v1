@@ -24,6 +24,7 @@ type AuthContextType = {
   login: (token: Token, uuid: number) => void;
   logout: () => void;
   synchronizeUser: (emp: Employee) => void;
+  updateUserData: (updatedUser: { firstName: string, lastName: string }) => void;
 };
 
 const AuthContext = React.createContext<AuthContextType>({
@@ -34,7 +35,8 @@ const AuthContext = React.createContext<AuthContextType>({
   isOnboarded: false,
   login: (token: Token, uuid: number) => {},
   logout: () => {},
-  synchronizeUser: (emp: Employee) => {}
+  synchronizeUser: (emp: Employee) => {},
+  updateUserData: ({ firstName, lastName }) => {}
 });
 
 const computeExpirationInMilliSecs = (expirationTime: Date) => {
@@ -79,7 +81,6 @@ export const AuthContextProvider = ({
   const [token, setToken] = React.useState<Token | null>(initialToken);
   const [userId, setUserId] = React.useState<number | null>(initialUserId);
   const [user, setUser] = React.useState<User | null>(null);
-
 
   const { sendHttpRequest: logout } = useHttp();
   const { sendHttpRequest: resetToken } = useHttp();
@@ -156,18 +157,37 @@ export const AuthContextProvider = ({
     [resetToken, token]
   );
 
-  const synchronizeUser = React.useCallback((responseData: Employee) => {
-    const { firstName, lastName, employeeEmail } = responseData;
-    const user = new User(
-      Number(userId),
-      firstName,
-      lastName,
-      employeeEmail,
-      tokenData?.token as Token,
-      tokenData?.tokenExpirationDate as Date
-    );
-    setUser(user);
-  }, [tokenData, userId]);
+  const synchronizeUser = React.useCallback(
+    (responseData: Employee) => {
+      const { firstName, lastName, employeeEmail } = responseData;
+      const user = new User(
+        Number(userId),
+        firstName,
+        lastName,
+        employeeEmail,
+        tokenData?.token as Token,
+        tokenData?.tokenExpirationDate as Date
+      );
+      setUser(user);
+    },
+    [tokenData, userId]
+  );
+
+  const updateUserData = React.useCallback(
+    ({ firstName, lastName }: { firstName: string; lastName: string }) => {
+      const { email } = user as User;
+      const updatedUser = new User(
+        Number(userId),
+        firstName,
+        lastName,
+        email,
+        tokenData?.token as Token,
+        tokenData?.tokenExpirationDate as Date
+      );
+      setUser(updatedUser);
+    },
+    [tokenData, userId, user]
+  );
 
   const contextValue: AuthContextType = {
     token: token,
@@ -177,7 +197,8 @@ export const AuthContextProvider = ({
     isOnboarded: !!(user?.firstName && user?.lastName),
     login: loginHandler,
     logout: logoutHandler,
-    synchronizeUser
+    synchronizeUser,
+    updateUserData
   };
 
   return (
