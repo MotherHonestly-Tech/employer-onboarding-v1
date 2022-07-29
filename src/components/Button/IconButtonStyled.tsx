@@ -3,7 +3,7 @@ import React from 'react';
 import ButtonUnstyled from '@mui/base/ButtonUnstyled';
 import { styled } from '@mui/material/styles';
 
-const IconButtonUnstyled = styled(ButtonUnstyled)`
+const IconButtonStyled = styled(ButtonUnstyled)`
   display: inline-flex;
   align-items: center;
   justify-content: center;
@@ -20,4 +20,4 @@ const IconButtonUnstyled = styled(ButtonUnstyled)`
   }
 `;
 
-export default IconButtonUnstyled;
+export default IconButtonStyled;

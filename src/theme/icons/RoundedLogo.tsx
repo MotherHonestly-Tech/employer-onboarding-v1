@@ -12,13 +12,13 @@ const RoundedLogoIcon: FnComponent = (props) => {
         borderRadius: '50%',
         width: 45,
         height: 45,
-        backgroundColor: '#F1F1F1',
+        backgroundColor: (theme) => theme.palette.grey[600],
         border: 'none',
         display: 'flex',
         justifyContent: 'center',
         alignItems: 'center',
         overflow: 'hidden',
-        mx: 'auto',
+        mx: 'auto'
       }}>
       {props.children}
     </Box>

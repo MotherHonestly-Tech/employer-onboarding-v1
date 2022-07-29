@@ -58,18 +58,18 @@ const WalletBalance = () => {
         position="relative"
         overflow={'hidden'}
         zIndex={1}
+        py={2}
         height="100%"
         display="flex"
-        justifyContent={'center'}
         flexDirection="column">
         <BackgroundOverlay />
 
-        <Box position="relative">
+        <Box position="relative" flexGrow={1} display="flex" flexDirection={'column'} justifyContent="center">
           <DashedIcon
             sx={{
               position: 'absolute',
-              left: '10%',
-              top: -5
+              left: '15%',
+              top: 10
             }}>
             <CashIcon />
           </DashedIcon>
@@ -155,7 +155,7 @@ const WalletBalance = () => {
                 }}>
                 Total Payout{' '}
                 <Typography
-                component="span"
+                  component="span"
                   sx={{
                     display: 'inline',
                     font: 'inherit',

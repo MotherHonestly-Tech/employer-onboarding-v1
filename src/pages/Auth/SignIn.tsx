@@ -10,7 +10,7 @@ import Alert from '@mui/material/Alert';
 import MHFormControl from '../../components/Form/MHFormControl';
 import MHButton from '../../components/Button/MHButton';
 import InputAdornment from '../../components/Form/InputAdornment';
-import IconButton from '../../components/Button/IconButtonUnstyled';
+import IconButton from '../../components/Button/IconButtonStyled';
 import useHttp from '../../hooks/use-http';
 import useTitle from '../../hooks/use-title';
 
@@ -102,7 +102,7 @@ const SignIn: FnComponent<{
       (response: HttpResponse<any>) => {
         console.log(response.data);
         authCtx.login(response.data.token, response.data.uuid);
-        
+
         history.push('/organization/dashboard');
       }
     );
@@ -131,101 +131,97 @@ const SignIn: FnComponent<{
 
   return (
     <React.Fragment>
-      <Paper
-        elevation={0}
+      <Box
         sx={{
           px: 8,
-          py: 5,
           width: '100%',
           maxWidth: 'sm',
           boxShadow: 'none'
         }}>
-        <Box sx={{}}>
+        <Box
+          sx={{
+            my: 4
+          }}>
+          <Typography variant="h1" component="div" gutterBottom mb={1.5}>
+            Welcome back
+          </Typography>
+          <Typography variant="body1" component="div">
+            Welcome back! Please enter your details.
+          </Typography>
+          {/* <h1 className="my-4 leading-4 text-2xl">Welcome back</h1>
+            <p>Welcome back! Please enter your details.</p> */}
+        </Box>
+
+        {error && (
+          <Alert
+            severity="error"
+            sx={{
+              mb: 3
+            }}>
+            {error}
+          </Alert>
+        )}
+
+        {/* autoComplete="off"
+            noValidate */}
+        <Box component={'form'} onSubmit={signinHandler}>
+          <MHFormControl
+            id="email"
+            type="email"
+            label="Email address"
+            placeholder="Enter your email"
+            onChange={inputChangeHandler}
+            startAdornment={
+              <InputAdornment>
+                <MailIcon width="1rem" />
+              </InputAdornment>
+            }
+            required
+            autoFocus
+          />
+
+          <MHFormControl
+            id="password"
+            type={showPassword ? 'text' : 'password'}
+            label="Password"
+            placeholder="Password"
+            onChange={inputChangeHandler}
+            startAdornment={
+              <InputAdornment>
+                <LockIcon width="1.2rem" />
+              </InputAdornment>
+            }
+            endAdornment={
+              <InputAdornment>
+                <IconButton onClick={handleClickShowPassword}>
+                  {showPassword ? (
+                    <VisibilityOffIcon width="1rem" height="1rem" />
+                  ) : (
+                    <VisibilityIcon width="1rem" height="1rem" />
+                  )}
+                </IconButton>
+              </InputAdornment>
+            }
+            required
+          />
+
           <Box
             sx={{
-              my: 4
-            }}>
-            <Typography variant="h1" component="div" gutterBottom mb={1.5}>
-              Welcome back
-            </Typography>
-            <Typography variant="body1" component="div">
-              Welcome back! Please enter your details.
-            </Typography>
-            {/* <h1 className="my-4 leading-4 text-2xl">Welcome back</h1>
-            <p>Welcome back! Please enter your details.</p> */}
+              typography: 'body1',
+              textAlign: 'right'
+            }}
+            mb={3}
+            onClick={preventDefault}>
+            <MuiLink component={Link} href="" to="/auth/forgot-password">
+              Forgot password?
+            </MuiLink>
           </Box>
 
-          {error && (
-            <Alert
-              severity="error"
-              sx={{
-                mb: 3
-              }}>
-              {error}
-            </Alert>
-          )}
-
-          {/* autoComplete="off"
-            noValidate */}
-          <Box component={'form'} onSubmit={signinHandler}>
-            <MHFormControl
-              id="email"
-              type="email"
-              label="Email address"
-              placeholder="Enter your email"
-              onChange={inputChangeHandler}
-              startAdornment={
-                <InputAdornment>
-                  <MailIcon width="1rem" />
-                </InputAdornment>
-              }
-              required
-              autoFocus
-            />
-
-            <MHFormControl
-              id="password"
-              type={showPassword ? 'text' : 'password'}
-              label="Password"
-              placeholder="Password"
-              onChange={inputChangeHandler}
-              startAdornment={
-                <InputAdornment>
-                  <LockIcon width="1.2rem" />
-                </InputAdornment>
-              }
-              endAdornment={
-                <InputAdornment>
-                  <IconButton onClick={handleClickShowPassword}>
-                    {showPassword ? (
-                      <VisibilityOffIcon width="1rem" height="1rem" />
-                    ) : (
-                      <VisibilityIcon width="1rem" height="1rem" />
-                    )}
-                  </IconButton>
-                </InputAdornment>
-              }
-              required
-            />
-
-            <Box
-              sx={{
-                typography: 'body1',
-                textAlign: 'right'
-              }}
-              mb={3}
-              onClick={preventDefault}>
-              <MuiLink component={Link} href="" to="/auth/forgot-password">
-                Forgot password?
-              </MuiLink>
-            </Box>
-
-            <MHButton sx={{}} type="submit" loading={loading} fullWidth>
-              Sign in
-            </MHButton>
-          </Box>
+          <MHButton sx={{}} type="submit" loading={loading} fullWidth>
+            Sign in
+          </MHButton>
         </Box>
-      </Paper>
+      </Box>
     </React.Fragment>
   );
 };

@@ -1,5 +1,6 @@
 import { createTheme } from '@mui/material/styles';
 import { red, common } from '@mui/material/colors';
+import Button, { buttonClasses } from '@mui/material/Button';
 
 const primaryColor = '#28404A';
 
@@ -19,6 +20,11 @@ export const theme = createTheme({
     background: {
       default: '#F5F5F5',
       paper: common.white
+    },
+    grey: {
+      600: '#F1F1F1',
+      700: '#A9A9A9',
+      800: '#77633B'
     }
     // action: {
     //   active: primaryColor,
@@ -57,11 +63,24 @@ export const theme = createTheme({
             backgroundColor: '#F2EC2C',
             color: primaryColor
           },
-          transition: '0.32s ease-out'
+          transition: '0.32s ease-out',
+          ...({
+            [`&.${buttonClasses.outlined}:hover`]: {
+              backgroundColor: '#F1F1F1',
+              borderColor: '#F1F1F1'
+            }
+          }),
+          ...({
+            [`&.${buttonClasses.outlined}:active`]: {
+              backgroundColor: '#F1F1F1',
+              borderColor: '#F1F1F1'
+            }
+          })
         }
       },
       defaultProps: {
         // disableRipple: true
+        
       }
     },
     MuiPaper: {
@@ -138,7 +157,8 @@ export const theme = createTheme({
           opacity: 1
         }
       }
-    }
+    },
+    
     // MuiTable: {
     //   styleOverrides: {
     //     root: {

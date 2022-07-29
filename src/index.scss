@@ -2,7 +2,7 @@
 @import 'tailwindcss/components';
 @import 'tailwindcss/utilities';
 
-$primary-color: #28404A;
+$primary-color: #28404a;
 
 * {
   box-sizing: border-box;
@@ -44,28 +44,31 @@ h6 {
 // a, p, span, ul, li, label, input, textarea, button
 @font-face {
   font-family: 'Avenir-Book';
-  src: local("Avenir-Book"), url('./static/fonts/avenir/Avenir-Book.otf') format('opentype');
+  src: local('Avenir-Book'),
+    url('./static/fonts/avenir/Avenir-Book.otf') format('opentype');
 }
 
-// Gilroy Bold (used for headers) 
+// Gilroy Bold (used for headers)
 @font-face {
   font-family: 'Gilroy-Bold';
-  src: local("Gilroy-Bold"),  url('./static/fonts/gilroy/Gilroy-Bold.ttf') format('truetype');
+  src: local('Gilroy-Bold'),
+    url('./static/fonts/gilroy/Gilroy-Bold.ttf') format('truetype');
 }
 
 @font-face {
   font-family: Gilroy-Regular;
-  src: local("Gilroy-Regular"),  url('./static/fonts/gilroy/Gilroy-Regular.ttf') format('truetype');
+  src: local('Gilroy-Regular'),
+    url('./static/fonts/gilroy/Gilroy-Regular.ttf') format('truetype');
 }
 
 ::-moz-selection {
   color: $primary-color;
-  background:  #F4EE46;
+  background: #f4ee46;
 }
 
 ::selection {
   color: $primary-color;
-  background: #F4EE46;
+  background: #f4ee46;
 }
 
 a:link,
@@ -90,3 +93,19 @@ a:hover {
 a:active {
   text-decoration: underline;
 }
+
+// ::-webkit-scrollbar {
+//   width: 10px;
+//   border-radius: 15px;
+// }
+
+// ::-webkit-scrollbar-track {
+//   background-color: rgb(233, 232, 232);
+//   border-radius: 15px;
+// }
+
+// ::-webkit-scrollbar-thumb {
+//   background-color: #adafb3;
+//   width: 10px;
+//   border-radius: 15px;
+// }

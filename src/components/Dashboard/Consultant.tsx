@@ -35,7 +35,7 @@ const Consultant: FnComponent<{ imageSrc: string }> = ({ imageSrc }) => {
           <Typography
             variant="body1"
             component="h4"
-            color="#28404A"
+            color="primary"
             gutterBottom
             sx={{
               fontWeight: 500,
@@ -55,7 +55,7 @@ const Consultant: FnComponent<{ imageSrc: string }> = ({ imageSrc }) => {
           <Divider
             sx={{
               my: 1.5,
-              color: '#D3D3D3'
+              color: (theme) => theme.palette.grey[500]
             }}
           />
           <Typography

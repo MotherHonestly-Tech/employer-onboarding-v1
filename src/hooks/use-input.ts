@@ -8,11 +8,11 @@ const useInput = (validators: Validator[]) => {
   const [touched, setTouched] = React.useState(false);
   const [error, setError] = React.useState(false);
 
-  const onChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    setValue(e.target.value);
+  const onChange = (e: React.ChangeEvent<HTMLInputElement> | string) => {
+    setValue(typeof e === 'string' ? e : e.target.value);
   };
 
-  const onBlur = (e: React.FocusEvent<HTMLInputElement>) => {
+  const onBlur = () => {
     setTouched(true);
   };
 
@@ -21,7 +21,7 @@ const useInput = (validators: Validator[]) => {
       validator.validator(value)
     );
     const isValid = validatorsResults.reduce((acc, curr) => acc && curr, true);
-    setValid(isValid && touched);
+    setValid(isValid);
     setError(!isValid && touched);
   }, [value, touched, validators]);
 
