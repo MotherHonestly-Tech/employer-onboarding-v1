@@ -3,6 +3,7 @@ import React from 'react';
 import Box from '@mui/material/Box';
 import Paper from '@mui/material/Paper';
 import Typography from '@mui/material/Typography';
+import Link from '@mui/material/Link';
 
 import MHButton from '../../components/Button/MHButton';
 
@@ -45,9 +46,13 @@ const ResetLinkSuccess: FnComponent<{
             Check your email
           </Typography>
 
-          <Typography variant="body1" mt={2} mb={4} mx="auto" maxWidth={.8}>
+          <Typography variant="body1" mt={2} mb={4} mx="auto" maxWidth={0.8}>
             We sent a password reset link to{' '}
-            <span className="text-gray-200">{email}</span>
+            <Typography
+              component={'span'}
+              color={(theme) => theme.palette.grey[500]}>
+              {email}
+            </Typography>
           </Typography>
 
           {/* <h1 className="text-center my-4">Check your email</h1>
@@ -55,15 +60,16 @@ const ResetLinkSuccess: FnComponent<{
           <p className="mb-5">We sent a password reset link to{' '}
             <span className="text-gray-200">{email}</span></p> */}
 
-          <MHButton
-            sx={{
-              mb: 2
-            }}
-            fullWidth>
-            Open email app
-          </MHButton>
+          <MHButton sx={{}} fullWidth>Open email app</MHButton>
 
-          <p className="mb-5">Didn't recieve the email? Click to reset</p>
+          <Link
+            sx={{
+              display: 'block',
+              cursor: 'pointer',
+              my: 2
+            }}>
+            Didn't recieve the email? Click to resend
+          </Link>
         </Box>
       </Paper>
     </React.Fragment>

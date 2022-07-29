@@ -22,7 +22,7 @@ const DashboardNavigator = () => {
     return (
       <Redirect
         to={{
-          pathname: '/onboarding',
+          pathname: '/onboarding/employee',
           state: { from: { pathname: '/dashboard' } }
         }}
       />

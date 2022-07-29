@@ -11,7 +11,7 @@ import MHTextInput from './MHTextInput';
 
 type InputProps = {
   id: string;
-  label: string;
+  label?: string;
   startAdornment?: React.ReactNode;
   endAdornment?: React.ReactNode;
   placeholder: string;
@@ -21,7 +21,7 @@ type InputProps = {
   autoFocus?: boolean;
   dirty?: boolean;
   onChange: (event: React.ChangeEvent<HTMLInputElement>) => void;
-  onBlur?: (event: React.FocusEvent<HTMLInputElement>) => void;
+  onBlur?: () => void;
   onFocus?: (event: React.FocusEvent<HTMLInputElement>) => void;
   error?: string;
   disabled?: boolean;
@@ -66,7 +66,10 @@ const Label = styled(
         className={clsx(
           className,
           error || showRequiredError ? 'invalid' : ''
-        )}>
+        )}
+        style={{
+          color: '#A9A9A9'
+        }}>
         {children}
         {/* {required ? ' *' : ''} */}
       </label>
@@ -147,8 +150,10 @@ const MHFormControl = (props: InputProps) => {
   } = props;
 
   return (
-    <FormControlUnstyled defaultValue="" value={value} required={required} className="mb-5">
-      <Label>{label}</Label>
+    <FormControlUnstyled defaultValue="" value={value} required={required} style={{
+      marginBottom: '1.25rem'
+    }}>
+      {label && <Label>{label}</Label>}
       <MHTextInput
         id={id}
         startAdornment={startAdornment}
@@ -158,7 +163,9 @@ const MHFormControl = (props: InputProps) => {
         onChange={onChange}
         onBlur={onBlur}
         autoFocus={autoFocus}
-        className="mb-2"
+        style={{
+          marginBottom: '0.5rem'
+        }}
       />
       <HelperText />
       <ErrorTip error={error as string} />

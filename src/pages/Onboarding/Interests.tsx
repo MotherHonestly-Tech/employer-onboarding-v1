@@ -1,5 +1,5 @@
 import React from 'react';
-import { NavLink } from 'react-router-dom';
+import { useHistory } from 'react-router-dom';
 
 import Container from '@mui/material/Container';
 import Grid from '@mui/material/Grid';
@@ -14,6 +14,8 @@ import MHLogoIcon from '../../theme/icons/MHLogo';
 import { theme } from '../../theme/mui/dashboard.theme';
 
 const Interests = () => {
+  const history = useHistory();
+
   return (
     <Container
       maxWidth="md"
@@ -38,14 +40,14 @@ const Interests = () => {
             justifyContent="center"
             alignItems="center"
             sx={{ mt: 6 }}>
-            <Box>
+            <div>
               <Typography variant="h1" my={1} align="center" gutterBottom>
                 Let's learn about your interests
               </Typography>
               <Typography variant="subtitle2" align="center" gutterBottom>
                 Your Dashboard will be populated by your interest
               </Typography>
-            </Box>
+            </div>
 
             <Stack
               direction="row"
@@ -125,7 +127,8 @@ const Interests = () => {
                   textAlign: 'center',
                   px: 12
                 }}
-                variant="outlined">
+                variant="outlined"
+                onClick={() => history.push('/organization/dashboard')}>
                 Skip
               </MHButton>
 
@@ -133,7 +136,8 @@ const Interests = () => {
                 sx={{
                   textAlign: 'center',
                   px: 12
-                }}>
+                }}
+                onClick={() => history.push('/organization/dashboard')}>
                 {'Finish'}
               </MHButton>
             </Stack>

@@ -1,21 +1,29 @@
 import React from 'react';
 
-import Button from '@mui/material/Button';
+import Button, { buttonClasses, ButtonProps } from '@mui/material/Button';
+import { styled } from '@mui/system';
 
 import LoadingIndicator from '../UI/LoadingIndicator';
 import { FnComponent } from '../../models/component.model';
 
-type Props = {
-  sx: object;
+type MHButtonProps = {
   disabled?: boolean;
   variant?: 'text' | 'outlined' | 'contained' | undefined;
   type?: 'button' | 'submit' | 'reset' | undefined;
   loading?: boolean;
   fullWidth?: boolean;
-  onClick?: () => void;
+  onClick?: (e: React.MouseEvent) => void;
 };
 
-const MHButton: FnComponent<Props> = ({
+// not working, dashboard theme takes precedence over styling here
+const StyledButton = styled(Button)(
+  ({ theme }) => `
+    &.${buttonClasses.outlined}:hover {
+      background: grey,
+    }`
+);
+
+const MHButton: FnComponent<MHButtonProps & ButtonProps> = ({
   sx,
   variant,
   children,
@@ -23,10 +31,11 @@ const MHButton: FnComponent<Props> = ({
   loading,
   disabled,
   fullWidth,
-  onClick
+  onClick,
+  ...props
 }) => {
-  const buttonClickHandler = () => {
-    onClick && onClick();
+  const buttonClickHandler = (e: React.MouseEvent) => {
+    onClick && onClick(e);
   };
 
   return (
@@ -35,7 +44,7 @@ const MHButton: FnComponent<Props> = ({
       type={type || 'button'}
       variant={variant || 'contained'}
       sx={{
-        p: 1.8,
+        p: 1.6,
         ...sx
       }}
       size="large"
@@ -43,7 +52,7 @@ const MHButton: FnComponent<Props> = ({
       onClick={buttonClickHandler}
       fullWidth={fullWidth}
       disableElevation
-      >
+      {...props}>
       {loading ? <LoadingIndicator /> : children}
     </Button>
   );

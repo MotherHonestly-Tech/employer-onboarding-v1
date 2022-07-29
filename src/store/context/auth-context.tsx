@@ -6,7 +6,7 @@ import { Employee, Token, User } from '../../models/user.model';
 import { decrypt, encrypt } from '../../utils/utils';
 
 const AUTH_LOCATION = 'Sn61y6yYDiIxkur0JT';
-const TOKEN_VALIDITY = 60 * 60000;
+const TOKEN_VALIDITY = 180 * 60000;
 let expirationTimer: any;
 
 type StoredToken = {
@@ -157,12 +157,12 @@ export const AuthContextProvider = ({
   );
 
   const synchronizeUser = React.useCallback((responseData: Employee) => {
-    const { firstName, lastName, email } = responseData;
+    const { firstName, lastName, employeeEmail } = responseData;
     const user = new User(
       Number(userId),
       firstName,
       lastName,
-      email,
+      employeeEmail,
       tokenData?.token as Token,
       tokenData?.tokenExpirationDate as Date
     );

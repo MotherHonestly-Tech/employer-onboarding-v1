@@ -5,7 +5,7 @@ import Box from '@mui/material/Box';
 import MHTextInput from '../Form/MHTextInput';
 import MHButton from '../Button/MHButton';
 import InputAdornment from './InputAdornment';
-import IconButtonUnstyled from '../Button/IconButtonUnstyled';
+import IconButtonUnstyled from '../Button/IconButtonStyled';
 import useInput from '../../hooks/use-input';
 
 import { ReactComponent as ArrowRightIcon } from '../../static/svg/arrow-right-thick.svg';
@@ -45,7 +45,7 @@ const SearchField = () => {
       <MHButton
         sx={{
           '& svg': {
-            stroke: '#F7F7F7',
+            stroke: 'grey.500',
             width: '1rem'
           },
           '&.MuiButton-root:hover svg': {

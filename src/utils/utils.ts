@@ -44,3 +44,7 @@ export const formatAmount = (amount: number) => {
     minimumFractionDigits: 2
   }).format(amount);
 };
+
+export const constructDateFormat = (date: Date) => {
+  return `${date.getFullYear()}-${date.getMonth() + 1}-${date.getDate()}`;
+};

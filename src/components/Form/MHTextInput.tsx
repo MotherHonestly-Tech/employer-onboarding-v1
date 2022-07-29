@@ -9,7 +9,7 @@ import { styled } from '@mui/system';
 
 const grey = {
   50: '#F3F6F9',
-  100: '#E7EBF0',
+  100: '#EEEEEE',
   200: '#E0E3E7',
   300: '#CDD2D7',
   400: '#B2BAC2',
@@ -24,7 +24,7 @@ const StyledInputRoot = styled('div')(
   ({ theme }) => `
     display: flex;
     font-weight: 400;
-    border: 1px solid #EEEEEE;
+    border: 1px solid ${grey[200]};
     align-items: center;
     justify-content: center;
     transition: all 0.4s ease-in;

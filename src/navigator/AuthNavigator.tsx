@@ -46,22 +46,14 @@ const AuthNavigator: FnComponent = () => {
               backgroundColor: backgroundColor.current,
               position: 'relative'
             }}>
-            <Box
-              component={'div'}
-              sx={{
-                position: 'absolute',
-                top: 70,
-                left: 0,
-                right: 0
-              }}>
-              <MHLogoIcon />
-            </Box>
-
             <Stack
               direction="column"
               justifyContent="center"
               alignItems="center"
               sx={{ minHeight: '100vh', px: 6 }}>
+              <Box position="relative" top={-50}>
+                <MHLogoIcon />
+              </Box>
               <Switch>
                 <Route path={`${path}/sign-in`}>
                   <SignIn
