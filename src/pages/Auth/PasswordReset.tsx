@@ -114,7 +114,7 @@ const PasswordReset: FnComponent<{
         })
       },
       (data: any) => {
-        history.push('/reset-password/jdd/success');
+        history.push('/auth/reset-password/jdd/success');
       }
     );
   };

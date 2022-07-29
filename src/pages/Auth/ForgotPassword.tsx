@@ -1,4 +1,5 @@
 import React from 'react';
+import { useHistory } from 'react-router-dom';
 
 import Box from '@mui/material/Box';
 import Paper from '@mui/material/Paper';
@@ -15,6 +16,7 @@ import { ReactComponent as MailIcon } from '../../static/svg/mail.svg';
 import { FnComponent } from '../../models/component.model';
 import { BGImage } from '../../models/background-image.model';
 import * as validators from '../../utils/validators';
+import { HttpResponse } from '../../models/api.interface';
 
 const ForgotPassword: FnComponent<{
   onRouteChange: (image: BGImage) => void;
@@ -22,6 +24,8 @@ const ForgotPassword: FnComponent<{
   const { onRouteChange } = props;
 
   const { loading, error, sendHttpRequest: sendResetLink } = useHttp();
+
+  const history = useHistory();
 
   const {
     value: enteredEmail,
@@ -59,7 +63,9 @@ const ForgotPassword: FnComponent<{
           email: enteredEmail
         })
       },
-      (data: any) => {}
+      (data: HttpResponse<unknown>) => {
+        history.push('/auth/forgot-password/reset-link')
+      }
     );
   };
 
