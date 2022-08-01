@@ -270,7 +270,7 @@ function CustomMultiSelect<TValue>(
     ...props.components
   };
 
-  const { popperWidth, renderValue, ...rest } = props;
+  const { popperWidth, ...rest } = props;
 
   return (
     <MultiSelectUnstyled
@@ -288,7 +288,6 @@ function CustomMultiSelect<TValue>(
           }
         }
       }}
-      renderValue={renderValue}
     />
   );
 }

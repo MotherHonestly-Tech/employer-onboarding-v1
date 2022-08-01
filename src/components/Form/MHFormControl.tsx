@@ -8,6 +8,7 @@ import { styled } from '@mui/system';
 import clsx from 'clsx';
 
 import MHTextInput from './MHTextInput';
+import { theme } from '../../theme/mui/dashboard.theme';
 
 type InputProps = {
   id: string;
@@ -121,11 +122,11 @@ const ErrorTip = (props: { error: string }) => {
 
   const { filled } = formControlContext;
 
-  return props.error && filled ? (
+  return props.error ? (
     <p
       className={clsx('invalid')}
       style={{
-        color: 'red',
+        color: theme.palette.error.main,
         fontSize: '0.85rem'
       }}>
       {props.error}
@@ -164,7 +165,8 @@ const MHFormControl = (props: InputProps) => {
         onBlur={onBlur}
         autoFocus={autoFocus}
         style={{
-          marginBottom: '0.5rem'
+          marginBottom: '0.5rem',
+          borderColor: error ? theme.palette.error.main : ''
         }}
       />
       <HelperText />

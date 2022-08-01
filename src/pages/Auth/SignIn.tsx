@@ -1,11 +1,12 @@
 import React from 'react';
-import { Link, useHistory } from 'react-router-dom';
+import { Link, useHistory, useLocation } from 'react-router-dom';
 
 import Box from '@mui/material/Box';
-import Paper from '@mui/material/Paper';
+import Stack from '@mui/material/Stack';
 import MuiLink from '@mui/material/Link';
 import Typography from '@mui/material/Typography';
 import Alert from '@mui/material/Alert';
+import Slide from '@mui/material/Slide';
 
 import MHFormControl from '../../components/Form/MHFormControl';
 import MHButton from '../../components/Button/MHButton';
@@ -18,6 +19,7 @@ import { ReactComponent as MailIcon } from '../../static/svg/mail.svg';
 import { ReactComponent as LockIcon } from '../../static/svg/lock.svg';
 import { ReactComponent as VisibilityIcon } from '../../static/svg/visibility.svg';
 import { ReactComponent as VisibilityOffIcon } from '../../static/svg/visibility-off.svg';
+import { ReactComponent as CheckCircleFillIcon } from '../../static/svg/check-circle-fill.svg';
 import { BGImage } from '../../models/background-image.model';
 import { FnComponent } from '../../models/component.model';
 import { theme } from '../../theme/mui/dashboard.theme';
@@ -25,6 +27,45 @@ import * as formReducer from '../../store/reducers/form';
 import * as validators from '../../utils/validators';
 import AuthContext from '../../store/context/auth-context';
 import { HttpResponse } from '../../models/api.interface';
+
+const Notification = () => {
+  return (
+    <Box
+      sx={{
+        position: 'fixed',
+        top: 20,
+        maxWidth: 700,
+        left: '50%',
+        transform: 'translateX(-50%)'
+      }}>
+      <Slide
+        direction="down"
+        in
+        mountOnEnter
+        unmountOnExit
+        easing={{
+          enter: 'ease-in'
+        }}>
+        <Stack
+          bgcolor="#edf7ed"
+          direction="row"
+          spacing={2}
+          alignItems="center"
+          sx={{
+            px: 2,
+            py: 1,
+            borderRadius: 2
+          }}>
+          <CheckCircleFillIcon color="#2d832d" />
+          <Typography variant="body1" color="textPrimary">
+            You're all set up! Please login with your work email and password to
+            continue
+          </Typography>
+        </Stack>
+      </Slide>
+    </Box>
+  );
+};
 
 const SignIn: FnComponent<{
   onRouteChange: (image: BGImage) => void;
@@ -34,6 +75,22 @@ const SignIn: FnComponent<{
   const { onRouteChange } = props;
   const history = useHistory();
   useTitle(props.title);
+
+  const [showAlert, setShowAlert] = React.useState(false);
+
+  const location = useLocation();
+  const queryParams = new URLSearchParams(location.search);
+  const verify = queryParams.get('verify');
+
+  React.useEffect(() => {
+    if (verify) {
+      setShowAlert(true);
+
+      setTimeout(() => {
+        setShowAlert(false);
+      }, 8000);
+    }
+  }, []);
 
   const authCtx = React.useContext(AuthContext);
   const { loading, error, sendHttpRequest: signIn } = useHttp();
@@ -100,9 +157,8 @@ const SignIn: FnComponent<{
         })
       },
       (response: HttpResponse<any>) => {
-        console.log(response.data);
+        // console.log(response.data);
         authCtx.login(response.data.token, response.data.uuid);
-
         history.push('/organization/dashboard');
       }
     );
@@ -131,6 +187,7 @@ const SignIn: FnComponent<{
 
   return (
     <React.Fragment>
+      {showAlert && <Notification />}
       <Box
         sx={{
           px: 8,
