@@ -1,4 +1,5 @@
 import React from 'react';
+import { Link, useHistory } from 'react-router-dom';
 
 import Box from '@mui/material/Box';
 import Paper from '@mui/material/Paper';
@@ -13,7 +14,7 @@ import { ReactComponent as ArrowLeftIcon } from '../../static/svg/arrow-left.svg
 import RoundedLogoIcon from '../../theme/icons/RoundedLogo';
 import { FnComponent } from '../../models/component.model';
 import { BGImage } from '../../models/background-image.model';
-import { Link, useHistory } from 'react-router-dom';
+import { getURLWithQueryParams } from '../../utils/utils';
 
 const ResetSuccess: FnComponent<{
   onRouteChange: (image: BGImage) => void;
@@ -55,7 +56,6 @@ const ResetSuccess: FnComponent<{
           </Typography>
 
           {/* <h1 className="text-center my-4">Password reset</h1>
-
           <p className="mb-5">
             Your password has been successfully reset. Click below to log in
             magically
@@ -65,7 +65,13 @@ const ResetSuccess: FnComponent<{
             sx={{
               mb: 2
             }}
-            onClick={() => history.push('/')}
+            onClick={() =>
+              history.push(
+                getURLWithQueryParams('/auth/sign-in', {
+                  verify: '1'
+                })
+              )
+            }
             fullWidth>
             Continue
           </MHButton>
@@ -76,7 +82,12 @@ const ResetSuccess: FnComponent<{
             justifyContent="center"
             alignItems="center">
             <ArrowLeftIcon />
-            <MuiLink component={Link} href="" to="/">
+            <MuiLink
+              component={Link}
+              href=""
+              to={getURLWithQueryParams('/auth/sign-in', {
+                verify: '1'
+              })}>
               Back to log in
             </MuiLink>
           </Stack>
