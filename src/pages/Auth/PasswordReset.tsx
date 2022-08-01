@@ -151,7 +151,11 @@ const PasswordReset: FnComponent<{
             </Alert>
           )}
 
-          <Box component={'form'} onSubmit={setPasswordHandler}>
+          <Box
+            component={'form'}
+            onSubmit={setPasswordHandler}
+            autoComplete="off"
+            noValidate>
             <MHFormControl
               id="password"
               type="password"
