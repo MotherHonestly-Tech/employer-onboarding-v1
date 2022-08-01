@@ -5,6 +5,7 @@ import Box from '@mui/material/Box';
 import Grid from '@mui/material/Grid';
 import Stack from '@mui/material/Stack';
 import Typography from '@mui/material/Typography';
+import Slide from '@mui/material/Slide';
 
 import Steps from '../../components/Steps/Steps';
 import InitialStep from '../../components/Onboarding/InitialStep';
@@ -111,7 +112,7 @@ const Onboarding = () => {
         history.push('/onboarding/interests');
       }
     );
-  }, [empData, onboardEmployee, userId, token, user, history]);
+  }, [empData, onboardEmployee, userId, token, user, history, updateUserData]);
 
   React.useEffect(() => {
     if (completed) {
@@ -161,11 +162,15 @@ const Onboarding = () => {
               <Steps steps={steps} activeStep={activeStepIndex} />
 
               {ActiveFormComponent && (
-                <ActiveFormComponent
-                  activeIndex={activeStepIndex}
-                  onNext={nextStepHandler}
-                  onPrevious={previousStepHandler}
-                />
+                <Slide direction="left" in={steps.includes(activeStepIndex + 1)} mountOnEnter unmountOnExit>
+                  <Box>
+                    <ActiveFormComponent
+                      activeIndex={activeStepIndex}
+                      onNext={nextStepHandler}
+                      onPrevious={previousStepHandler}
+                    />
+                  </Box>
+                </Slide>
               )}
             </Box>
           </Stack>

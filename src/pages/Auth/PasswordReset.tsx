@@ -13,10 +13,10 @@ import useInput from '../../hooks/use-input';
 import useHttp from '../../hooks/use-http';
 
 import { ReactComponent as KeyIcon } from '../../static/svg/key.svg';
-import { ReactComponent as InvalidLinkIcon } from '../../static/svg/share_link_re_54rx.svg';
 import { FnComponent } from '../../models/component.model';
 import { BGImage } from '../../models/background-image.model';
 import * as validators from '../../utils/validators';
+import { getURLWithQueryParams } from '../../utils/utils';
 
 const PasswordReset: FnComponent<{
   onRouteChange: (image: BGImage) => void;
@@ -114,7 +114,11 @@ const PasswordReset: FnComponent<{
         })
       },
       (data: any) => {
-        history.push('/auth/reset-password/jdd/success');
+        history.push(
+          getURLWithQueryParams('/auth/reset-password/jdd/success', {
+            verify: '1'
+          })
+        );
       }
     );
   };

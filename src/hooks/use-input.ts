@@ -16,6 +16,10 @@ const useInput = (validators: Validator[]) => {
     setTouched(true);
   };
 
+  const markAsTouched = () => {
+    setTouched(true);
+  };
+
   React.useEffect(() => {
     const validatorsResults = validators.map((validator) =>
       validator.validator(value)
@@ -31,7 +35,8 @@ const useInput = (validators: Validator[]) => {
     touched,
     error,
     onChange,
-    onBlur
+    onBlur,
+    markAsTouched
   };
 };
 
