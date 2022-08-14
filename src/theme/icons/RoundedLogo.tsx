@@ -4,7 +4,7 @@ import Box from '@mui/material/Box';
 
 import { FnComponent } from '../../models/component.model';
 
-const RoundedLogoIcon: FnComponent = (props) => {
+const RoundedLogoIcon: FnComponent<{ sx?: object }> = (props) => {
   return (
     <Box
       component="div"
@@ -18,7 +18,8 @@ const RoundedLogoIcon: FnComponent = (props) => {
         justifyContent: 'center',
         alignItems: 'center',
         overflow: 'hidden',
-        mx: 'auto'
+        mx: 'auto',
+        ...props.sx
       }}>
       {props.children}
     </Box>

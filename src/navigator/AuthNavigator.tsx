@@ -62,7 +62,7 @@ const AuthNavigator: FnComponent = () => {
                   />
                 </Route>
                 <Route path={`${path}/forgot-password`} exact>
-                  <ForgotPassword onRouteChange={changeImageHandler} />
+                  <ForgotPassword onRouteChange={changeImageHandler} title="Forgot Password" />
                 </Route>
                 <Route path={`${path}/forgot-password/reset-link`} exact>
                   <ResetLinkSuccess onRouteChange={changeImageHandler} />

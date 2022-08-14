@@ -1,6 +1,6 @@
 import { SelectOption } from '@mui/base';
 
-export const drawerWidth: number = 240;
+export const drawerWidth: number = 220;
 
 export const RELATIONSHIP_STATUS_OPTIONS: SelectOption<string>[] = [
   {
@@ -74,6 +74,45 @@ export const IDENTITY_OPTIONS: SelectOption<string>[] = [
   }
 ];
 
+export const RACE_OPTIONS: SelectOption<string>[] = [
+  {
+    value: 'Native American',
+    label: 'Native American'
+  },
+  {
+    value: 'Asian',
+    label: 'Asian'
+  },
+  {
+    value: 'Black or African American',
+    label: 'Black or African American'
+  },
+  {
+    value: 'Native Hawaiian or Other Pacific Islander',
+    label: 'Native Hawaiian or Other Pacific Islander'
+  },
+  {
+    value: 'Hispanic, Latino, or Spanish origin',
+    label: 'Hispanic, Latino, or Spanish origin'
+  },
+  {
+    value: 'White',
+    label: 'White'
+  },
+  {
+    value: 'Unknown',
+    label: 'Unknown'
+  },
+  {
+    value: 'Other/Prefer to self-describe',
+    label: 'Other/Prefer to self-describe'
+  },
+  {
+    value: 'Don\'t wish to answer',
+    label: 'Don\'t wish to answer'
+  }
+];
+
 export const CARE_RESPONSIBILITY_OPTIONS: SelectOption<string>[] = [
   {
     value: 'self',
@@ -102,5 +141,24 @@ export const CARE_RESPONSIBILITY_OPTIONS: SelectOption<string>[] = [
   {
     value: 'pet',
     label: 'Pet'
+  }
+];
+
+export const CATEGORY_OPTIONS: SelectOption<string>[] = [
+  {
+    value: 'food',
+    label: 'Food'
   },
+  {
+    value: 'childcare',
+    label: 'Childcare'
+  },
+  {
+    value: 'petcare',
+    label: 'Petcare'
+  },
+  {
+    value: 'selfcare',
+    label: 'Selfcare'
+  }
 ];

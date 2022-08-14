@@ -37,7 +37,7 @@ const DashboardNavigator = () => {
             <Dashboard />
           </Route>
           <Route path={`${path}/wallet`} exact>
-            <Wallet />
+            <Wallet title="Wallet" />
           </Route>
           <Route path={`${path}/merchants`} exact>
             <Merchants />

@@ -129,7 +129,7 @@ const SignIn: FnComponent<{
       imageSrc:
         'https://res.cloudinary.com/mother-honestly/image/upload/v1657835660/juliane-liebermann-O-RKu3Aqnsw-unsplash_1_zv7sov.png',
       imageAlt: 'Juliane Liebermann',
-      background: theme.palette.background.paper
+      background: theme.palette.common.white
     });
   }, [onRouteChange]);
 

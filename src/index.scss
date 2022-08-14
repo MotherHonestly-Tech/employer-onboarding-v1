@@ -4,10 +4,61 @@
 
 $primary-color: #28404a;
 
+// Columbia-Sans (used for headers)
+@font-face {
+  font-family: 'Columbia-Sans';
+  src: url('./static/fonts/columbia-sans/columbiasanswdisplay-medium.woff2')
+      format('woff2'),
+    url('./static/fonts/columbia-sans/columbiasanswdisplay-medium.eot?#iefix')
+      format('embedded-opentype');
+}
+
+// Area font family is used for the following:
+// a, p, span, ul, li, label, input, textarea, button
+@font-face {
+  font-family: 'Area-Extended';
+  src: url('./static/fonts/area/Area\ Extended\ Black/AreaExtended-Black.woff2')
+      format('woff2'),
+    url('./static/fonts/area/Area\ Extended\ Black/AreaExtended-Black.woff')
+      format('woff'),
+    url('./static/fonts/area/Area\ Extended\ Black/AreaExtended-Black.otf')
+      format('opentype');
+}
+
+@font-face {
+  font-family: 'Area-Normal';
+  src: url('./static/fonts/area/Area\ Normal\ Black/AreaNormal-Black.woff2')
+      format('woff2'),
+    url('./static/fonts/area/Area\ Normal\ Black/AreaNormal-Black.woff')
+      format('woff'),
+    url('./static/fonts/area/Area\ Normal\ Black/AreaNormal-Black.otf')
+      format('opentype');
+}
+
+@font-face {
+  font-family: 'Area-Normal-Bold';
+  src: url('./static/fonts/area/Area\ Normal\ Bold/AreaNormal-Bold.woff2')
+      format('woff2'),
+    url('./static/fonts/area/Area\ Normal\ Bold/AreaNormal-Bold.woff')
+      format('woff'),
+    url('./static/fonts/area/Area\ Normal\ Bold/AreaNormal-Bold.otf')
+      format('opentype');
+}
+
+@font-face {
+  font-family: 'Area-Normal-Semibold';
+  src: url('./static/fonts/area/Area\ Normal\ Semibold/AreaNormal-Semibold.woff2')
+      format('woff2'),
+    url('./static/fonts/area/Area\ Normal\ Semibold/AreaNormal-Semibold.woff')
+      format('woff'),
+    url('./static/fonts/area/Area\ Normal\ Semibold/AreaNormal-Semibold.otf')
+      format('opentype');
+}
+
 * {
   box-sizing: border-box;
   margin: 0;
-  font-family: 'Avenir-Book', sans-serif;
+  font-family: 'Area-Normal-Semibold', sans-serif;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
 }
@@ -26,8 +77,8 @@ label,
 input,
 textarea,
 button {
-  font-size: 13px;
-  font-family: 'Avenir-Book', sans-serif;
+  font-size: 12px;
+  font-family: 'Area-Normal-Semibold', sans-serif;
 }
 
 h1,
@@ -36,29 +87,8 @@ h3,
 h4,
 h5,
 h6 {
-  font-size: 17px;
-  font-family: 'Gilroy-Bold', sans-serif;
-}
-
-// Avenir Book font family is used for the following:
-// a, p, span, ul, li, label, input, textarea, button
-@font-face {
-  font-family: 'Avenir-Book';
-  src: local('Avenir-Book'),
-    url('./static/fonts/avenir/Avenir-Book.otf') format('opentype');
-}
-
-// Gilroy Bold (used for headers)
-@font-face {
-  font-family: 'Gilroy-Bold';
-  src: local('Gilroy-Bold'),
-    url('./static/fonts/gilroy/Gilroy-Bold.ttf') format('truetype');
-}
-
-@font-face {
-  font-family: Gilroy-Regular;
-  src: local('Gilroy-Regular'),
-    url('./static/fonts/gilroy/Gilroy-Regular.ttf') format('truetype');
+  font-size: 16px;
+  font-family: 'Columbia-Sans', sans-serif;
 }
 
 ::-moz-selection {
@@ -94,18 +124,29 @@ a:active {
   text-decoration: underline;
 }
 
-// ::-webkit-scrollbar {
-//   width: 10px;
-//   border-radius: 15px;
-// }
+::-webkit-scrollbar {
+  width: 8px;
+  border-radius: 15px;
+}
 
-// ::-webkit-scrollbar-track {
-//   background-color: rgb(233, 232, 232);
-//   border-radius: 15px;
-// }
+::-webkit-scrollbar-track {
+  background-color: transparent;
+  border-radius: 15px;
+}
 
-// ::-webkit-scrollbar-thumb {
-//   background-color: #adafb3;
-//   width: 10px;
-//   border-radius: 15px;
+::-webkit-scrollbar-thumb {
+  background-color: #c8c8c8;
+  width: 8px;
+  border-radius: 15px;
+}
+
+// @font-face {
+//   font-family: 'Avenir-Book';
+//   src: local('Avenir-Book'),
+//     url('./static/fonts/avenir/Avenir-Book.otf') format('opentype');
+// }
+// @font-face {
+//   font-family: Gilroy-Regular;
+//   src: local('Gilroy-Regular'),
+//     url('./static/fonts/gilroy/Gilroy-Regular.ttf') format('truetype');
 // }

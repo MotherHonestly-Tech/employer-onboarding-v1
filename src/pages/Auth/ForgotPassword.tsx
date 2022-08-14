@@ -11,6 +11,7 @@ import MHFormControl from '../../components/Form/MHFormControl';
 import InputAdornment from '../../components/Form/InputAdornment';
 import useInput from '../../hooks/use-input';
 import useHttp from '../../hooks/use-http';
+import useTitle from '../../hooks/use-title';
 
 import { ReactComponent as MailIcon } from '../../static/svg/mail.svg';
 import { FnComponent } from '../../models/component.model';
@@ -20,10 +21,12 @@ import { HttpResponse } from '../../models/api.interface';
 
 const ForgotPassword: FnComponent<{
   onRouteChange: (image: BGImage) => void;
+  title: string
 }> = (props) => {
   const { onRouteChange } = props;
 
   const { loading, error, sendHttpRequest: sendResetLink } = useHttp();
+  useTitle(props.title);
 
   const history = useHistory();
 
@@ -82,7 +85,7 @@ const ForgotPassword: FnComponent<{
             Forgot your password?
           </Typography>
 
-          <Typography variant="subtitle1" component={'div'} gutterBottom mb={2}>
+          <Typography variant="subtitle1" color="#6F6F6F" component={'div'} gutterBottom mb={2}>
             Let's get you into your account
           </Typography>
 

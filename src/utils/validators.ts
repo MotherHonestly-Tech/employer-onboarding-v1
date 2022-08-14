@@ -32,3 +32,7 @@ export const minLength = (minLength: number) => (value: string) => {
 export const maxLength = (maxLength: number) => (value: string) => {
   return value.length <= maxLength;
 };
+
+export const isNumber = (value: string) => {
+  return !isNaN(+value);
+};

@@ -31,7 +31,7 @@ const useHttp = () => {
 
         const responseData = await response.json();
 
-        if (response.status && response.status !== HttpStatusCode.Ok) {
+        if (response.status !== HttpStatusCode.Ok) {
           throw new Error(responseData.message);
         }
 
