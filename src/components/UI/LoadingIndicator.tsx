@@ -57,7 +57,7 @@ const LoadingIndicator = () => {
         }}
       /> */}
       <LoaderStyled />
-      <Typography>Loading...</Typography>
+      <Typography variant="body1">Loading...</Typography>
     </React.Fragment>
   );
 };

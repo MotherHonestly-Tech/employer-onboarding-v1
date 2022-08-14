@@ -13,8 +13,8 @@ import { theme } from '../../theme/mui/dashboard.theme';
 type InputProps = {
   id: string;
   label?: string;
-  startAdornment?: React.ReactNode;
-  endAdornment?: React.ReactNode;
+  startAdornment?: React.ReactElement;
+  endAdornment?: React.ReactElement;
   placeholder: string;
   type: string;
   name?: string;
@@ -30,12 +30,13 @@ type InputProps = {
   fullWidth?: boolean;
   multiline?: boolean;
   rows?: number;
-  rowsMax?: number;
+  maxRows?: number;
   email?: boolean;
   min?: number;
   max?: number;
   minLength?: number;
   maxLength?: number;
+  readOnly?: boolean;
 };
 
 const Label = styled(
@@ -64,12 +65,9 @@ const Label = styled(
 
     return (
       <label
-        className={clsx(
-          className,
-          error || showRequiredError ? 'invalid' : ''
-        )}
+        className={clsx(className, error || showRequiredError ? 'invalid' : '')}
         style={{
-          color: '#A9A9A9'
+          color: '#21392E'
         }}>
         {children}
         {/* {required ? ' *' : ''} */}
@@ -77,8 +75,9 @@ const Label = styled(
     );
   }
 )`
-  font-size: 0.875rem;
+  font-size: 0.8rem;
   margin-bottom: 4px;
+  font-family: Area-Normal-Semibold;
 `;
 
 const HelperText = styled((props: {}) => {
@@ -104,13 +103,13 @@ const HelperText = styled((props: {}) => {
       className={clsx('invalid')}
       style={{
         color: 'red',
-        fontSize: '0.85rem'
+        fontSize: '0.7rem'
       }}>
       This field is required.
     </p>
   ) : null;
 })`
-  font-size: 0.75rem;
+  font-size: 0.7rem;
 `;
 
 const ErrorTip = (props: { error: string }) => {
@@ -127,7 +126,7 @@ const ErrorTip = (props: { error: string }) => {
       className={clsx('invalid')}
       style={{
         color: theme.palette.error.main,
-        fontSize: '0.85rem'
+        fontSize: '0.7rem'
       }}>
       {props.error}
     </p>
@@ -146,14 +145,20 @@ const MHFormControl = (props: InputProps) => {
     endAdornment,
     autoFocus,
     error,
+    multiline,
+    rows,
     onChange,
     onBlur
   } = props;
 
   return (
-    <FormControlUnstyled defaultValue="" value={value} required={required} style={{
-      marginBottom: '1.25rem'
-    }}>
+    <FormControlUnstyled
+      defaultValue=""
+      value={value}
+      required={required}
+      style={{
+        marginBottom: '1.25rem'
+      }}>
       {label && <Label>{label}</Label>}
       <MHTextInput
         id={id}
@@ -164,13 +169,15 @@ const MHFormControl = (props: InputProps) => {
         onChange={onChange}
         onBlur={onBlur}
         autoFocus={autoFocus}
+        multiline={multiline}
+        rows={rows}
         style={{
           marginBottom: '0.5rem',
           borderColor: error ? theme.palette.error.main : ''
         }}
       />
       <HelperText />
-      <ErrorTip error={error as string} />
+      <ErrorTip error={error!} />
     </FormControlUnstyled>
   );
 };

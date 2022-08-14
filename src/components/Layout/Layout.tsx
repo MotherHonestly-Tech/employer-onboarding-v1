@@ -5,9 +5,9 @@ import Toolbar from '@mui/material/Toolbar';
 
 import AppBar from './AppBar';
 import Sidebar from './MainSidebar';
+import SecondarySidebar from './SecondarySidebar';
 
 import { FnComponent } from '../../models/component.model';
-import SecondarySidebar from './SecondarySidebar';
 
 const Layout: FnComponent = (props) => {
   return (
@@ -19,7 +19,7 @@ const Layout: FnComponent = (props) => {
         <Box
           p={4}
           sx={{
-            backgroundColor: (theme) => theme.palette.background.default,
+            backgroundColor: (theme) => theme.palette.background.paper,
             flexGrow: 1,
             overflow: 'auto'
           }}>

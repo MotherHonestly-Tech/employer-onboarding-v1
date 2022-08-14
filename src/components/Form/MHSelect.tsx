@@ -57,8 +57,8 @@ const StyledButton = styled('button')<{
   ) => React.ReactNode;
 }>(
   ({ theme, placeholder, value }) => `
-    font-family: Avenir-Book;
-    font-size: 0.875rem;
+    font-family: Area-Normal-Semibold;
+    font-size: 0.75rem;
     box-sizing: border-box;
     min-height: calc(1.5em + 22px);
     width: 100%;
@@ -120,8 +120,8 @@ const StyledButton = styled('button')<{
 
 const StyledListbox = styled('ul')(
   ({ theme }) => `
-  font-family: Avenir-Book;
-  font-size: 0.875rem;
+  font-family: Area-Normal-Semibold;
+  font-size: 0.75rem;
   box-sizing: border-box;
   padding: 5px;
   min-width: fit-content;
@@ -150,6 +150,10 @@ const StyledListbox = styled('ul')(
   }
   `
 );
+
+const StyledPopper = styled(PopperUnstyled)`
+  z-index: 1;
+`;
 
 const Checkmark = styled('span')(
   ({ theme }) => `
@@ -218,10 +222,6 @@ const StyledMultiSelectOption = styled(
 )(optionStyles);
 
 const StyledOption = styled(OptionUnstyled)(optionStyles);
-
-const StyledPopper = styled(PopperUnstyled)`
-  z-index: 1;
-`;
 
 type ExtraProps = {
   value?: string | string[];

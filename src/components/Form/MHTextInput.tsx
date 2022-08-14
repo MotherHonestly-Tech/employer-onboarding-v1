@@ -45,7 +45,7 @@ const StyledInputRoot = styled('div')(
 
 const StyledInputElement = styled('input')`
   display: block;
-  font-size: 0.875rem;
+  font-size: 0.75rem;
   font-weight: 400;
   line-height: 1.5;
   flex-grow: 1;
@@ -57,40 +57,70 @@ const StyledInputElement = styled('input')`
   outline: 0;
 `;
 
-const MHTextInput = React.forwardRef((props: InputUnstyledProps, ref: React.ForwardedRef<HTMLDivElement>) => {
-  const { components, ...others } = props;
+const StyledTextareaElement = styled('textarea', {
+  shouldForwardProp: (prop) =>
+    !['ownerState', 'minRows', 'maxRows', 'rows'].includes(prop.toString())
+})(
+  ({ theme }) => `
+  display: block;
+  font-size: 0.75rem;
+  font-weight: 400;
+  line-height: 1.5;
+  flex-grow: 1;
+  color: ${grey[900]};
+  background: inherit;
+  border: none;
+  border-radius: inherit;
+  padding: 12px 12px;
+  outline: 0;
+`
+);
 
-  React.useEffect(() => {
-    // console.log(inputRef);
-  }, []);
+const MHTextInput = React.forwardRef(
+  (props: InputUnstyledProps, ref: React.ForwardedRef<HTMLDivElement>) => {
+    const { components, ...others } = props;
 
-  // const { onChange, onFocus, onBlur } = formControlContext;
+    // const formControlContext = useFormControlUnstyledContext();
+    React.useEffect(() => {
+      // console.log(inputRef);
+    }, []);
 
-  const inputChangeHandler = (event: React.ChangeEvent<HTMLInputElement>) => {
-    props.onChange && props.onChange(event);
-    // onChange && onChange(event);
-  };
+    // const { onChange, onFocus, onBlur, error } = formControlContext!;
 
-  const inputBlurHandler = (event: React.FocusEvent<HTMLInputElement>) => {
-    props.onBlur && props.onBlur(event);
-    // onBlur && onBlur();
+    const inputChangeHandler = (event: React.ChangeEvent<HTMLInputElement>) => {
+      props.onChange && props.onChange(event);
+      // onChange && onChange(event);
+    };
+
+    const inputBlurHandler = (event: React.FocusEvent<HTMLInputElement>) => {
+      props.onBlur && props.onBlur(event);
+      // onBlur && onBlur();
+    };
+
+    React.useImperativeHandle(ref, () => ({} as any));
+
+    return (
+      <React.Fragment>
+        <InputUnstyled
+          components={{
+            Root: StyledInputRoot,
+            Input: StyledInputElement,
+            Textarea: StyledTextareaElement,
+            ...components
+          }}
+          componentsProps={{
+            input: {
+              
+            }
+          }}
+          onChange={inputChangeHandler}
+          onBlur={inputBlurHandler}
+          {...others}
+          ref={ref}
+        />
+      </React.Fragment>
+    );
   }
-
-  return (
-    <React.Fragment>
-      <InputUnstyled
-        components={{
-          Root: StyledInputRoot,
-          Input: StyledInputElement,
-          ...components
-        }}
-        onChange={inputChangeHandler}
-        onBlur={inputBlurHandler}
-        ref={ref}
-        {...others}
-      />
-    </React.Fragment>
-  );
-});
+);
 
 export default MHTextInput;

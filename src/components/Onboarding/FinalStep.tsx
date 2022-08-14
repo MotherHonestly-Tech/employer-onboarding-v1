@@ -71,8 +71,9 @@ const FinalStep = (props: {
   let formIsValid =
     enteredJobTitleIsValid &&
     enteredPositionIsValid &&
-    enteredDepartmentIsValid &&
-    careResponsibilites?.length;
+    enteredDepartmentIsValid;
+    // &&
+    // careResponsibilites?.length;
 
   const { employee, updateEmployee } = onboardingCtx;
   const { activeIndex, onNext, onPrevious } = props;
@@ -85,7 +86,7 @@ const FinalStep = (props: {
     jobTitleInputChangeHandler(employee.jobTitle || '');
     positionInputChangeHandler(employee.position || '');
     departmentInputChangeHandler(employee.department || '');
-    careResInputChangeHandler(employee.careResponsibilities || []);
+    // careResInputChangeHandler(employee.careResponsibilities || []);
   }, []);
 
   function updateEmployeeData() {
@@ -93,7 +94,7 @@ const FinalStep = (props: {
       jobTitle: enteredJobTitle,
       position: enteredPosition,
       department: enteredDepartment,
-      careResponsibilities: careResponsibilites as Array<string>
+      // careResponsibilities: careResponsibilites as Array<string>
     });
   }
 
@@ -173,7 +174,7 @@ const FinalStep = (props: {
           required
         />
 
-        <MHMultiSelect
+        {/* <MHMultiSelect
           label="Care Responsibilities"
           placeholder="What are your care responsibilities?"
           options={constants.CARE_RESPONSIBILITY_OPTIONS}
@@ -181,7 +182,7 @@ const FinalStep = (props: {
           onChange={careResInputChangeHandler}
           onBlur={() => {}}
           renderValue={renderValue}
-        />
+        /> */}
 
         <Stack spacing={2} mt={3}>
           <MHButton type="submit">{'Complete'}</MHButton>

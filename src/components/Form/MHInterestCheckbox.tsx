@@ -4,6 +4,7 @@ import Checkbox from '@mui/material/Checkbox';
 import { styled } from '@mui/material/styles';
 
 import { FnComponent } from '../../models/component.model';
+import { isHexColorBright } from '../../utils/utils';
 
 const InterestUnChecked = styled(({ label, ...props }: any) => (
   <div {...props}>{label}</div>
@@ -13,21 +14,26 @@ const InterestUnChecked = styled(({ label, ...props }: any) => (
   padding: '0.8rem 1.7rem'
 }));
 
-const InterestChecked = styled(InterestUnChecked)(({ theme, fill, stroke }) => ({
-  backgroundColor: fill || '#F7DAA0',
-  color: stroke || '#77633B'
-}));
+const InterestChecked = styled(InterestUnChecked)(
+  ({ theme, fill }) => ({
+    backgroundColor: fill || '#F7DAA0',
+    color: !isHexColorBright(fill) ? theme.palette.common.white : '#194049'
+  })
+);
 
 const MHInterestCheckbox: FnComponent<{
   label: string;
   fill: string;
-  stroke: string;
+  value: boolean;
+  onChange: (e: React.ChangeEvent<HTMLInputElement>) => void;
 }> = (props) => {
   const label = { inputProps: { 'aria-label': props.label } };
 
   return (
     <Checkbox
       {...label}
+      value={props.value}
+      onChange={props.onChange}
       disableRipple
       icon={<InterestUnChecked {...props} />}
       checkedIcon={<InterestChecked {...props} />}></Checkbox>

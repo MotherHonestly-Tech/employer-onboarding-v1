@@ -104,17 +104,10 @@ const IntermediateStep = (props: {
   ]);
 
   const {
-    value: enteredPetBoolQ,
-    valid: enteredPetBoolQIsValid,
-    onChange: petBoolQInputChangeHandler,
-    onBlur: petBoolQInputBlurHandler
-  } = useInput([{ validator: (value: string) => validators.required(value) }]);
-
-  const {
-    value: enteredNumberOfPets,
-    valid: enteredNumberOfPetsIsValid,
-    onChange: numberOfPetsInputChangeHandler,
-    onBlur: numberOfPetsInputBlurHandler
+    value: enteredRace,
+    valid: enteredRaceIsValid,
+    onChange: raceInputChangeHandler,
+    onBlur: raceInputBlurHandler
   } = useInput([{ validator: (value: string) => validators.required(value) }]);
 
   let formIsValid = false;
@@ -124,13 +117,9 @@ const IntermediateStep = (props: {
     enteredDateIsValid &&
     enteredMonthIsValid &&
     enteredYearIsValid &&
-    enteredPetBoolQIsValid
+    enteredRaceIsValid
   ) {
-    if (enteredPetBoolQ === 'yes' && !enteredNumberOfPetsIsValid) {
-      formIsValid = false;
-    } else {
-      formIsValid = true;
-    }
+    formIsValid = true;
   }
 
   const { employee, updateEmployee } = onboardingCtx;
@@ -157,38 +146,8 @@ const IntermediateStep = (props: {
         ? String(new Date(employee.dateOfBirth as Date).getFullYear())
         : ''
     );
-    petBoolQInputChangeHandler(employee.petBoolQ || '');
-    numberOfPetsInputChangeHandler(String(employee.numberOfPets) || '');
+    raceInputChangeHandler(employee.race || '');
   }, []);
-
-  function renderPetsQSelectValue(option: SelectOption<string> | null) {
-    let content = null;
-
-    if (!option) {
-      return content;
-    }
-
-    switch (option.value) {
-      case 'yes':
-        content = <span>{option.label} (I have pets)</span>;
-        break;
-
-      case 'no':
-        content = <span>{option.label} (No pets)</span>;
-        break;
-      default:
-        content = null;
-        break;
-    }
-    return content;
-  }
-
-  function renderPetsSelectValue(option: SelectOption<string> | null) {
-    if (!option) {
-      return null;
-    }
-    return <span>{option?.value + ' pet(s)'}</span>;
-  }
 
   function updateEmployeeData() {
     updateEmployee({
@@ -198,8 +157,7 @@ const IntermediateStep = (props: {
         parseInt(enteredMonth) - 1,
         parseInt(enteredDate)
       ),
-      petBoolQ: enteredPetBoolQ,
-      numberOfPets: enteredNumberOfPets
+      race: enteredRace,
     });
   }
 
@@ -265,29 +223,15 @@ const IntermediateStep = (props: {
         </Grid>
 
         <MHSelect
-          label={'Do you have pets?'}
-          placeholder="Do you have any pets?"
-          options={constants.BOOL_OPTIONS}
-          value={enteredPetBoolQ}
+          label={'Race/Ethnicity'}
+          placeholder="Race/Ethnicity"
+          options={constants.RACE_OPTIONS}
+          value={enteredRace}
           onChange={(val) => {
-            numberOfPetsInputChangeHandler('');
-            petBoolQInputChangeHandler(val as string);
+            raceInputChangeHandler(val as string);
           }}
-          onBlur={petBoolQInputBlurHandler}
-          renderValue={renderPetsQSelectValue}
+          onBlur={raceInputBlurHandler}
         />
-
-        {enteredPetBoolQ === 'yes' && (
-          <MHSelect
-            label={'How many pets do you have?'}
-            placeholder="How many pets?"
-            options={constants.QUANTITY_OPTIONS}
-            value={enteredNumberOfPets}
-            onChange={(val) => numberOfPetsInputChangeHandler(val as string)}
-            onBlur={numberOfPetsInputBlurHandler}
-            renderValue={renderPetsSelectValue}
-          />
-        )}
 
         <Stack spacing={2} mt={3}>
           <MHButton type="submit">{'Next'}</MHButton>

@@ -19,12 +19,14 @@ export const theme = createTheme({
     },
     background: {
       default: '#F5F5F5',
-      paper: common.white
+      paper: '#F8F8F8'
+      // paper: common.white
     },
     grey: {
       600: '#F1F1F1',
       700: '#A9A9A9',
-      800: '#77633B'
+      800: '#77633B',
+      900: '#ADADAD'
     }
     // action: {
     //   active: primaryColor,
@@ -36,7 +38,7 @@ export const theme = createTheme({
     // }
   },
   typography: {
-    fontFamily: 'Avenir-Book, sans-serif',
+    fontFamily: 'Area-Normal-Semibold, sans-serif',
     // fontSize: 16,
     fontWeightLight: 300,
     fontWeightRegular: 400,
@@ -49,12 +51,13 @@ export const theme = createTheme({
       styleOverrides: {
         // Name of the slot
         root: {
-          fontSize: 13,
-          fontFamily: 'Avenir-Book',
+          fontSize: '0.8rem',
+          fontFamily: 'Area-Normal-Semibold',
           borderRadius: 0,
           boxShadow: 'none',
           textTransform: 'none',
           padding: '6px 12px',
+          letterSpacing: '0.05em',
           ':hover': {
             backgroundColor: '#F2EC2C',
             color: primaryColor
@@ -86,6 +89,7 @@ export const theme = createTheme({
     MuiPaper: {
       styleOverrides: {
         root: {
+          backgroundColor: '#FFFFFF',
           boxShadow: '0px 10px 16px 0px rgba(154, 154, 154, 0.13)'
         }
       },
@@ -96,45 +100,45 @@ export const theme = createTheme({
     MuiTypography: {
       styleOverrides: {
         h1: {
-          fontSize: '1.6rem',
-          fontFamily: 'Gilroy-Bold',
+          fontSize: '1.8rem',
+          fontFamily: 'Columbia-Sans',
           color: primaryColor
         },
         h2: {
           fontSize: '1.4rem',
-          fontFamily: 'Gilroy-Bold',
+          fontFamily: 'Columbia-Sans',
           color: primaryColor
         },
         h3: {
           fontSize: '1.2rem',
-          fontFamily: 'Gilroy-Bold',
+          fontFamily: 'Columbia-Sans',
           color: primaryColor
         },
         h4: {
           fontSize: '1rem',
-          fontFamily: 'Gilroy-Bold',
+          fontFamily: 'Columbia-Sans',
           color: primaryColor
         },
         subtitle1: {
           fontSize: '1rem',
-          fontFamily: 'Gilroy-Regular',
+          fontFamily: 'Area-Normal-Semibold',
           color: '#6F6F6F',
           fontWeight: 300
         },
         subtitle2: {
           fontSize: '1rem',
-          fontFamily: 'Gilroy-Regular',
+          fontFamily: 'Area-Normal-Semibold',
           color: '#B9B9B9',
           fontWeight: 300
         },
         body1: {
-          fontSize: '0.85rem',
-          fontFamily: 'Avenir-Book',
+          fontSize: '0.8rem',
+          fontFamily: 'Area-Normal-Semibold',
           color: '#717171'
         },
         body2: {
-          fontSize: '0.85rem',
-          fontFamily: 'Avenir-Book',
+          fontSize: '0.8rem',
+          fontFamily: 'Area-Normal-Semibold',
           color: '#717171',
           fontWeight: 300
         }

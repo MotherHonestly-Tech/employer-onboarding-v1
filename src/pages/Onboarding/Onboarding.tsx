@@ -80,18 +80,17 @@ const Onboarding = () => {
       lastName: empData?.lastName,
       zipCode: empData?.zipCode,
       relationShipStatus: empData?.relationshipStatus,
+      houseHoldSize : +empData?.householdSize!,
       numberOfKids: empData?.numberOfKids,
-      livingParent: empData?.livingParents === 'yes',
       identity: empData?.identity,
       dateOfBirth: constructDateFormat(empData?.dateOfBirth as Date),
-      petStatus: empData?.petBoolQ === 'yes',
-      numberOfPets: empData?.numberOfPets,
+      race: empData?.race,
       jobTitle: empData?.jobTitle,
       position: empData?.position,
       workDepartment: empData?.department,
-      careResponsibility: (empData?.careResponsibilities as Array<string>).join(
-        ','
-      )
+      // careResponsibility: (empData?.careResponsibilities as Array<string>).join(
+      //   ','
+      // )
     };
 
     onboardEmployee(
@@ -132,7 +131,7 @@ const Onboarding = () => {
           item
           xs={6}
           sx={{
-            backgroundColor: theme.palette.background.paper,
+            backgroundColor: theme.palette.common.white,
             position: 'relative'
           }}
           py={6}>

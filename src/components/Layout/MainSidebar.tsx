@@ -32,7 +32,7 @@ const SideDrawer = styled(MuiDrawer, {
     width: drawerWidth,
     height: '100vh',
     paddingTop: theme.spacing(5),
-    background: theme.palette.background.paper,
+    background: theme.palette.common.white,
     borderWidth: 0,
     boxShadow: '2px 4px 4px 0px #B7B7B740',
     transition: theme.transitions.create('width', {
@@ -85,7 +85,7 @@ const Indicator = styled('div')(({ theme }) => ({
   display: 'block',
   left: 0,
   top: 0,
-  width: 6,
+  width: 5,
   backgroundColor: theme.palette.primary.main,
   borderTopRightRadius: '.4rem',
   borderBottomRightRadius: '.4rem',

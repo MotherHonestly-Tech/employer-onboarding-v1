@@ -15,6 +15,17 @@ const OnboardingNavigator = () => {
     // console.log('authCtx.user', authCtx.user);
     return <Startup />;
   }
+  
+  if (authCtx.isOnboarded) {
+    return (
+      <Redirect
+        to={{
+          pathname: '/organization/dashboard',
+          state: { from: { pathname: '/onboarding' } }
+        }}
+      />
+    );
+  }
 
   return (
     <Switch>

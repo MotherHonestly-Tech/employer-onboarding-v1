@@ -5,13 +5,11 @@ export type EmployeeOnboarding = {
   lastName: string;
   zipCode: string;
   relationshipStatus: string;
+  householdSize: string;
   numberOfKids: string;
-  livingParents: string;
   identity: string;
   dateOfBirth: string | Date;
-  petBoolQ: string;
-  numberOfPets: string;
-  petsCategories: string;
+  race: string;
   jobTitle: string;
   position: string;
   department: string;

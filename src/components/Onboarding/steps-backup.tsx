@@ -2,7 +2,6 @@ import React from 'react';
 
 import Box from '@mui/material/Box';
 import Stack from '@mui/material/Stack';
-import Grid from '@mui/material/Grid';
 
 import MHFormControl from '../Form/MHFormControl';
 import { MHSelect } from '../Form/MHSelect';
@@ -72,11 +71,11 @@ const InitialStep = React.forwardRef(
     ]);
 
     const {
-      value: enteredHouseholdSize,
-      valid: enteredHouseholdSizeIsValid,
-      error: enteredHouseholdSizeHasError,
-      onChange: householdSizeInputChangeHandler,
-      onBlur: householdSizeInputBlurHandler
+      value: enteredNumberOfKids,
+      valid: enteredNumberOfKidsIsValid,
+      error: enteredNumberOfKidsHasError,
+      onChange: numberOfKidsInputChangeHandler,
+      onBlur: numberOfKidsInputBlurHandler
     } = useInput([
       {
         validator: (value: string) => validators.required(value)
@@ -84,11 +83,11 @@ const InitialStep = React.forwardRef(
     ]);
 
     const {
-      value: enteredNumberOfKids,
-      valid: enteredNumberOfKidsIsValid,
-      error: enteredNumberOfKidsHasError,
-      onChange: numberOfKidsInputChangeHandler,
-      onBlur: numberOfKidsInputBlurHandler
+      value: enteredLivingParents,
+      valid: enteredLivingParentsIsValid,
+      error: enteredLivingParentsHasError,
+      onChange: livingParentsInputChangeHandler,
+      onBlur: livingParentsInputBlurHandler
     } = useInput([
       {
         validator: (value: string) => validators.required(value)
@@ -102,13 +101,10 @@ const InitialStep = React.forwardRef(
       enteredLastNameIsValid &&
       enteredZipCodeIsValid &&
       enteredStatusIsValid &&
-      enteredHouseholdSizeIsValid
+      enteredNumberOfKidsIsValid &&
+      enteredLivingParentsIsValid
     ) {
-      if(+enteredHouseholdSize > 2 && !enteredNumberOfKidsIsValid) {
-        formIsValid = false;
-      } else {
-        formIsValid = true;
-      }
+      formIsValid = true;
     }
 
     const { employee, updateEmployee } = onboardingCtx;
@@ -123,7 +119,7 @@ const InitialStep = React.forwardRef(
       zipCodeInputChangeHandler(employee.zipCode || '');
       statusInputChangeHandler(employee.relationshipStatus || '');
       numberOfKidsInputChangeHandler(employee.numberOfKids || '');
-      householdSizeInputChangeHandler(employee.householdSize || '');
+    //   livingParentsInputChangeHandler(employee.livingParents || '');
     }, []);
 
     function renderKidsSelectValue(option: SelectOption<string> | null) {
@@ -188,10 +184,39 @@ const InitialStep = React.forwardRef(
         zipCode: enteredZipCode,
         relationshipStatus: enteredStatus,
         numberOfKids: enteredNumberOfKids,
-        householdSize: enteredHouseholdSize
+        // livingParents: enteredLivingParents
       });
       onNext();
     }
+
+    function renderPetsQSelectValue(option: SelectOption<string> | null) {
+        let content = null;
+    
+        if (!option) {
+          return content;
+        }
+    
+        switch (option.value) {
+          case 'yes':
+            content = <span>{option.label} (I have pets)</span>;
+            break;
+    
+          case 'no':
+            content = <span>{option.label} (No pets)</span>;
+            break;
+          default:
+            content = null;
+            break;
+        }
+        return content;
+      }
+    
+      function renderPetsSelectValue(option: SelectOption<string> | null) {
+        if (!option) {
+          return null;
+        }
+        return <span>{option?.value + ' pet(s)'}</span>;
+      }
 
     React.useImperativeHandle(ref, () => ({}));
 
@@ -240,47 +265,25 @@ const InitialStep = React.forwardRef(
             onBlur={statusInputBlurHandler}
           />
 
-          <Grid container spacing={2}>
-            <Grid
-              item
-              xs={6}
-              sx={{
-                transition: 'all 0.3s ease-in-out'
-              }}>
-              <MHFormControl
-                id="householdSize"
-                type="number"
-                label="Household Size"
-                placeholder="Household Size"
-                value={enteredHouseholdSize}
-                onChange={(event) => {
-                  numberOfKidsInputChangeHandler('');
-                  householdSizeInputChangeHandler(event);
-                }}
-                onBlur={householdSizeInputBlurHandler}
-              />
-            </Grid>
-            {+enteredHouseholdSize > 2 && (
-              <Grid
-                item
-                xs={6}
-                sx={{
-                  transition: 'all 0.3s ease-in-out'
-                }}>
-                <MHSelect
-                  label="Number of Kids"
-                  options={constants.QUANTITY_OPTIONS}
-                  placeholder="Number of Kids"
-                  value={enteredNumberOfKids}
-                  onChange={(val) =>
-                    numberOfKidsInputChangeHandler(val as string)
-                  }
-                  onBlur={numberOfKidsInputBlurHandler}
-                  renderValue={renderKidsSelectValue}
-                />
-              </Grid>
-            )}
-          </Grid>
+          <MHSelect
+            label="Number of Kids"
+            options={constants.QUANTITY_OPTIONS}
+            placeholder="Number of Kids"
+            value={enteredNumberOfKids}
+            onChange={(val) => numberOfKidsInputChangeHandler(val as string)}
+            onBlur={numberOfKidsInputBlurHandler}
+            renderValue={renderKidsSelectValue}
+          />
+
+          <MHSelect
+            label="Living Parents"
+            options={constants.BOOL_OPTIONS}
+            placeholder="Living Parents"
+            value={enteredLivingParents}
+            onChange={(val) => livingParentsInputChangeHandler(val as string)}
+            onBlur={livingParentsInputBlurHandler}
+            renderValue={renderParentsSelectValue}
+          />
 
           <Stack spacing={2} mt={3}>
             <MHButton type="submit">{'Next'}</MHButton>
