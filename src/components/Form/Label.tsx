@@ -8,7 +8,7 @@ const Label = styled('label')(
     width: 100%;
     min-width: 320px;
     margin-bottom: 4px;
-    color: #A9A9A9;
+    color: #21392E;
     ...({
         ...style
     })

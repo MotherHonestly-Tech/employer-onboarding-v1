@@ -17,6 +17,8 @@ import { SelectOption } from '@mui/base';
 
 import Label from './Label';
 import { SelectProps, MultiSelectProps } from '../../models/form.model';
+import ErrorTip from './ErrorTip';
+import { theme } from '../../theme/mui/dashboard.theme';
 
 const blue = {
   100: '#DAECFF',
@@ -44,9 +46,9 @@ const grey = {
 //   border-radius: 0.75em;
 const isExistingValue = (value: Array<string> | string) => {
   if (Array.isArray(value)) {
-    return (value as Array<string>).some((v) => !!v);
+    return (value as Array<string>).some((v) => Boolean(v));
   } else {
-    return !!value;
+    return Boolean(value);
   }
 };
 
@@ -64,7 +66,7 @@ const StyledButton = styled('button')<{
     width: 100%;
     background: ${theme.palette.mode === 'dark' ? grey[900] : '#fff'};
     border: 1px solid ${grey[100]};
-    margin-bottom: 20px;
+    margin-bottom: 1.25rem;
     padding: 10px;
     text-align: left;
     line-height: 1.5;
@@ -228,6 +230,7 @@ type ExtraProps = {
   placeholder?: string;
   onBlur?: () => void;
   popperWidth?: string;
+  error?: string;
 };
 
 function CustomSelect<TValue>(props: SelectUnstyledProps<TValue> & ExtraProps) {
@@ -248,7 +251,10 @@ function CustomSelect<TValue>(props: SelectUnstyledProps<TValue> & ExtraProps) {
         root: {
           value: props.value,
           placeholder: props.placeholder || 'Select an option',
-          onBlur: props.onBlur
+          onBlur: props.onBlur,
+          style: {
+            borderColor: props.error ? theme.palette.error.main : `${grey[100]}`
+          }
         },
         popper: {
           style: {
@@ -257,6 +263,38 @@ function CustomSelect<TValue>(props: SelectUnstyledProps<TValue> & ExtraProps) {
         }
       }}
     />
+  );
+}
+
+// error={props.error}
+export function MHSelect(props: SelectProps<string>) {
+  return (
+    <>
+      {props.label && <Label>{props.label}</Label>}
+      <CustomSelect
+        placeholder={props.placeholder}
+        value={props.value}
+        onChange={props.onChange}
+        onBlur={props.onBlur}
+        renderValue={props.renderValue}
+        popperWidth={props.popperWidth}
+       >
+        {props.options.map((opt) => (
+          <StyledOption key={opt.value} value={opt.value}>
+            {opt.label}
+          </StyledOption>
+        ))}
+      </CustomSelect>
+      {props.error && (
+        <ErrorTip
+          style={{
+            position: 'relative',
+            top: '-1rem'
+          }}>
+          {props.error}
+        </ErrorTip>
+      )}
+    </>
   );
 }
 
@@ -289,27 +327,6 @@ function CustomMultiSelect<TValue>(
         }
       }}
     />
-  );
-}
-
-export function MHSelect(props: SelectProps<string>) {
-  return (
-    <>
-      {props.label && <Label>{props.label}</Label>}
-      <CustomSelect
-        placeholder={props.placeholder}
-        value={props.value}
-        onChange={props.onChange}
-        onBlur={props.onBlur}
-        renderValue={props.renderValue}
-        popperWidth={props.popperWidth}>
-        {props.options.map((opt) => (
-          <StyledOption key={opt.value} value={opt.value}>
-            {opt.label}
-          </StyledOption>
-        ))}
-      </CustomSelect>
-    </>
   );
 }
 

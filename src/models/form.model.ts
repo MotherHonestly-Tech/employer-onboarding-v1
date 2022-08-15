@@ -25,6 +25,7 @@ export interface SelectProps<T> {
   onBlur: () => void;
   renderValue?: (option: SelectOption<T> | null) => React.ReactNode;
   popperWidth?: string;
+  error?: string;
 }
 
 export interface MultiSelectProps<T> {
