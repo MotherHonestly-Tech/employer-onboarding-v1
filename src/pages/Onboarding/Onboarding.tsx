@@ -20,6 +20,7 @@ import OnboardingContext from '../../store/context/onboarding-context';
 import AuthContext from '../../store/context/auth-context';
 import { HttpResponse } from '../../models/api.interface';
 import { constructDateFormat } from '../../utils/utils';
+import geoData from '../../data/georef-united-states-of-america-state.json';
 
 const steps = [1, 2, 3];
 
@@ -68,7 +69,7 @@ const Onboarding = () => {
   };
 
   const { userId, token, user, updateUserData } = authCtx;
-  const { employee } = onboardingCtx;
+  const { employee, configureStates } = onboardingCtx;
 
   const empData = React.useMemo(() => employee, [employee]);
 
@@ -112,6 +113,10 @@ const Onboarding = () => {
       }
     );
   }, [empData, onboardEmployee, userId, token, user, history, updateUserData]);
+
+  React.useEffect(() => {
+    configureStates(geoData);
+  }, []);
 
   React.useEffect(() => {
     if (completed) {
