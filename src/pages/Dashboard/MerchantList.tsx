@@ -10,7 +10,7 @@ import {
   Typography,
 } from "@mui/material";
 import React from "react";
-import MHButton from "../../components/Form/MHButton";
+import MHButton from "../../components/Button/MHButton";
 import MHTextInput from "../../components/Form/MHTextInput";
 
 import { ReactComponent as SearchIcon } from "../../static/svg/search.svg";

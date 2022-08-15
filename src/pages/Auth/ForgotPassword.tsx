@@ -1,4 +1,3 @@
-<<<<<<< HEAD
 import React from 'react';
 import { useHistory } from 'react-router-dom';
 
@@ -19,22 +18,6 @@ import { FnComponent } from '../../models/component.model';
 import { BGImage } from '../../models/background-image.model';
 import * as validators from '../../utils/validators';
 import { HttpResponse } from '../../models/api.interface';
-=======
-import React from "react";
-
-import Box from "@mui/material/Box";
-import Paper from "@mui/material/Paper";
-import Typography from "@mui/material/Typography";
-
-import MHButton from "../../components/Form/MHButton";
-import MHFormControl from "../../components/Form/MHFormControl";
-import InputAdornment from "../../components/Form/InputAdornment";
-
-import { ReactComponent as MailIcon } from "../../static/svg/mail.svg";
-import { FnComponent } from "../../models/component.model";
-import { BGImage } from "../../models/background-image.model";
-import { Avatar, ListItem, ListItemAvatar, ListItemText } from "@mui/material";
->>>>>>> 4c3bfedc9fdc7e82a6fc8f5a1cc008dc9a99067c
 
 const ForgotPassword: FnComponent<{
   onRouteChange: (image: BGImage) => void;
@@ -60,8 +43,8 @@ const ForgotPassword: FnComponent<{
   React.useEffect(() => {
     onRouteChange({
       imageSrc:
-        "https://res.cloudinary.com/mother-honestly/image/upload/v1657836148/lawrence-crayton-KXOaNSU63NE-unsplash_1_c4copk.png",
-      imageAlt: "Lwrence Crayton",
+        'https://res.cloudinary.com/mother-honestly/image/upload/v1657836148/lawrence-crayton-KXOaNSU63NE-unsplash_1_c4copk.png',
+      imageAlt: 'Lwrence Crayton'
     });
   }, [onRouteChange]);
 
@@ -94,29 +77,23 @@ const ForgotPassword: FnComponent<{
       <Paper
         sx={{
           p: 8,
-          width: "100%",
-          maxWidth: "sm",
-        }}
-      >
+          width: '100%',
+          maxWidth: 'sm'
+        }}>
         <Box sx={{}}>
           <Typography variant="h1" component="h1" gutterBottom mb={1}>
             Forgot your password?
           </Typography>
 
-<<<<<<< HEAD
           <Typography variant="subtitle1" color="#6F6F6F" component={'div'} gutterBottom mb={2}>
-=======
-          <Typography variant="subtitle1" component={"div"} gutterBottom mb={2}>
->>>>>>> 4c3bfedc9fdc7e82a6fc8f5a1cc008dc9a99067c
             Let's get you into your account
           </Typography>
 
-          <Typography variant="body2" component={"div"} gutterBottom mb={3}>
+          <Typography variant="body2" component={'div'} gutterBottom mb={3}>
             Submit your email address and we'll send you a link to reset your
             password
           </Typography>
 
-<<<<<<< HEAD
           {error && (
             <Alert
               severity="error"
@@ -128,9 +105,6 @@ const ForgotPassword: FnComponent<{
           )}
 
           <Box component={'form'} onSubmit={sendResetLinkHandler}>
-=======
-          <Box component={"form"}>
->>>>>>> 4c3bfedc9fdc7e82a6fc8f5a1cc008dc9a99067c
             <MHFormControl
               id="email"
               type="email"
@@ -147,32 +121,11 @@ const ForgotPassword: FnComponent<{
               }
               required
             />
-<<<<<<< HEAD
 
             <MHButton sx={{}} type="submit" loading={loading} fullWidth>
               Reset my password
             </MHButton>
           </Box>
-=======
-            <MHButton sx={{}}>Reset my password</MHButton>
-          </Box>
-          <ListItem
-            sx={{
-              background: "#F3F3F3",
-              color: "#6B6B6B",
-            }}
-            className="py-8 mt-8 font-bold text-xs"
-          >
-            <ListItemAvatar>
-              <Avatar src="asset/info.png" />
-            </ListItemAvatar>
-            <ListItemText>
-              If you don't receive an email from us within a few minutes, Check
-              your spam filter as sometimes they end up in there. The email will
-              be from help@motherhonestly.com
-            </ListItemText>
-          </ListItem>
->>>>>>> 4c3bfedc9fdc7e82a6fc8f5a1cc008dc9a99067c
         </Box>
       </Paper>
     </React.Fragment>
