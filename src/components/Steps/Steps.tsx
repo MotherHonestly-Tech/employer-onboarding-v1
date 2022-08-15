@@ -50,7 +50,7 @@ const ColorlibStepIconRoot = styled('div')<{
   borderRadius: '10%',
   justifyContent: 'center',
   alignItems: 'center',
-  fontFamily: 'Gilroy-Regular',
+  fontFamily: 'Area-Normal-Semibold',
   ...(ownerState.active && {
     backgroundImage:
       'linear-gradient( 136deg, rgba(2,98,89) 0%, rgba(2,98,89) 40%, rgb(40,64,74) 100%)',

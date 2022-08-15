@@ -194,7 +194,7 @@ export const AuthContextProvider = ({
     isAuthenticated: !!token,
     userId: userId,
     user: user,
-    isOnboarded: !!(user?.firstName && user?.lastName), //
+    isOnboarded: false, //!!(user?.firstName && user?.lastName)
     login: loginHandler,
     logout: logoutHandler,
     synchronizeUser,

@@ -15,13 +15,10 @@ import * as constants from '../../utils/constants';
 import OnboardingContext, {
   EmployeeOnboarding
 } from '../../store/context/onboarding-context';
-import useHttp from '../../hooks/use-http';
 
 const InitialStep = React.forwardRef(
   (props: { activeIndex: number; onNext: () => void }, ref) => {
     const onboardingCtx = React.useContext(OnboardingContext);
-
-    const [states, setStates] = React.useState<Array<SelectOption<string>>>([]);
 
     const {
       value: enteredFirstName,
@@ -52,6 +49,7 @@ const InitialStep = React.forwardRef(
     const {
       value: enteredState,
       valid: enteredStateIsValid,
+      error: enteredStateHasError,
       onChange: stateInputChangeHandler,
       onBlur: stateInputBlurHandler,
       markAsTouched: markStateInputAsTouched
@@ -106,17 +104,14 @@ const InitialStep = React.forwardRef(
       error: enteredNumberOfKidsHasError,
       onChange: numberOfKidsInputChangeHandler,
       onBlur: numberOfKidsInputBlurHandler
-    } = useInput([
-      {
-        validator: (value: string) => validators.required(value)
-      }
-    ]);
+    } = useInput([]);
 
     let formIsValid = false;
 
     if (
       enteredFirstNameIsValid &&
       enteredLastNameIsValid &&
+      enteredStateIsValid &&
       enteredZipCodeIsValid &&
       enteredStatusIsValid &&
       enteredHouseholdSizeIsValid
@@ -128,9 +123,7 @@ const InitialStep = React.forwardRef(
       }
     }
 
-    const { loading, sendHttpRequest } = useHttp();
-
-    const { employee, updateEmployee } = onboardingCtx;
+    const { states, employee, updateEmployee } = onboardingCtx;
     const { activeIndex, onNext } = props;
 
     // to set the values of the form when component is mounted
@@ -139,34 +132,11 @@ const InitialStep = React.forwardRef(
 
       firstNameInputChangeHandler(employee.firstName || '');
       lastNameInputChangeHandler(employee.lastName || '');
+      stateInputChangeHandler(employee.state || '');
       zipCodeInputChangeHandler(employee.zipCode || '');
       statusInputChangeHandler(employee.relationshipStatus || '');
       numberOfKidsInputChangeHandler(employee.numberOfKids || '');
       householdSizeInputChangeHandler(employee.householdSize || '');
-    }, []);
-
-    React.useEffect(() => {
-      const options = {
-        method: 'GET',
-        headers: {
-          'X-RapidAPI-Key':
-            '9b6116e924mshc95acd837a39e6fp14f012jsn401e56c711f8',
-          'X-RapidAPI-Host': 'us-states.p.rapidapi.com'
-        }
-      };
-      sendHttpRequest(
-        'https://us-states.p.rapidapi.com/basic',
-        options,
-        (response: any) => {
-          const states: SelectOption<string>[] = response.map((state: any) => {
-            return {
-              value: state.name,
-              label: state.name
-            };
-          });
-          setStates(states);
-        }
-      );
     }, []);
 
     function renderKidsSelectValue(option: SelectOption<string> | null) {
@@ -207,6 +177,10 @@ const InitialStep = React.forwardRef(
       ? 'Please enter your last name'
       : undefined;
 
+    let stateErrorTip = enteredStateHasError
+      ? 'Please select your state of residence'
+      : undefined;
+
     let zipCodeErrorTip = enteredZipCodeHasError
       ? 'Please enter your zip code'
       : undefined;
@@ -229,6 +203,7 @@ const InitialStep = React.forwardRef(
       if (!formIsValid) {
         markFirstNameInputAsTouched();
         markLastNameInputAsTouched();
+        markStateInputAsTouched();
         markZipCodeInputAsTouched();
         markHouseholdSizeInputAsTouched();
         markStatusInputAsTouched();
@@ -238,6 +213,7 @@ const InitialStep = React.forwardRef(
       updateEmployee({
         firstName: enteredFirstName,
         lastName: enteredLastName,
+        state: enteredState,
         zipCode: enteredZipCode,
         relationshipStatus: enteredStatus,
         numberOfKids: enteredNumberOfKids,
@@ -280,6 +256,7 @@ const InitialStep = React.forwardRef(
             value={enteredState}
             onChange={(val) => stateInputChangeHandler(val as string)}
             onBlur={stateInputBlurHandler}
+            error={stateErrorTip}
           />
 
           <MHFormControl

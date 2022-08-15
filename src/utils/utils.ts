@@ -18,6 +18,22 @@ export const decrypt = (encryptedStr: string) => {
   ).toString(CryptoJS.enc.Utf8);
 };
 
+export const isHexColorBright = (color: string) => {
+  const hex = color.replace('#', '');
+  const c_r = parseInt(hex.substring(0, 2), 16);
+  const c_g = parseInt(hex.substring(2, 4), 16);
+  const c_b = parseInt(hex.substring(4, 6), 16);
+  const brightness = (c_r * 299 + c_g * 587 + c_b * 114) / 1000;
+  return brightness > 155;
+};
+
+export const isValidDate = (date: Date | string) => {
+  date = new Date(date);
+  return (
+    date instanceof Date && !isNaN(Date.parse((date as unknown) as string))
+  );
+};
+
 export const getURLWithQueryParams = (
   base: string,
   params: Record<string, string>
@@ -47,20 +63,4 @@ export const formatAmount = (amount: number) => {
 
 export const constructDateFormat = (date: Date) => {
   return `${date.getFullYear()}-${date.getMonth() + 1}-${date.getDate()}`;
-};
-
-export const isHexColorBright = (color: string) => {
-  const hex = color.replace('#', '');
-  const c_r = parseInt(hex.substring(0, 2), 16);
-  const c_g = parseInt(hex.substring(2, 4), 16);
-  const c_b = parseInt(hex.substring(4, 6), 16);
-  const brightness = (c_r * 299 + c_g * 587 + c_b * 114) / 1000;
-  return brightness > 155;
-};
-
-export const isValidDate = (date: Date | string) => {
-  date = new Date(date);
-  return (
-    date instanceof Date && !isNaN(Date.parse((date as unknown) as string))
-  );
 };
