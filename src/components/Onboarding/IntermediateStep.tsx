@@ -11,6 +11,7 @@ import Label from '../Form/Label';
 import MHButton from '../Button/MHButton';
 import useInput from '../../hooks/use-input';
 
+import * as utils from '../../utils/utils';
 import * as validators from '../../utils/validators';
 import * as constants from '../../utils/constants';
 import OnboardingContext from '../../store/context/onboarding-context';
@@ -132,17 +133,17 @@ const IntermediateStep = (props: {
 
     identityInputChangeHandler(employee.identity || '');
     dateInputChangeHandler(
-      employee.dateOfBirth
+      employee.dateOfBirth && utils.isValidDate(employee.dateOfBirth)
         ? String(new Date(employee.dateOfBirth as Date).getDate())
         : ''
     );
     monthInputChangeHandler(
-      employee.dateOfBirth
+      employee.dateOfBirth && utils.isValidDate(employee.dateOfBirth)
         ? String(new Date(employee.dateOfBirth as Date).getMonth() + 1)
         : ''
     );
     yearInputChangeHandler(
-      employee.dateOfBirth
+      employee.dateOfBirth && utils.isValidDate(employee.dateOfBirth)
         ? String(new Date(employee.dateOfBirth as Date).getFullYear())
         : ''
     );

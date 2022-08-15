@@ -2,16 +2,15 @@ import React from 'react';
 import { Link, useHistory, useLocation } from 'react-router-dom';
 
 import Box from '@mui/material/Box';
-import Stack from '@mui/material/Stack';
 import MuiLink from '@mui/material/Link';
 import Typography from '@mui/material/Typography';
 import Alert from '@mui/material/Alert';
-import Slide from '@mui/material/Slide';
 
 import MHFormControl from '../../components/Form/MHFormControl';
 import MHButton from '../../components/Button/MHButton';
 import InputAdornment from '../../components/Form/InputAdornment';
 import IconButton from '../../components/Button/IconButtonStyled';
+import Notification from '../../components/UI/Notification';
 import useHttp from '../../hooks/use-http';
 import useTitle from '../../hooks/use-title';
 
@@ -19,53 +18,13 @@ import { ReactComponent as MailIcon } from '../../static/svg/mail.svg';
 import { ReactComponent as LockIcon } from '../../static/svg/lock.svg';
 import { ReactComponent as VisibilityIcon } from '../../static/svg/visibility.svg';
 import { ReactComponent as VisibilityOffIcon } from '../../static/svg/visibility-off.svg';
-import { ReactComponent as CheckCircleFillIcon } from '../../static/svg/check-circle-fill.svg';
 import { BGImage } from '../../models/background-image.model';
 import { FnComponent } from '../../models/component.model';
 import { theme } from '../../theme/mui/dashboard.theme';
+import { HttpResponse } from '../../models/api.interface';
 import * as formReducer from '../../store/reducers/form';
 import * as validators from '../../utils/validators';
 import AuthContext from '../../store/context/auth-context';
-import { HttpResponse } from '../../models/api.interface';
-
-const Notification = () => {
-  return (
-    <Box
-      sx={{
-        position: 'fixed',
-        top: 20,
-        maxWidth: 700,
-        left: '50%',
-        transform: 'translateX(-50%)'
-      }}>
-      <Slide
-        direction="down"
-        in
-        mountOnEnter
-        unmountOnExit
-        easing={{
-          enter: 'ease-in'
-        }}>
-        <Stack
-          bgcolor="#edf7ed"
-          direction="row"
-          spacing={2}
-          alignItems="center"
-          sx={{
-            px: 2,
-            py: 1,
-            borderRadius: 2
-          }}>
-          <CheckCircleFillIcon color="#2d832d" />
-          <Typography variant="body1" color="textPrimary">
-            You're all set up! Please login with your work email and password to
-            continue
-          </Typography>
-        </Stack>
-      </Slide>
-    </Box>
-  );
-};
 
 const SignIn: FnComponent<{
   onRouteChange: (image: BGImage) => void;
@@ -187,7 +146,12 @@ const SignIn: FnComponent<{
 
   return (
     <React.Fragment>
-      {showAlert && <Notification />}
+      {showAlert && (
+        <Notification
+          type="success"
+          message="You're all set up! Please login with your work email and password to continue"
+        />
+      )}
       <Box
         sx={{
           px: 8,

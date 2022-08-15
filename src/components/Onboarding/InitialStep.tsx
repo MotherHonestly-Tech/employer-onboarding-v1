@@ -3,6 +3,7 @@ import React from 'react';
 import Box from '@mui/material/Box';
 import Stack from '@mui/material/Stack';
 import Grid from '@mui/material/Grid';
+import { SelectOption } from '@mui/base';
 
 import MHFormControl from '../Form/MHFormControl';
 import { MHSelect } from '../Form/MHSelect';
@@ -11,14 +12,16 @@ import useInput from '../../hooks/use-input';
 
 import * as validators from '../../utils/validators';
 import * as constants from '../../utils/constants';
-import { SelectOption } from '@mui/base';
 import OnboardingContext, {
   EmployeeOnboarding
 } from '../../store/context/onboarding-context';
+import useHttp from '../../hooks/use-http';
 
 const InitialStep = React.forwardRef(
   (props: { activeIndex: number; onNext: () => void }, ref) => {
     const onboardingCtx = React.useContext(OnboardingContext);
+
+    const [states, setStates] = React.useState<Array<SelectOption<string>>>([]);
 
     const {
       value: enteredFirstName,
@@ -47,6 +50,18 @@ const InitialStep = React.forwardRef(
     ]);
 
     const {
+      value: enteredState,
+      valid: enteredStateIsValid,
+      onChange: stateInputChangeHandler,
+      onBlur: stateInputBlurHandler,
+      markAsTouched: markStateInputAsTouched
+    } = useInput([
+      {
+        validator: (value: string) => validators.required(value)
+      }
+    ]);
+
+    const {
       value: enteredZipCode,
       valid: enteredZipCodeIsValid,
       error: enteredZipCodeHasError,
@@ -64,7 +79,8 @@ const InitialStep = React.forwardRef(
       valid: enteredStatusIsValid,
       error: enteredStatusHasError,
       onChange: statusInputChangeHandler,
-      onBlur: statusInputBlurHandler
+      onBlur: statusInputBlurHandler,
+      markAsTouched: markStatusInputAsTouched
     } = useInput([
       {
         validator: (value: string) => validators.required(value)
@@ -76,7 +92,8 @@ const InitialStep = React.forwardRef(
       valid: enteredHouseholdSizeIsValid,
       error: enteredHouseholdSizeHasError,
       onChange: householdSizeInputChangeHandler,
-      onBlur: householdSizeInputBlurHandler
+      onBlur: householdSizeInputBlurHandler,
+      markAsTouched: markHouseholdSizeInputAsTouched
     } = useInput([
       {
         validator: (value: string) => validators.required(value)
@@ -104,12 +121,14 @@ const InitialStep = React.forwardRef(
       enteredStatusIsValid &&
       enteredHouseholdSizeIsValid
     ) {
-      if(+enteredHouseholdSize > 2 && !enteredNumberOfKidsIsValid) {
+      if (+enteredHouseholdSize > 2 && !enteredNumberOfKidsIsValid) {
         formIsValid = false;
       } else {
         formIsValid = true;
       }
     }
+
+    const { loading, sendHttpRequest } = useHttp();
 
     const { employee, updateEmployee } = onboardingCtx;
     const { activeIndex, onNext } = props;
@@ -124,6 +143,30 @@ const InitialStep = React.forwardRef(
       statusInputChangeHandler(employee.relationshipStatus || '');
       numberOfKidsInputChangeHandler(employee.numberOfKids || '');
       householdSizeInputChangeHandler(employee.householdSize || '');
+    }, []);
+
+    React.useEffect(() => {
+      const options = {
+        method: 'GET',
+        headers: {
+          'X-RapidAPI-Key':
+            '9b6116e924mshc95acd837a39e6fp14f012jsn401e56c711f8',
+          'X-RapidAPI-Host': 'us-states.p.rapidapi.com'
+        }
+      };
+      sendHttpRequest(
+        'https://us-states.p.rapidapi.com/basic',
+        options,
+        (response: any) => {
+          const states: SelectOption<string>[] = response.map((state: any) => {
+            return {
+              value: state.name,
+              label: state.name
+            };
+          });
+          setStates(states);
+        }
+      );
     }, []);
 
     function renderKidsSelectValue(option: SelectOption<string> | null) {
@@ -168,17 +211,27 @@ const InitialStep = React.forwardRef(
       ? 'Please enter your zip code'
       : undefined;
 
+    let statusErrorTip = enteredStatusHasError
+      ? 'Please select relationship status'
+      : undefined;
+
+    let householdSizeErrorTip = enteredHouseholdSizeHasError
+      ? 'Please enter number of people in household'
+      : undefined;
+
     const preventDefault = (e: React.SyntheticEvent) => {
       e.preventDefault();
     };
 
     function submitHandler(e: React.ChangeEvent<HTMLFormElement>) {
-      e.preventDefault();
+      preventDefault(e);
 
       if (!formIsValid) {
         markFirstNameInputAsTouched();
         markLastNameInputAsTouched();
         markZipCodeInputAsTouched();
+        markHouseholdSizeInputAsTouched();
+        markStatusInputAsTouched();
         return;
       }
 
@@ -220,6 +273,15 @@ const InitialStep = React.forwardRef(
             error={lastNameErrorTip}
           />
 
+          <MHSelect
+            label="State"
+            placeholder="Select State"
+            options={states}
+            value={enteredState}
+            onChange={(val) => stateInputChangeHandler(val as string)}
+            onBlur={stateInputBlurHandler}
+          />
+
           <MHFormControl
             id="zipCode"
             type="text"
@@ -238,6 +300,7 @@ const InitialStep = React.forwardRef(
             value={enteredStatus}
             onChange={(val) => statusInputChangeHandler(val as string)}
             onBlur={statusInputBlurHandler}
+            error={statusErrorTip}
           />
 
           <Grid container spacing={2}>
@@ -258,6 +321,7 @@ const InitialStep = React.forwardRef(
                   householdSizeInputChangeHandler(event);
                 }}
                 onBlur={householdSizeInputBlurHandler}
+                error={householdSizeErrorTip}
               />
             </Grid>
             {+enteredHouseholdSize > 2 && (
