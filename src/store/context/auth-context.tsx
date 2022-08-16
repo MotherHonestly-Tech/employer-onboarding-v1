@@ -21,7 +21,7 @@ type AuthContextType = {
   token: Token | null;
   userId: number | null;
   user: User | null;
-  isOnboarded: boolean;
+  isOnboarded: (user: User) => boolean;
   login: (token: Token, uuid: number) => void;
   logout: () => void;
   synchronizeUser: (emp: Employee) => void;
@@ -36,7 +36,7 @@ const AuthContext = React.createContext<AuthContextType>({
   token: null,
   userId: null,
   user: null,
-  isOnboarded: false,
+  isOnboarded: (user: User) => false,
   login: (token: Token, uuid: number) => {},
   logout: () => {},
   synchronizeUser: (emp: Employee) => {},
@@ -200,7 +200,7 @@ export const AuthContextProvider = ({
     isAuthenticated: !!token,
     userId: userId,
     user: user,
-    isOnboarded: !!(user?.firstName && user?.lastName), //
+    isOnboarded: (user: User) => !!(user?.firstName && user?.lastName), //
     login: loginHandler,
     logout: logoutHandler,
     synchronizeUser,

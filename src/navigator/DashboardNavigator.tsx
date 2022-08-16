@@ -18,7 +18,7 @@ const DashboardNavigator = () => {
     return <Startup />;
   }
 
-  if (!authCtx.isOnboarded) {
+  if (!authCtx.isOnboarded(authCtx.user)) {
     return (
       <Redirect
         to={{
