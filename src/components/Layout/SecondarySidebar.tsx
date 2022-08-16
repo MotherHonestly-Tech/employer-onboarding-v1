@@ -115,13 +115,17 @@ const SecondarySidebar: FnComponent = () => {
           color="#28404A"
           fontSize={'.7rem'}
           gutterBottom
-          mb={2}
-          sx={{}}>
-          Are you joggling different task and still can't find time to do the
+          mb={2}>
+          Are you joggling different tasks and still can't find time to do the
           needful.
         </Typography>
 
-        <Typography variant="body2" color="#28404A" gutterBottom mb={2} sx={{}}>
+        <Typography
+          variant="body2"
+          color="#28404A"
+          fontSize={'.7rem'}
+          gutterBottom
+          mb={2}>
           Lets take some tasks off from your plate.
         </Typography>
 

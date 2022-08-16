@@ -16,6 +16,8 @@ const OnboardingNavigator = () => {
     return <Startup />;
   }
   
+  console.log(authCtx.isOnboarded);
+
   if (authCtx.isOnboarded) {
     return (
       <Redirect

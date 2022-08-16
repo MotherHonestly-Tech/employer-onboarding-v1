@@ -171,6 +171,7 @@ export const AuthContextProvider = ({
         tokenData?.token as Token,
         tokenData?.tokenExpirationDate as Date
       );
+      console.log(user);
       setUser(user);
     },
     [tokenData, userId]
