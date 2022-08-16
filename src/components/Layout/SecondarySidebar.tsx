@@ -24,7 +24,7 @@ const SideDrawer = styled(MuiDrawer, {
 })(({ theme, open }) => ({
   '& .MuiDrawer-paper': {
     position: 'sticky',
-    width: `${drawerWidth + 20}px`,
+    width: `${drawerWidth + 60}px`,
     height: '100vh',
     padding: theme.spacing(2),
     background: '#F1F7F8',
@@ -46,6 +46,22 @@ const SideDrawer = styled(MuiDrawer, {
       }
     })
   }
+}));
+
+const ListStyled = styled(
+  List,
+  {}
+)<{
+  component?: React.ElementType;
+}>(({ theme }) => ({}));
+
+const ListItemStyled = styled(ListItem)<{
+  component?: React.ElementType;
+  to: string;
+}>(({ theme }) => ({
+  position: 'relative',
+  cursor: 'pointer',
+  height: 52
 }));
 
 const merchantsList: Array<{
@@ -73,22 +89,6 @@ const merchantsList: Array<{
   }
 ];
 
-const ListStyled = styled(
-  List,
-  {}
-)<{
-  component?: React.ElementType;
-}>(({ theme }) => ({}));
-
-const ListItemStyled = styled(ListItem)<{
-  component?: React.ElementType;
-  to: string;
-}>(({ theme }) => ({
-  position: 'relative',
-  cursor: 'pointer',
-  height: 52
-}));
-
 const SecondarySidebar: FnComponent = () => {
   return (
     <SideDrawer variant="permanent" open={true}>
@@ -98,7 +98,7 @@ const SecondarySidebar: FnComponent = () => {
         }}
       />
       <Box display="flex" flexDirection={'column'} height="100%">
-        <Typography variant="h3">Merchants</Typography>
+        <Typography variant="h3" gutterBottom>Merchants</Typography>
 
         <MerchantList merchantList={merchantsList} />
 
@@ -117,7 +117,7 @@ const SecondarySidebar: FnComponent = () => {
         </Typography>
 
         <Typography variant="body2" color="#28404A" gutterBottom mb={2} sx={{}}>
-          Lets take some task off from your plate.
+          Lets take some tasks off from your plate.
         </Typography>
 
         <ListItem

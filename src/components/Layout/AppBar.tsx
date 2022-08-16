@@ -11,6 +11,8 @@ import { styled } from '@mui/material/styles';
 import SearchField from '../Form/SearchField';
 import MHPrimaryLogo from '../../theme/icons/MHPrimaryLogo';
 import IconButtonUnstyled from '../Button/IconButtonStyled';
+
+import { ReactComponent as ArrowRightIcon } from '../../static/svg/arrow-right-thick.svg';
 import { ReactComponent as BellIcon } from '../../static/svg/notification-bell.svg';
 import { ReactComponent as CaretDownIcon } from '../../static/svg/caret-down.svg';
 import AuthContext from '../../store/context/auth-context';
@@ -47,7 +49,7 @@ const AppBar = () => {
           </Box>
 
           <Stack direction="row" alignItems="center" spacing={6}>
-            <SearchField />
+            <SearchField icon={<ArrowRightIcon />} placeholder="Select an interest" />
 
             <BellIcon title="notification" width="1.3rem" />
 

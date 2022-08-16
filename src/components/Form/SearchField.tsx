@@ -8,11 +8,10 @@ import InputAdornment from './InputAdornment';
 import IconButtonUnstyled from '../Button/IconButtonStyled';
 import useInput from '../../hooks/use-input';
 
-import { ReactComponent as ArrowRightIcon } from '../../static/svg/arrow-right-thick.svg';
 import { ReactComponent as FilterIcon } from '../../static/svg/filter.svg';
 import * as validators from '../../utils/validators';
 
-const SearchField = () => {
+const SearchField = ({ icon, placeholder, bgcolor }: { icon?: React.ReactElement, placeholder: string, bgcolor?: string }) => {
   const {
     value: searchValue,
     valid: searchValid,
@@ -25,11 +24,11 @@ const SearchField = () => {
   ]);
 
   return (
-    <Box component={'form'} width={300} display="flex" bgcolor="#F1F1F1">
+    <Box component={'form'} width={250} display="flex" bgcolor={bgcolor || '#F1F1F1'}>
       <MHTextInput
         id="search-interest"
         type="text"
-        placeholder="Select an interest"
+        placeholder={placeholder}
         value={searchValue}
         onChange={searchOnChange}
         onBlur={searchOnBlur}
@@ -44,6 +43,7 @@ const SearchField = () => {
       />
       <MHButton
         sx={{
+          minWidth: 'auto',
           '& svg': {
             stroke: 'grey.500',
             width: '1rem'
@@ -52,7 +52,7 @@ const SearchField = () => {
             stroke: 'primary'
           }
         }}>
-        <ArrowRightIcon />
+          {icon && icon}
       </MHButton>
     </Box>
   );

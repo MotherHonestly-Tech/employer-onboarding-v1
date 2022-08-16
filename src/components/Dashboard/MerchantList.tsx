@@ -4,14 +4,11 @@ import Avatar from '@mui/material/Avatar';
 import List from '@mui/material/List';
 import ListItem from '@mui/material/ListItem';
 import ListItemAvatar from '@mui/material/ListItemAvatar';
-import ListItemIcon from '@mui/material/ListItemIcon';
 import ListItemText from '@mui/material/ListItemText';
 import Typography from '@mui/material/Typography';
 
-import MHButton from '../Button/MHButton';
-import MHTextInput from '../Form/MHTextInput';
-
 import { ReactComponent as SearchIcon } from '../../static/svg/search.svg';
+import SearchField from '../Form/SearchField';
 
 type MerchantListProps = {
   merchantList: Array<{
@@ -24,32 +21,19 @@ type MerchantListProps = {
 export const MerchantList = ({ merchantList }: MerchantListProps) => {
   return (
     <>
-      {/* <FormGroup sx={{ marginTop: '20px' }}>
-        <MHTextInput
-          className="bg-white"
-          placeholder="Search for a merchant"
-          // value={searchText}
-          // onChange={(e) => setSearchText(e.target.value)}
-          endAdornment={
-            <MHButton sx={{}}>
-            </MHButton>
-            // <Button
-            //   color={"primary"}
-            //   sx={{ backgroundColor: "black" }}
-            //   onClick={handleClick}
-            // >
-            //   <SearchIcon width="1rem" />
-            // </Button>
-          }
+      <List
+        sx={{
+          flexGrow: 1
+        }}>
+        <SearchField
+          icon={<SearchIcon width="1rem" />}
+          placeholder="Search for a Merchant"
+          bgcolor="#FFFFFF"
         />
-              <SearchIcon width="1rem" />
-
-      </FormGroup> */}
-      <List sx={{
-        flexGrow: 1,
-      }}>
         {merchantList.map((merchant, index) => (
-          <ListItem component={'button'} key={index} sx={{ }} disableGutters>
+          <ListItem component={'button'} key={index} sx={{
+            mt: index < 1 ? 2: 0
+          }} disableGutters>
             <ListItemAvatar>
               <Avatar
                 variant="rounded"
