@@ -31,7 +31,7 @@ const blue = {
 
 const grey = {
   50: '#F3F6F9',
-  100: '#EEEEEE',
+  100: '#E0E3E7',
   200: '#E0E3E7',
   300: '#CDD2D7',
   400: '#B2BAC2',

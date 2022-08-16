@@ -6,8 +6,14 @@ import Box from '@mui/material/Box';
 import Typography from '@mui/material/Typography';
 import List from '@mui/material/List';
 import ListItem from '@mui/material/ListItem';
+import ListItemText from '@mui/material/ListItemText';
+import Divider from '@mui/material/Divider';
 import { styled } from '@mui/material/styles';
 
+import IconButtonStyled from '../Button/IconButtonStyled';
+import { MerchantList } from '../Dashboard/MerchantList';
+
+import { ReactComponent as ArrowBtnIcon } from '../../static/svg/arrow-btn.svg';
 import { drawerWidth } from '../../utils/constants';
 import { FnComponent } from '../../models/component.model';
 
@@ -16,10 +22,9 @@ const SideDrawer = styled(MuiDrawer, {
 })(({ theme, open }) => ({
   '& .MuiDrawer-paper': {
     position: 'sticky',
-    whiteSpace: 'nowrap',
-    width: drawerWidth,
+    width: `${drawerWidth + 60}px`,
     height: '100vh',
-    padding: theme.spacing(3),
+    padding: theme.spacing(2),
     background: '#F1F7F8',
     boxShadow: '2px 4px 4px 0px #B7B7B740',
     transition: theme.transitions.create('width', {
@@ -46,9 +51,7 @@ const ListStyled = styled(
   {}
 )<{
   component?: React.ElementType;
-}>(({ theme }) => ({
-
-}));
+}>(({ theme }) => ({}));
 
 const ListItemStyled = styled(ListItem)<{
   component?: React.ElementType;
@@ -59,21 +62,79 @@ const ListItemStyled = styled(ListItem)<{
   height: 52
 }));
 
+const merchantsList: Array<{
+  merchant: string;
+  categories: string;
+  iconUrl: string;
+}> = [
+  {
+    merchant: 'Sittercity',
+    categories: 'Petcare, Childcare, Eldercare',
+    iconUrl:
+      'https://res.cloudinary.com/mother-honestly/image/upload/v1658581169/sittercity_square_logo_1_t7zj5w.svg'
+  },
+  {
+    merchant: 'Care.com',
+    categories: 'Petcare, Childcare, Eldercare',
+    iconUrl:
+      'https://res.cloudinary.com/mother-honestly/image/upload/v1658581169/care_1_ofwdit.svg'
+  },
+  {
+    merchant: 'SnapHealth',
+    categories: 'Petcare, Childcare, Eldercare',
+    iconUrl:
+      'https://res.cloudinary.com/mother-honestly/image/upload/v1658581169/Snaphealth_1_g44p2m.svg'
+  }
+];
 
 const SecondarySidebar: FnComponent = () => {
-
   return (
     <SideDrawer variant="permanent" open={true}>
-      <Toolbar />
+      <Toolbar
+        sx={{
+          mb: 1
+        }}
+      />
+      <Box display="flex" flexDirection={'column'} height="100%">
+        <Typography variant="h3" gutterBottom>
+          Merchants
+        </Typography>
 
-      <Box>
-        <Typography variant="h3" >Merchants</Typography>
+        <MerchantList merchantList={merchantsList} />
+
+        <Divider
+          variant="fullWidth"
+          light
+          sx={{
+            borderColor: '#E8E8E8',
+            my: 4
+          }}
+        />
+
+        <Typography variant="body2" color="#28404A" gutterBottom mb={2} sx={{}}>
+          Are you joggling different task and still can't find time to do the
+          needful.
+        </Typography>
+
+        <Typography variant="body2" color="#28404A" gutterBottom mb={2} sx={{}}>
+          Lets take some tasks off from your plate.
+        </Typography>
+
+        <ListItem
+          component="button"
+          disableGutters
+          secondaryAction={
+            <IconButtonStyled aria-label="">
+              <ArrowBtnIcon />
+            </IconButtonStyled>
+          }>
+          <ListItemText sx={{ color: '#28404A' }}>
+            <Typography variant="body2" color="#28404A" sx={{}}>
+              Talk to a Concierge Today!
+            </Typography>
+          </ListItemText>
+        </ListItem>
       </Box>
-
-      <ListStyled component="nav" sx={{}} disablePadding>
-        {/* <ListItem component={NavLink} to="/organization/dashboard"></ListItem> */}
-
-      </ListStyled>
     </SideDrawer>
   );
 };

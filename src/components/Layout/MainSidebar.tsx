@@ -176,7 +176,7 @@ const RouterLink = (props: RouterLinkProps) => {
 
 const MainSidebar: FnComponent<{ sx?: object }> = ({ sx }) => {
   return (
-    <SideDrawer variant="permanent" open={true} style={{ ...sx }}>
+    <SideDrawer variant="permanent" open={true} sx={{ ...sx }}>
       <Toolbar />
 
       <ListStyled component="nav" sx={{}} disablePadding>
