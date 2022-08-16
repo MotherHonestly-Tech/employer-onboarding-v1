@@ -10,7 +10,6 @@ import ListItemText from '@mui/material/ListItemText';
 import Divider from '@mui/material/Divider';
 import { styled } from '@mui/material/styles';
 
-import IconButtonStyled from '../Button/IconButtonStyled';
 import { MerchantList } from '../Dashboard/MerchantList';
 
 import { ReactComponent as ArrowBtnIcon } from '../../static/svg/arrow-btn.svg';
@@ -111,7 +110,13 @@ const SecondarySidebar: FnComponent = () => {
           }}
         />
 
-        <Typography variant="body2" color="#28404A" gutterBottom mb={2} sx={{}}>
+        <Typography
+          variant="body2"
+          color="#28404A"
+          fontSize={'.7rem'}
+          gutterBottom
+          mb={2}
+          sx={{}}>
           Are you joggling different task and still can't find time to do the
           needful.
         </Typography>
@@ -123,12 +128,8 @@ const SecondarySidebar: FnComponent = () => {
         <ListItem
           component="button"
           disableGutters
-          secondaryAction={
-            <IconButtonStyled aria-label="">
-              <ArrowBtnIcon />
-            </IconButtonStyled>
-          }>
-          <ListItemText sx={{ color: '#28404A' }}>
+          secondaryAction={<ArrowBtnIcon />}>
+          <ListItemText sx={{ color: '#28404A', verticalAlign: 'middle' }}>
             <Typography variant="body2" color="#28404A" sx={{}}>
               Talk to a Concierge Today!
             </Typography>
