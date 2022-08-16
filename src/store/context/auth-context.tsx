@@ -24,7 +24,10 @@ type AuthContextType = {
   login: (token: Token, uuid: number) => void;
   logout: () => void;
   synchronizeUser: (emp: Employee) => void;
-  updateUserData: (updatedUser: { firstName: string, lastName: string }) => void;
+  updateUserData: (updatedUser: {
+    firstName: string;
+    lastName: string;
+  }) => void;
 };
 
 const AuthContext = React.createContext<AuthContextType>({
