@@ -15,9 +15,6 @@ const OnboardingNavigator = () => {
     // console.log('authCtx.user', authCtx.user);
     return <Startup />;
   }
-  
-  console.log(authCtx.user);
-  console.log(!!authCtx.user.firstName && !!authCtx.user.lastName);
 
   if (authCtx.isOnboarded(authCtx.user)) {
     return (

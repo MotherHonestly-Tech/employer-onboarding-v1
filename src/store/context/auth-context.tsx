@@ -114,7 +114,6 @@ export const AuthContextProvider = ({
   }, [user, logout]);
 
   const loginHandler = (token: Token, uuid: number) => {
-    localStorage.removeItem(AUTH_LOCATION);
     setToken(token);
     setUserId(uuid);
     const expirationTime = new Date(new Date().getTime() + TOKEN_VALIDITY);
@@ -173,7 +172,6 @@ export const AuthContextProvider = ({
         tokenData?.token as Token,
         tokenData?.tokenExpirationDate as Date
       );
-      console.log(user);
       setUser(user);
     },
     [tokenData, userId]
