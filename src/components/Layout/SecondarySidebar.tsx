@@ -10,11 +10,9 @@ import ListItemText from '@mui/material/ListItemText';
 import Divider from '@mui/material/Divider';
 import { styled } from '@mui/material/styles';
 
-import MHTextInput from '../Form/MHTextInput';
 import IconButtonStyled from '../Button/IconButtonStyled';
 import { MerchantList } from '../Dashboard/MerchantList';
 
-import { ReactComponent as SearchIcon } from '../../static/svg/search.svg';
 import { ReactComponent as ArrowBtnIcon } from '../../static/svg/arrow-btn.svg';
 import { drawerWidth } from '../../utils/constants';
 import { FnComponent } from '../../models/component.model';
@@ -98,7 +96,9 @@ const SecondarySidebar: FnComponent = () => {
         }}
       />
       <Box display="flex" flexDirection={'column'} height="100%">
-        <Typography variant="h3" gutterBottom>Merchants</Typography>
+        <Typography variant="h3" gutterBottom>
+          Merchants
+        </Typography>
 
         <MerchantList merchantList={merchantsList} />
 
