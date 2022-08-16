@@ -6,86 +6,71 @@ import Box from '@mui/material/Box';
 import Typography from '@mui/material/Typography';
 import List from '@mui/material/List';
 import ListItem from '@mui/material/ListItem';
+import ListItemText from '@mui/material/ListItemText';
+import Divider from '@mui/material/Divider';
 import { styled } from '@mui/material/styles';
 
+import MHTextInput from '../Form/MHTextInput';
+import IconButtonStyled from '../Button/IconButtonStyled';
+import { MerchantList } from '../Dashboard/MerchantList';
+
+import { ReactComponent as SearchIcon } from '../../static/svg/search.svg';
+import { ReactComponent as ArrowBtnIcon } from '../../static/svg/arrow-btn.svg';
 import { drawerWidth } from '../../utils/constants';
 import { FnComponent } from '../../models/component.model';
-
-interface RouterLinkProps {
-  icon?: React.ReactElement;
-  primary: string;
-  to: string;
-}
 
 const SideDrawer = styled(MuiDrawer, {
   shouldForwardProp: (prop) => prop !== 'open'
 })(({ theme, open }) => ({
   '& .MuiDrawer-paper': {
     position: 'sticky',
-    whiteSpace: 'nowrap',
-    width: drawerWidth,
+    width: `${drawerWidth + 20}px`,
     height: '100vh',
-    padding: theme.spacing(3),
-    background: "#F1F7F8",
-    borderWidth: 1,
-    boxShadow: "2px 4px 4px 0px #B7B7B740",
-    transition: theme.transitions.create("width", {
+    padding: theme.spacing(2),
+    background: '#F1F7F8',
+    boxShadow: '2px 4px 4px 0px #B7B7B740',
+    transition: theme.transitions.create('width', {
       easing: theme.transitions.easing.sharp,
       duration: theme.transitions.duration.enteringScreen
     }),
-    boxSizing: "border-box",
+    boxSizing: 'border-box',
     ...(!open && {
-      overflowX: "hidden",
-      transition: theme.transitions.create("width", {
+      overflowX: 'hidden',
+      transition: theme.transitions.create('width', {
         easing: theme.transitions.easing.sharp,
-        duration: theme.transitions.duration.leavingScreen,
+        duration: theme.transitions.duration.leavingScreen
       }),
       width: theme.spacing(7),
-      [theme.breakpoints.up("sm")]: {
-        width: theme.spacing(9),
-      },
-    }),
-  },
+      [theme.breakpoints.up('sm')]: {
+        width: theme.spacing(9)
+      }
+    })
+  }
 }));
 
-const merchantsList = [
+const merchantsList: Array<{
+  merchant: string;
+  categories: string;
+  iconUrl: string;
+}> = [
   {
-    id: 1,
-    text: "Sittercity",
-    text2: "Petcare, Childcare, Eldercare",
-    // avatar: (
-    //   <SittercityIcon width="41px" height="41px" className="rounded-lg" />
-    // ),
-    img: "../asset/sitter.png",
+    merchant: 'Sittercity',
+    categories: 'Petcare, Childcare, Eldercare',
+    iconUrl:
+      'https://res.cloudinary.com/mother-honestly/image/upload/v1658581169/sittercity_square_logo_1_t7zj5w.svg'
   },
   {
-    id: 2,
-    text: "Care",
-    text2: "Childcare",
-    img: "../asset/care.png",
-    // avatar: <CaresIcon width="41px" height="41px" className="rounded-md" />,
+    merchant: 'Care.com',
+    categories: 'Petcare, Childcare, Eldercare',
+    iconUrl:
+      'https://res.cloudinary.com/mother-honestly/image/upload/v1658581169/care_1_ofwdit.svg'
   },
   {
-    id: 3,
-    text: "SnapHealth",
-    text2: "Eldercare",
-    img: "../asset/snap.png",
-    // avatar: <SnapIcon width="41px" height="41px" className="rounded-lg" />,
-  },
-  {
-    id: 4,
-    text: "Care",
-    text2: "Childcare",
-    img: "../asset/care.png",
-    // avatar: <CaresIcon width="41px" height="41px" className="rounded-md" />,
-  },
-  {
-    id: 5,
-    text: "SnapHealth",
-    text2: "Eldercare",
-    img: "../asset/snap.png",
-    // avatar: <SnapIcon width="41px" height="41px" className="rounded-lg" />,
-  },
+    merchant: 'SnapHealth',
+    categories: 'Petcare, Childcare, Eldercare',
+    iconUrl:
+      'https://res.cloudinary.com/mother-honestly/image/upload/v1658581169/Snaphealth_1_g44p2m.svg'
+  }
 ];
 
 const ListStyled = styled(
@@ -93,34 +78,63 @@ const ListStyled = styled(
   {}
 )<{
   component?: React.ElementType;
-}>(({ theme }) => ({
-
-}));
+}>(({ theme }) => ({}));
 
 const ListItemStyled = styled(ListItem)<{
   component?: React.ElementType;
   to: string;
 }>(({ theme }) => ({
-  position: "relative",
-  cursor: "pointer",
-  height: 52,
+  position: 'relative',
+  cursor: 'pointer',
+  height: 52
 }));
 
-
 const SecondarySidebar: FnComponent = () => {
-
   return (
     <SideDrawer variant="permanent" open={true}>
-      <Toolbar />
+      <Toolbar
+        sx={{
+          mb: 1
+        }}
+      />
+      <Box display="flex" flexDirection={'column'} height="100%">
+        <Typography variant="h3">Merchants</Typography>
 
-      <Box>
-        <Typography variant="h3" >Merchants</Typography>
+        <MerchantList merchantList={merchantsList} />
+
+        <Divider
+          variant="fullWidth"
+          light
+          sx={{
+            borderColor: '#E8E8E8',
+            my: 4
+          }}
+        />
+
+        <Typography variant="body2" color="#28404A" gutterBottom mb={2} sx={{}}>
+          Are you joggling different task and still can't find time to do the
+          needful.
+        </Typography>
+
+        <Typography variant="body2" color="#28404A" gutterBottom mb={2} sx={{}}>
+          Lets take some task off from your plate.
+        </Typography>
+
+        <ListItem
+          component="button"
+          disableGutters
+          secondaryAction={
+            <IconButtonStyled aria-label="">
+              <ArrowBtnIcon />
+            </IconButtonStyled>
+          }>
+          <ListItemText sx={{ color: '#28404A' }}>
+            <Typography variant="body2" color="#28404A" sx={{}}>
+              Talk to a Concierge Today!
+            </Typography>
+          </ListItemText>
+        </ListItem>
       </Box>
-
-      <ListStyled component="nav" sx={{}} disablePadding>
-        {/* <ListItem component={NavLink} to="/organization/dashboard"></ListItem> */}
-
-      </ListStyled>
     </SideDrawer>
   );
 };

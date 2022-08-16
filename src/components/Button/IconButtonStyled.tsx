@@ -1,5 +1,3 @@
-import React from 'react';
-
 import ButtonUnstyled from '@mui/base/ButtonUnstyled';
 import { styled } from '@mui/material/styles';
 

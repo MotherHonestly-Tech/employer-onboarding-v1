@@ -3,7 +3,7 @@ import AppNavigator from './navigator/Navigator';
 
 function App() {
   return (
-    <div className="App">
+    <div className="mh-organization">
       <AppNavigator />
     </div>
   );
