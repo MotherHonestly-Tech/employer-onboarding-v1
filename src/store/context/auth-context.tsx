@@ -1,4 +1,5 @@
 import * as React from 'react';
+import { useRouteMatch } from 'react-router-dom';
 
 import useHttp from '../../hooks/use-http';
 
@@ -113,6 +114,7 @@ export const AuthContextProvider = ({
   }, [user, logout]);
 
   const loginHandler = (token: Token, uuid: number) => {
+    localStorage.removeItem(AUTH_LOCATION);
     setToken(token);
     setUserId(uuid);
     const expirationTime = new Date(new Date().getTime() + TOKEN_VALIDITY);
