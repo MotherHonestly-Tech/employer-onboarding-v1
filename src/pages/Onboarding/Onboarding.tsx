@@ -79,16 +79,17 @@ const Onboarding = () => {
       employeeEmail: user?.email,
       firstName: empData?.firstName,
       lastName: empData?.lastName,
+      state: empData?.state,
       zipCode: empData?.zipCode,
       relationShipStatus: empData?.relationshipStatus,
-      houseHoldSize : +empData?.householdSize!,
+      houseHoldSize: +empData?.householdSize!,
       numberOfKids: empData?.numberOfKids,
       identity: empData?.identity,
       dateOfBirth: constructDateFormat(empData?.dateOfBirth as Date),
       race: empData?.race,
       jobTitle: empData?.jobTitle,
       position: empData?.position,
-      workDepartment: empData?.department,
+      workDepartment: empData?.department
       // careResponsibility: (empData?.careResponsibilities as Array<string>).join(
       //   ','
       // )
@@ -109,6 +110,7 @@ const Onboarding = () => {
           firstName: String(empData?.firstName),
           lastName: String(empData?.lastName)
         });
+        
         history.push('/onboarding/interests');
       }
     );
@@ -166,7 +168,11 @@ const Onboarding = () => {
               <Steps steps={steps} activeStep={activeStepIndex} />
 
               {ActiveFormComponent && (
-                <Slide direction="left" in={steps.includes(activeStepIndex + 1)} mountOnEnter unmountOnExit>
+                <Slide
+                  direction="left"
+                  in={steps.includes(activeStepIndex + 1)}
+                  mountOnEnter
+                  unmountOnExit>
                   <Box>
                     <ActiveFormComponent
                       activeIndex={activeStepIndex}

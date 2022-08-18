@@ -65,14 +65,14 @@ const WalletBalance = () => {
         <BackgroundOverlay />
 
         <Box position="relative" flexGrow={1} display="flex" flexDirection={'column'} justifyContent="center">
-          <DashedIcon
+          {/* <DashedIcon
             sx={{
               position: 'absolute',
               left: '15%',
               top: 10
             }}>
             <CashIcon />
-          </DashedIcon>
+          </DashedIcon> */}
 
           <Typography
             align="center"
