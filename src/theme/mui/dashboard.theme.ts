@@ -160,6 +160,14 @@ export const theme = createTheme({
           opacity: 1
         }
       }
+    },
+    MuiAlert: {
+      styleOverrides: {
+        root: {
+          fontSize: '0.8rem',
+          lineHeight: 1.5
+        }
+      }
     }
 
     // MuiTable: {

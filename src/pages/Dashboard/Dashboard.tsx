@@ -4,8 +4,9 @@ import Box from '@mui/material/Box';
 import Typography from '@mui/material/Typography';
 import Grid from '@mui/material/Grid';
 
-import WalletBalance from '../../components/Dashboard/WalletBalance';
-import Consultant from '../../components/Dashboard/Consultant';
+import WalletBalance from "../../components/Dashboard/WalletBalance";
+import Consultant from "../../components/Dashboard/Consultant";
+import Concierge from "../../components/Dashboard/Concierge";
 import RecentTransactions from '../../components/Dashboard/RecentTransactions';
 import AuthContext from '../../store/context/auth-context';
 
@@ -54,6 +55,9 @@ const Dashboard = () => {
             <Consultant imageSrc="https://res.cloudinary.com/mother-honestly/image/upload/v1657976886/jurica-koletic-7YVZYZeITc8-unsplash_1_bxrqph.png" />
           </Grid>
         </Grid>
+      </Box>
+      <Box mt={5}>
+        <Concierge />
       </Box>
     </React.Fragment>
   );
