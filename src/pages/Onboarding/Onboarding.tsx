@@ -1,5 +1,5 @@
 import React from 'react';
-import { useHistory } from 'react-router-dom';
+import { Redirect, useHistory } from 'react-router-dom';
 
 import Box from '@mui/material/Box';
 import Grid from '@mui/material/Grid';
@@ -24,7 +24,7 @@ import geoData from '../../data/georef-united-states-of-america-state.json';
 
 const steps = [1, 2, 3];
 
-const Onboarding = () => {
+const Onboarding = ({ isOnboarded }: { isOnboarded: () => boolean }) => {
   const [activeStepIndex, setActiveStepIndex] = React.useState(0);
   const [completed, setCompleted] = React.useState(false);
   const onboardingCtx = React.useContext(OnboardingContext);
@@ -110,7 +110,7 @@ const Onboarding = () => {
           firstName: String(empData?.firstName),
           lastName: String(empData?.lastName)
         });
-        
+
         history.push('/onboarding/interests');
       }
     );
@@ -128,6 +128,17 @@ const Onboarding = () => {
 
   if (error) {
     setCompleted(false);
+  }
+  
+  if (isOnboarded()) {
+    return (
+      <Redirect
+        to={{
+          pathname: '/organization/dashboard',
+          state: { from: { pathname: '/onboarding' } }
+        }}
+      />
+    );
   }
 
   return (

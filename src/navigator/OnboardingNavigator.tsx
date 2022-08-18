@@ -4,34 +4,36 @@ import { Switch, Route, Redirect, useRouteMatch } from 'react-router-dom';
 import Startup from '../components/Dashboard/Startup';
 import Interests from '../pages/Onboarding/Interests';
 import Onboarding from '../pages/Onboarding/Onboarding';
+
 import AuthContext from '../store/context/auth-context';
 import { OnboardingContextProvider } from '../store/context/onboarding-context';
+import { User } from '../models/user.model';
 
 const OnboardingNavigator = () => {
   const { path } = useRouteMatch();
   const authCtx = React.useContext(AuthContext);
+
+  const { user, isOnboarded } = authCtx;
 
   if (!authCtx.user) {
     // console.log('authCtx.user', authCtx.user);
     return <Startup />;
   }
 
-  if (authCtx.isOnboarded(authCtx.user)) {
-    return (
-      <Redirect
-        to={{
-          pathname: '/organization/dashboard',
-          state: { from: { pathname: '/onboarding' } }
-        }}
-      />
-    );
-  }
+  const userIsOnboarded = () => isOnboarded(user as User);
+
+  // <Redirect
+  //   to={{
+  //     pathname: '/organization/dashboard',
+  //     state: { from: { pathname: '/onboarding' } }
+  //   }}
+  // />;
 
   return (
     <Switch>
       <Route path={`${path}/employee`}>
         <OnboardingContextProvider>
-          <Onboarding />
+          <Onboarding isOnboarded={userIsOnboarded} />
         </OnboardingContextProvider>
       </Route>
       <Route path={`${path}/interests`}>
