@@ -1,48 +1,49 @@
-import React from 'react';
+import React from "react";
 
-import MuiDrawer from '@mui/material/Drawer';
-import Toolbar from '@mui/material/Toolbar';
-import Box from '@mui/material/Box';
-import Typography from '@mui/material/Typography';
-import List from '@mui/material/List';
-import ListItem from '@mui/material/ListItem';
-import ListItemText from '@mui/material/ListItemText';
-import Divider from '@mui/material/Divider';
-import { styled } from '@mui/material/styles';
+import MuiDrawer from "@mui/material/Drawer";
+import Toolbar from "@mui/material/Toolbar";
+import Box from "@mui/material/Box";
+import Typography from "@mui/material/Typography";
+import List from "@mui/material/List";
+import ListItem from "@mui/material/ListItem";
+import ListItemText from "@mui/material/ListItemText";
+import Divider from "@mui/material/Divider";
+import { styled } from "@mui/material/styles";
 
-import { MerchantList } from '../Dashboard/MerchantList';
+import { MerchantList } from "../Dashboard/MerchantList";
 
-import { ReactComponent as ArrowBtnIcon } from '../../static/svg/arrow-btn.svg';
-import { drawerWidth } from '../../utils/constants';
-import { FnComponent } from '../../models/component.model';
+import { ReactComponent as ArrowBtnIcon } from "../../static/svg/arrow-btn.svg";
+import { ReactComponent as SideDesign } from "../../static/svg/side-bar.svg";
+import { drawerWidth } from "../../utils/constants";
+import { FnComponent } from "../../models/component.model";
 
 const SideDrawer = styled(MuiDrawer, {
-  shouldForwardProp: (prop) => prop !== 'open'
+  shouldForwardProp: (prop) => prop !== "open",
 })(({ theme, open }) => ({
-  '& .MuiDrawer-paper': {
-    position: 'sticky',
+  "& .MuiDrawer-paper": {
+    position: "sticky",
     width: `${drawerWidth + 60}px`,
-    height: '100vh',
+    height: "100vh",
     padding: theme.spacing(2),
-    background: '#F1F7F8',
-    boxShadow: '2px 4px 4px 0px #B7B7B740',
-    transition: theme.transitions.create('width', {
+    background: "#F1F7F8",
+    boxShadow: "2px 4px 4px 0px #B7B7B740",
+    transition: theme.transitions.create("width", {
       easing: theme.transitions.easing.sharp,
-      duration: theme.transitions.duration.enteringScreen
+      duration: theme.transitions.duration.enteringScreen,
     }),
-    boxSizing: 'border-box',
+    boxSizing: "border-box",
     ...(!open && {
-      overflowX: 'hidden',
-      transition: theme.transitions.create('width', {
+      overflowX: "hidden",
+      transition: theme.transitions.create("width", {
         easing: theme.transitions.easing.sharp,
-        duration: theme.transitions.duration.leavingScreen
+        duration: theme.transitions.duration.leavingScreen,
       }),
       width: theme.spacing(7),
-      [theme.breakpoints.up('sm')]: {
-        width: theme.spacing(9)
-      }
-    })
-  }
+      [theme.breakpoints.up("sm")]: {
+        width: theme.spacing(9),
+      },
+    }),
+  },
 }));
 
 const ListStyled = styled(
@@ -56,9 +57,9 @@ const ListItemStyled = styled(ListItem)<{
   component?: React.ElementType;
   to: string;
 }>(({ theme }) => ({
-  position: 'relative',
-  cursor: 'pointer',
-  height: 52
+  position: "relative",
+  cursor: "pointer",
+  height: 52,
 }));
 
 const merchantsList: Array<{
@@ -67,73 +68,83 @@ const merchantsList: Array<{
   iconUrl: string;
 }> = [
   {
-    merchant: 'Sittercity',
-    categories: 'Petcare, Childcare, Eldercare',
+    merchant: "Sittercity",
+    categories: "Petcare, Childcare, Eldercare",
     iconUrl:
-      'https://res.cloudinary.com/mother-honestly/image/upload/v1658581169/sittercity_square_logo_1_t7zj5w.svg'
+      "https://res.cloudinary.com/mother-honestly/image/upload/v1658581169/sittercity_square_logo_1_t7zj5w.svg",
   },
   {
-    merchant: 'Care.com',
-    categories: 'Petcare, Childcare, Eldercare',
+    merchant: "Care.com",
+    categories: "Petcare, Childcare, Eldercare",
     iconUrl:
-      'https://res.cloudinary.com/mother-honestly/image/upload/v1658581169/care_1_ofwdit.svg'
+      "https://res.cloudinary.com/mother-honestly/image/upload/v1658581169/care_1_ofwdit.svg",
   },
   {
-    merchant: 'SnapHealth',
-    categories: 'Petcare, Childcare, Eldercare',
+    merchant: "SnapHealth",
+    categories: "Petcare, Childcare, Eldercare",
     iconUrl:
-      'https://res.cloudinary.com/mother-honestly/image/upload/v1658581169/Snaphealth_1_g44p2m.svg'
-  }
+      "https://res.cloudinary.com/mother-honestly/image/upload/v1658581169/Snaphealth_1_g44p2m.svg",
+  },
 ];
 
 const SecondarySidebar: FnComponent = () => {
   return (
-    <SideDrawer variant="permanent" open={true}>
+    <SideDrawer variant="permanent" open={true} className="">
       <Toolbar
         sx={{
-          mb: 1
+          mb: 1,
         }}
       />
-      <Box display="flex" flexDirection={'column'} height="100%">
+      <Box display="flex " flexDirection={"column"} height="100%" className="">
         <Typography variant="h3" gutterBottom>
           Merchants
         </Typography>
 
         <MerchantList merchantList={merchantsList} />
 
-        <Divider
-          variant="fullWidth"
-          light
-          sx={{
-            borderColor: '#E8E8E8',
-            my: 4
-          }}
+        <SideDesign
+          className="absolute bottom-0 right-0"
+          height="300px"
+          width="200px"
         />
 
-        <Typography
-          variant="body2"
-          color="#28404A"
-          fontSize={'.7rem'}
-          gutterBottom
-          mb={2}>
-          Are you joggling different tasks and still can't find time to do the
-          needful.
-        </Typography>
-
-        <Typography
-          variant="body2"
-          color="#28404A"
-          fontSize={'.7rem'}
-          gutterBottom
-          mb={2}>
-          Lets take some tasks off from your plate.
-        </Typography>
-
+        <ListItem component="div">
+          <ListItemText sx={{ color: "#28404A", verticalAlign: "middle" }}>
+            <Divider
+              variant="fullWidth"
+              light
+              className="mb-24"
+              sx={{
+                borderColor: "#E8E8E8",
+              }}
+            />
+            <Typography
+              variant="body2"
+              color="#28404A"
+              fontSize={".7rem"}
+              gutterBottom
+              mb={2}
+            >
+              Are you joggling different tasks and still can't find time to do
+              the needful.
+            </Typography>
+            <Typography
+              variant="body2"
+              color="#28404A"
+              fontSize={".7rem"}
+              gutterBottom
+              mb={2}
+            >
+              Lets take some tasks off from your plate.
+            </Typography>
+          </ListItemText>
+        </ListItem>
         <ListItem
           component="button"
-          disableGutters
-          secondaryAction={<ArrowBtnIcon />}>
-          <ListItemText sx={{ color: '#28404A', verticalAlign: 'middle' }}>
+          // disableGutters
+          secondaryAction={<ArrowBtnIcon />}
+        >
+          <ListItemText sx={{ color: "#28404A", verticalAlign: "middle" }}>
             <Typography variant="body2" color="#28404A" sx={{}}>
               Talk to a Concierge Today!
             </Typography>

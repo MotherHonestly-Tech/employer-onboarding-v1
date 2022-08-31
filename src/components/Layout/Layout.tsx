@@ -1,19 +1,19 @@
-import React from 'react';
+import React from "react";
 
-import Box from '@mui/material/Box';
-import Toolbar from '@mui/material/Toolbar';
+import Box from "@mui/material/Box";
+import Toolbar from "@mui/material/Toolbar";
 
-import AppBar from './AppBar';
-import Sidebar from './MainSidebar';
-import SecondarySidebar from './SecondarySidebar';
+import AppBar from "./AppBar";
+import Sidebar from "./MainSidebar";
+import SecondarySidebar from "./SecondarySidebar";
 
-import { FnComponent } from '../../models/component.model';
+import { FnComponent } from "../../models/component.model";
 
 const Layout: FnComponent = (props) => {
   return (
     <Box>
       <AppBar />
-      <Box component={'main'} sx={{ display: 'flex' }}>
+      <Box component={"main"} sx={{ display: "flex" }}>
         <Sidebar />
 
         <Box
@@ -21,13 +21,14 @@ const Layout: FnComponent = (props) => {
           sx={{
             backgroundColor: (theme) => theme.palette.background.paper,
             flexGrow: 1,
-            overflow: 'auto'
-          }}>
+            overflow: "auto",
+          }}
+        >
           <Toolbar />
           {props.children}
         </Box>
 
-        <SecondarySidebar />
+        {/* <SecondarySidebar /> */}
       </Box>
     </Box>
   );
