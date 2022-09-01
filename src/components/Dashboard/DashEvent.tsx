@@ -2,11 +2,11 @@ import { Box, Grid, Typography } from "@mui/material";
 import { Fragment } from "react";
 import React, { useEffect, useState } from "react";
 
-import MHButton from "../../Button/MHButton";
-import ResCard from "../SubComponents/ResCard";
+import ResCard from "../Resources/SubComponents/ResCard";
+import MHButton from "../Button/MHButton";
 import { useHistory, useLocation, useRouteMatch } from "react-router-dom";
 
-import { ReactComponent as ResEventIcon } from "../../../static/svg/resevent.svg";
+import { ReactComponent as ResEventIcon } from "../../static/svg/resevent.svg";
 import { format } from "date-fns";
 
 type ResProps = {
@@ -21,10 +21,10 @@ type ResProps = {
   updatedAt?: string;
 };
 
-const ResEvent = (props: ResProps) => {
+const DashEvent = (props: ResProps) => {
   const location = useLocation();
   const [resources, setResources] = useState<ResProps[]>([]);
-  const [noOfElement, setnoOfElement] = useState(4);
+  const [noOfElement, setnoOfElement] = useState(3);
 
   var resUrl = `${process.env.REACT_APP_RES_URL}`;
 
@@ -33,7 +33,7 @@ const ResEvent = (props: ResProps) => {
   const { path } = useRouteMatch();
 
   const handleClickOpen = () => {
-    history.push(`${path}/events`);
+    history.push(`resources/events`);
   };
 
   // console.log(location.pathname);
@@ -59,7 +59,7 @@ const ResEvent = (props: ResProps) => {
 
   return (
     <Fragment>
-      <Box className=" py-12 bg-white">
+      <Box className=" py-12 ">
         <Box className="mx-auto overscroll-x-hidden flex" sx={{}}>
           <Typography
             variant="body2"
@@ -88,12 +88,12 @@ const ResEvent = (props: ResProps) => {
           Events & Conferences
         </Typography>
 
-        <Box className="mx-auto pt-10 bg-white px-6 pb-4">
+        <Box className="mx-auto pt-10  px-6 pb-4">
           <Grid container spacing={2}>
             {slice.map((res, index) => (
-              <Grid item xs={12} md={6} lg={3} key={index}>
+              <Grid item xs={12} md={6} lg={4} key={index}>
                 <ResCard
-                  cardClass="relative w-[280px] h-[420px] object-cover bg-cream-100 rounded-md"
+                  cardClass="relative w-[250px] h-[390px] object-cover bg-cream-100 rounded-md"
                   iconClass="hidden"
                   imgBg="bg-cream-200 "
                   bodyBg="bg-cream-100"
@@ -101,8 +101,8 @@ const ResEvent = (props: ResProps) => {
                   top={format(new Date(res.createdAt!), "MMMM d")}
                   title={res.titles}
                   category={res.categ}
-                  titleUrl={`${location.pathname}/events/${res.slugs}`}
-                  playUrl={`${location.pathname}/events/${res.slugs}`}
+                  titleUrl={`resources/events/${res.slugs}`}
+                  playUrl={`resources/events/${res.slugs}`}
                 />
               </Grid>
             ))}
@@ -120,4 +120,4 @@ const ResEvent = (props: ResProps) => {
   );
 };
 
-export default ResEvent;
+export default DashEvent;

@@ -2,8 +2,10 @@ import { Box, Typography } from "@mui/material";
 import React, { Fragment } from "react";
 
 import { ReactComponent as ResAll } from "../../../static/svg/all-res.svg";
-import { ReactComponent as ResTop } from "../../../static/svg/res-top.svg";
-import { ReactComponent as ResBottom } from "../../../static/svg/res-bottom.svg";
+import { ReactComponent as ResOne } from "../../../static/svg/resone.svg";
+import { ReactComponent as ResTwo } from "../../../static/svg/restwo.svg";
+import { ReactComponent as ResThree } from "../../../static/svg/resthree.svg";
+import { ReactComponent as ResFour } from "../../../static/svg/resfour.svg";
 
 type Props = {};
 
@@ -19,10 +21,15 @@ const ResHeader = (props: Props) => {
         }
       >
         <Box className="overscroll-x-hidden" sx={{}}>
-          <ResTop
-            className="absolute -top-40 left-12"
-            height="480px"
-            width="700px"
+          <ResOne
+            className="absolute -top-20 left-16"
+            height="350px"
+            width="250px"
+          />
+          <ResThree
+            className="absolute -top-16 right-52"
+            height="350px"
+            width="250px"
           />
         </Box>
 
@@ -41,10 +48,10 @@ const ResHeader = (props: Props) => {
           </Typography>
           <ResAll className=" mx-auto" height="100px" width="300px" />
 
-          <Box className="text-center place-content-center">
+          <Box className="relative text-center place-content-center">
             <Typography
               variant="body2"
-              className="text-center mt-2 w-2/4 absolute inset-x-64 text-[12px] font-areaSemi"
+              className=" text-center mt-2 w-[450px] mx-auto inset-x-64 text-[12px] font-areaSemi"
               color="primary"
             >
               Achieve your personal and professional goals with personalized
@@ -54,12 +61,9 @@ const ResHeader = (props: Props) => {
           </Box>
         </Box>
 
-        <Box className="overscroll-x-hidden" sx={{}}>
-          <ResBottom
-            className="absolute top-24 left-64"
-            height="480px"
-            width="700px"
-          />
+        <Box className="overscroll-x-hidden " sx={{}}>
+          <ResTwo className="absolute top-40 left-52" height="350px" />
+          <ResFour className="absolute top-[270px] right-0" width="400px" />
         </Box>
       </Box>
     </Fragment>

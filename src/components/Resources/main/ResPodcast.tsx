@@ -23,7 +23,7 @@ type ResProps = {
 const ResPodcast = (props: ResProps) => {
   const location = useLocation();
   const [resources, setResources] = useState<ResProps[]>([]);
-  const [noOfElement, setnoOfElement] = useState(3);
+  const [noOfElement, setnoOfElement] = useState(4);
 
   var resUrl = `${process.env.REACT_APP_RES_URL}`;
 
@@ -89,9 +89,9 @@ const ResPodcast = (props: ResProps) => {
         <Box className="mx-auto pt-10 bg-white px-6 pb-4">
           <Grid container spacing={2}>
             {slice.map((res, index) => (
-              <Grid item xs={12} md={6} lg={4} key={index}>
+              <Grid item xs={12} md={6} lg={3} key={index}>
                 <ResCard
-                  cardClass="relative w-[280px] h-auto object-cover bg-cream-100 rounded-md"
+                  cardClass="relative w-[280px] h-[465px] object-cover bg-cream-100 rounded-md"
                   iconClass="hidden"
                   imgBg="bg-cream-200 "
                   bodyBg="bg-cream-100"
@@ -100,8 +100,8 @@ const ResPodcast = (props: ResProps) => {
                   title={res.titles}
                   text={res.texts}
                   category={res.categ}
-                  titleUrl={`${location.pathname}/${res.slugs}`}
-                  playUrl={`${location.pathname}/${res.slugs}`}
+                  titleUrl={`${location.pathname}/podcasts/${res.slugs}`}
+                  playUrl={`${location.pathname}/podcasts/${res.slugs}`}
                 />
               </Grid>
             ))}

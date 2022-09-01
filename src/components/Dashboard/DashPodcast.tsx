@@ -2,12 +2,11 @@ import { Box, Grid, Typography } from "@mui/material";
 import { Fragment } from "react";
 import React, { useEffect, useState } from "react";
 
-import MHButton from "../../Button/MHButton";
-import ResCard from "../SubComponents/ResCard";
+import ResCard from "../Resources/SubComponents/ResCard";
+import MHButton from "../Button/MHButton";
 import { useHistory, useLocation, useRouteMatch } from "react-router-dom";
 
-import { ReactComponent as ResEventIcon } from "../../../static/svg/resevent.svg";
-import { format } from "date-fns";
+import { ReactComponent as ResPodcastIcon } from "../../static/svg/respod.svg";
 
 type ResProps = {
   image?: string;
@@ -21,10 +20,10 @@ type ResProps = {
   updatedAt?: string;
 };
 
-const ResEvent = (props: ResProps) => {
+const DashPodcast = (props: ResProps) => {
   const location = useLocation();
   const [resources, setResources] = useState<ResProps[]>([]);
-  const [noOfElement, setnoOfElement] = useState(4);
+  const [noOfElement, setnoOfElement] = useState(3);
 
   var resUrl = `${process.env.REACT_APP_RES_URL}`;
 
@@ -33,7 +32,7 @@ const ResEvent = (props: ResProps) => {
   const { path } = useRouteMatch();
 
   const handleClickOpen = () => {
-    history.push(`${path}/events`);
+    history.push(`resources/podcasts`);
   };
 
   // console.log(location.pathname);
@@ -56,10 +55,9 @@ const ResEvent = (props: ResProps) => {
   useEffect(() => {
     getResource();
   }, []);
-
   return (
     <Fragment>
-      <Box className=" py-12 bg-white">
+      <Box className=" py-12 ">
         <Box className="mx-auto overscroll-x-hidden flex" sx={{}}>
           <Typography
             variant="body2"
@@ -71,8 +69,8 @@ const ResEvent = (props: ResProps) => {
               fontFamily: "Area-Extended",
             }}
           >
-            <ResEventIcon className="-mt-2" height="24px" width="25px" />
-            Events
+            <ResPodcastIcon className="-mt-2" height="24px" width="25px" />
+            podcast
           </Typography>
         </Box>
         <Typography
@@ -85,24 +83,25 @@ const ResEvent = (props: ResProps) => {
             fontFamily: "Columbia-Sans",
           }}
         >
-          Events & Conferences
+          The Podcast
         </Typography>
 
-        <Box className="mx-auto pt-10 bg-white px-6 pb-4">
+        <Box className="mx-auto pt-10  px-6 pb-4">
           <Grid container spacing={2}>
             {slice.map((res, index) => (
-              <Grid item xs={12} md={6} lg={3} key={index}>
+              <Grid item xs={12} md={6} lg={4} key={index}>
                 <ResCard
-                  cardClass="relative w-[280px] h-[420px] object-cover bg-cream-100 rounded-md"
+                  cardClass="relative w-[250px] h-[430px] object-cover bg-cream-100 rounded-md"
                   iconClass="hidden"
                   imgBg="bg-cream-200 "
                   bodyBg="bg-cream-100"
                   imageSrc={res.image}
-                  top={format(new Date(res.createdAt!), "MMMM d")}
+                  top={res.tops}
                   title={res.titles}
+                  text={res.texts}
                   category={res.categ}
-                  titleUrl={`${location.pathname}/events/${res.slugs}`}
-                  playUrl={`${location.pathname}/events/${res.slugs}`}
+                  titleUrl={`resources/podcasts/${res.slugs}`}
+                  playUrl={`resources/podcasts/${res.slugs}`}
                 />
               </Grid>
             ))}
@@ -112,12 +111,10 @@ const ResEvent = (props: ResProps) => {
               View All
             </MHButton>
           </div>
-
-          <Box className="bg-gray-300 h-[2px] w-[98%] mx-auto"></Box>
         </Box>
       </Box>
     </Fragment>
   );
 };
 
-export default ResEvent;
+export default DashPodcast;

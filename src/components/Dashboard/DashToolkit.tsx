@@ -2,12 +2,11 @@ import { Box, Grid, Typography } from "@mui/material";
 import { Fragment } from "react";
 import React, { useEffect, useState } from "react";
 
-import MHButton from "../../Button/MHButton";
-import ResCard from "../SubComponents/ResCard";
 import { useHistory, useLocation, useRouteMatch } from "react-router-dom";
 
-import { ReactComponent as ResEventIcon } from "../../../static/svg/resevent.svg";
-import { format } from "date-fns";
+import { ReactComponent as ResToolkitIcon } from "../../static/svg/resdot.svg";
+import ResCard from "../Resources/SubComponents/ResCard";
+import MHButton from "../Button/MHButton";
 
 type ResProps = {
   image?: string;
@@ -21,10 +20,10 @@ type ResProps = {
   updatedAt?: string;
 };
 
-const ResEvent = (props: ResProps) => {
+const DashToolkit = (props: ResProps) => {
   const location = useLocation();
   const [resources, setResources] = useState<ResProps[]>([]);
-  const [noOfElement, setnoOfElement] = useState(4);
+  const [noOfElement, setnoOfElement] = useState(2);
 
   var resUrl = `${process.env.REACT_APP_RES_URL}`;
 
@@ -33,7 +32,7 @@ const ResEvent = (props: ResProps) => {
   const { path } = useRouteMatch();
 
   const handleClickOpen = () => {
-    history.push(`${path}/events`);
+    history.push(`resources/toolkits`);
   };
 
   // console.log(location.pathname);
@@ -59,11 +58,12 @@ const ResEvent = (props: ResProps) => {
 
   return (
     <Fragment>
-      <Box className=" py-12 bg-white">
-        <Box className="mx-auto overscroll-x-hidden flex" sx={{}}>
+      <Box className="bg-lilac-200">
+        <Box className=" overscroll-x-hidden mt-6 gap-2 flex px-8" sx={{}}>
+          <ResToolkitIcon className="" height="24px" width="25px" />
           <Typography
             variant="body2"
-            className="mx-auto gap-2 flex font-normal uppercase "
+            className="text-center mt-1 font-normal uppercase "
             color="primary"
             sx={{
               fontWeight: 900,
@@ -71,13 +71,12 @@ const ResEvent = (props: ResProps) => {
               fontFamily: "Area-Extended",
             }}
           >
-            <ResEventIcon className="-mt-2" height="24px" width="25px" />
-            Events
+            The Toolkits
           </Typography>
         </Box>
         <Typography
           variant="h3"
-          className="mx-auto text-center my-2 "
+          className="text-left my-2 px-8"
           color="primary"
           sx={{
             fontWeight: 500,
@@ -85,39 +84,39 @@ const ResEvent = (props: ResProps) => {
             fontFamily: "Columbia-Sans",
           }}
         >
-          Events & Conferences
+          Resources To Make Life Easier
         </Typography>
 
-        <Box className="mx-auto pt-10 bg-white px-6 pb-4">
-          <Grid container spacing={2}>
+        <Box className="mx-auto mt-10">
+          <Grid container spacing={28} className="gap-16 px-28">
             {slice.map((res, index) => (
-              <Grid item xs={12} md={6} lg={3} key={index}>
+              <Grid item xs={4} key={index}>
                 <ResCard
-                  cardClass="relative w-[280px] h-[420px] object-cover bg-cream-100 rounded-md"
+                  cardClass="relative w-[320px] h-[440px] object-cover bg-cream-100"
                   iconClass="hidden"
                   imgBg="bg-cream-200 "
                   bodyBg="bg-cream-100"
                   imageSrc={res.image}
-                  top={format(new Date(res.createdAt!), "MMMM d")}
+                  // top={res.tops}
                   title={res.titles}
+                  // text={res.texts}
                   category={res.categ}
-                  titleUrl={`${location.pathname}/events/${res.slugs}`}
-                  playUrl={`${location.pathname}/events/${res.slugs}`}
+                  titleUrl={`resources/toolkits/${res.slugs}`}
+                  playUrl={`resources/toolkits/${res.slugs}`}
                 />
               </Grid>
             ))}
           </Grid>
-          <div className="flex justify-center py-12">
+
+          <div className="flex justify-center py-8">
             <MHButton onClick={() => handleClickOpen()} sx={{ width: "113px" }}>
               View All
             </MHButton>
           </div>
-
-          <Box className="bg-gray-300 h-[2px] w-[98%] mx-auto"></Box>
         </Box>
       </Box>
     </Fragment>
   );
 };
 
-export default ResEvent;
+export default DashToolkit;

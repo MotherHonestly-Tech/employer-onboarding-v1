@@ -23,7 +23,7 @@ type ResProps = {
 const ResToolkit = (props: ResProps) => {
   const location = useLocation();
   const [resources, setResources] = useState<ResProps[]>([]);
-  const [noOfElement, setnoOfElement] = useState(2);
+  const [noOfElement, setnoOfElement] = useState(3);
 
   var resUrl = `${process.env.REACT_APP_RES_URL}`;
 
@@ -88,11 +88,11 @@ const ResToolkit = (props: ResProps) => {
         </Typography>
 
         <Box className="mx-auto mt-10">
-          <Grid container spacing={24} className="gap-16 px-24">
+          <Grid container spacing={12} className="gap-16 px-12">
             {slice.map((res, index) => (
-              <Grid item xs={4} key={index}>
+              <Grid item xs={3} key={index}>
                 <ResCard
-                  cardClass="relative w-[350px] h-fit object-cover bg-cream-100"
+                  cardClass="relative w-[350px] h-[470px] object-cover bg-cream-100"
                   iconClass="hidden"
                   imgBg="bg-cream-200 "
                   bodyBg="bg-cream-100"
@@ -101,8 +101,8 @@ const ResToolkit = (props: ResProps) => {
                   title={res.titles}
                   // text={res.texts}
                   category={res.categ}
-                  titleUrl={`${location.pathname}/${res.slugs}`}
-                  playUrl={`${location.pathname}/${res.slugs}`}
+                  titleUrl={`${location.pathname}/toolkits/${res.slugs}`}
+                  playUrl={`${location.pathname}/toolkits/${res.slugs}`}
                 />
               </Grid>
             ))}
