@@ -2,6 +2,8 @@ import { Fragment } from "react";
 import React, { useEffect, useState } from "react";
 import { Link, useLocation } from "react-router-dom";
 
+import moment from "moment";
+
 import { ReactComponent as BgOverlay } from "../../../static/svg/event.svg";
 import {
   Box,
@@ -17,7 +19,6 @@ import EventSort from "./EventSort";
 import Pagination from "../../Form/Pagination";
 import AllresHeader from "../SubComponents/AllresHeader";
 import ResCard from "../SubComponents/ResCard";
-import { format } from "date-fns";
 
 type ResProps = {
   image?: string;
@@ -117,7 +118,7 @@ const EventsPage = (props: ResProps) => {
                           {res.titles}
                         </Typography>
                         <Typography className="pt-4 uppercase w-full font-areaNorm text-[11px] font-[900] leading-[102%] tracking-[0.1rem] text-white">
-                          {format(new Date(res.createdAt!), "MMMM dd")} -
+                          {moment(res.createdAt!).format("MMMM Do ")}
                         </Typography>
                         <Typography className="pt-4  w-3/4 font-areaSemi line-clamp-3 text-[15px] font-[700] leading-[200%] tracking-[0.02rem]  text-white">
                           {res.texts}
@@ -157,7 +158,7 @@ const EventsPage = (props: ResProps) => {
                     imgBg="bg-pink-700"
                     bodyBg="bg-cream-100"
                     imageSrc={res.image}
-                    top={format(new Date(res.createdAt!), "MMMM dd")}
+                    top={moment(res.createdAt!).format("MMMM Do ")}
                     title={res.titles}
                     text=""
                     category={res.categ}

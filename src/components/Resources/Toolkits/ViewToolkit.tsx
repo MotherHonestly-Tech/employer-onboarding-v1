@@ -4,7 +4,7 @@ import Typography from "@mui/material/Typography";
 import { Box, Grid } from "@mui/material";
 import ResCard from "../SubComponents/ResCard";
 import { useLocation, useParams } from "react-router-dom";
-import { format } from "date-fns";
+import moment from "moment";
 
 type ComponentProps = {
   image?: string;
@@ -73,8 +73,8 @@ const ViewToolkit = (props: ComponentProps) => {
         categoryTwo={data.category}
         downloadLink={data.downloadUrl}
         downloadClassName="flex -ml-4 my-8"
-        date={data.date}
-        dateTwo={data.date}
+        date={moment(data.date).format("DD/MM/YYYY HH:mm")}
+        dateTwo={moment(data.date).format("MMMM D YYYY")}
         ticketClassName="py-6 hidden"
         podClassName="mt-10 flex gap-32 hidden"
         dateClassName="hidden text-left pb-2 w-3/4 text-base font-areaSemi"

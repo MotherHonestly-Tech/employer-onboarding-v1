@@ -1,6 +1,4 @@
 import { Box, Grid, Typography } from "@mui/material";
-import { format } from "date-fns";
-// import { format } from "date-fns";
 import React, { Fragment } from "react";
 
 import { ReactComponent as DownloadIcon } from "../../../static/svg/download.svg";
@@ -44,7 +42,6 @@ const ViewHeader = (props: HeaderProps) => {
                 color="primary"
               >
                 {props.date}
-                {/* {format(new Date(props.date!), "MMMM d")} */}
               </Typography>
               <Typography
                 variant="body2"

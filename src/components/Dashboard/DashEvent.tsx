@@ -7,7 +7,8 @@ import MHButton from "../Button/MHButton";
 import { useHistory, useLocation, useRouteMatch } from "react-router-dom";
 
 import { ReactComponent as ResEventIcon } from "../../static/svg/resevent.svg";
-import { format } from "date-fns";
+
+import moment from "moment";
 
 type ResProps = {
   image?: string;
@@ -98,7 +99,7 @@ const DashEvent = (props: ResProps) => {
                   imgBg="bg-cream-200 "
                   bodyBg="bg-cream-100"
                   imageSrc={res.image}
-                  top={format(new Date(res.createdAt!), "MMMM d")}
+                  top={moment(res.createdAt!).format("MMMM Do ")}
                   title={res.titles}
                   category={res.categ}
                   titleUrl={`resources/events/${res.slugs}`}

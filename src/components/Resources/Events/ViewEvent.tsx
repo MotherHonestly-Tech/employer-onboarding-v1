@@ -5,7 +5,7 @@ import { Box, Grid } from "@mui/material";
 import ResCard from "../SubComponents/ResCard";
 import { useHistory, useLocation } from "react-router-dom";
 import MHButton from "../../Button/MHButton";
-import { format } from "date-fns";
+import moment from "moment";
 
 type ComponentProps = {
   image?: string;
@@ -79,7 +79,8 @@ const ViewEvent = (props: ComponentProps) => {
         podClassName="mt-10 flex gap-32 hidden"
         ticketClassName="py-6"
         ticketLink={data.ticketUrl}
-        date={data.date}
+        date={moment(data.date).format("MMMM Do ")}
+        dateTwo={moment(data.date).format("MMMM D YYYY")}
         dateClassName="text-left pb-2 w-3/4 text-base font-areaSemi"
         episodeClassName="hidden"
       />
@@ -134,7 +135,7 @@ const ViewEvent = (props: ComponentProps) => {
                 imgBg="bg-cream-200 "
                 bodyBg="bg-cream-100"
                 imageSrc={res.image}
-                top={format(new Date(res.createdAt!), "MMMM d")}
+                top={moment(res.createdAt!).format("MMMM Do ")}
                 title={res.titles}
                 category={res.categ}
                 titleUrl={`${location.pathname}/${res.slugs}`}
