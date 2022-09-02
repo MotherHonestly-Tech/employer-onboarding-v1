@@ -409,13 +409,17 @@ const Wallet = (props: { title: string }) => {
             <Divider light />
 
             <Grid container mt={2} spacing={1}>
-              <Grid item xs={3}>
+              <Grid item xs={3} position="relative">
                 <MHSelect
                   placeholder="Status"
-                  options={[]}
+                  options={Object.keys(RECEIPT_STATUS).map((statusKey) => ({
+                    value: statusKey,
+                    label: RECEIPT_STATUS[statusKey as any].text
+                  }))}
                   value={enteredStatus}
                   onChange={(val) => statusInputChangeHandler(val as string)}
                   onBlur={statusInputBlurHandler}
+                  popperWidth="100%"
                 />
               </Grid>
               <Grid item xs={3} position="relative">
