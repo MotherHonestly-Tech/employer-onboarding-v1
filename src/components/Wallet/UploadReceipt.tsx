@@ -401,10 +401,15 @@ const UploadReceipt = ({
     },
     [history]
   );
+  
+  const onExit = React.useCallback(() => {
+    onClose();
+  }, [onClose]);
 
   const config: PlaidLinkOptions = {
     token: linkToken,
     onSuccess,
+    onExit,
     ...(isOauth && {
       receivedRedirectUri: window.location.href
     })

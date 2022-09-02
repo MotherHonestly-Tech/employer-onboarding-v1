@@ -67,6 +67,16 @@ export const constructDateFormat = (date: Date) => {
   return `${date.getFullYear()}-${date.getMonth() + 1}-${date.getDate()}`;
 };
 
+export function formatDate(date: Date): string {
+  date = date instanceof Date ? date : new Date(date);
+  const month =
+    date.getMonth() + 1 < 10
+      ? '0' + (date.getMonth() + 1)
+      : date.getMonth() + 1;
+  const day = date.getDate() < 10 ? '0' + date.getDate() : date.getDate();
+  return `${month}/${day}/${date.getFullYear()}`;
+}
+
 export const convertFileSizeFromBytes = (size: number) => (
   unit: 'kb' | 'mb'
 ) => {

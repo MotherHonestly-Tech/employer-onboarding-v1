@@ -113,7 +113,7 @@ function CustomizedTables() {
                 <ListItem disablePadding disableGutters>
                   <ListItemAvatar>
                     <Avatar
-                      alt="Remy Sharp"
+                      alt={row.merchantName}
                       src={row.merchantImgSrc}
                       variant="rounded"
                       sx={{ width: 35, height: 35 }}
