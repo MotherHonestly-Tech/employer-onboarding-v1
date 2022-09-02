@@ -7,6 +7,8 @@ import MHButton from "../Button/MHButton";
 import { useHistory, useLocation, useRouteMatch } from "react-router-dom";
 
 import { ReactComponent as ResEventIcon } from "../../static/svg/resevent.svg";
+import { ReactComponent as LeftBtn } from "../../static/svg/left-btn.svg";
+import { ReactComponent as RightBtn } from "../../static/svg/right-btn.svg";
 
 import moment from "moment";
 
@@ -89,12 +91,26 @@ const DashEvent = (props: ResProps) => {
           Events & Conferences
         </Typography>
 
-        <Box className="mx-auto pt-10  px-6 pb-4">
-          <Grid container spacing={2}>
+        <Box className="mx-auto pt-10 pb-4">
+          <Grid container spacing={1} className=" relative">
+            <Box className="flex ">
+              <Box className="absolute top-[40%] z-10 -left-6">
+                <LeftBtn
+                  className="cursor-pointer"
+                  onClick={() => console.log("left")}
+                />
+              </Box>
+              <Box className="absolute top-[40%] z-10 -right-3">
+                <RightBtn
+                  className="cursor-pointer"
+                  onClick={() => console.log("right")}
+                />
+              </Box>
+            </Box>
             {slice.map((res, index) => (
               <Grid item xs={12} md={6} lg={4} key={index}>
                 <ResCard
-                  cardClass="relative w-[250px] h-[390px] object-cover bg-cream-100 rounded-md"
+                  cardClass="relative w-[260px] h-[390px] object-cover bg-cream-100 rounded-md"
                   iconClass="hidden"
                   imgBg="bg-cream-200 "
                   bodyBg="bg-cream-100"

@@ -5,6 +5,9 @@ import React, { useEffect, useState } from "react";
 import { useHistory, useLocation, useRouteMatch } from "react-router-dom";
 
 import { ReactComponent as ResToolkitIcon } from "../../static/svg/resdot.svg";
+import { ReactComponent as LeftBtn } from "../../static/svg/left-btn.svg";
+import { ReactComponent as RightBtn } from "../../static/svg/right-btn.svg";
+
 import ResCard from "../Resources/SubComponents/ResCard";
 import MHButton from "../Button/MHButton";
 
@@ -88,7 +91,21 @@ const DashToolkit = (props: ResProps) => {
         </Typography>
 
         <Box className="mx-auto mt-10">
-          <Grid container spacing={28} className="gap-16 px-28">
+          <Grid container spacing={12} className="gap-16 px-12 relative">
+            <Box className="flex ">
+              <Box className="absolute top-[50%] z-10 left-[165px]">
+                <LeftBtn
+                  className="cursor-pointer"
+                  onClick={() => console.log("left")}
+                />
+              </Box>
+              <Box className="absolute top-[50%] z-10 right-12">
+                <RightBtn
+                  className="cursor-pointer"
+                  onClick={() => console.log("right")}
+                />
+              </Box>
+            </Box>
             {slice.map((res, index) => (
               <Grid item xs={4} key={index}>
                 <ResCard
