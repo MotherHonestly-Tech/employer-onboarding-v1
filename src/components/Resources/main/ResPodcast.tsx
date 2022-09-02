@@ -7,6 +7,8 @@ import ResCard from "../SubComponents/ResCard";
 import { useHistory, useLocation, useRouteMatch } from "react-router-dom";
 
 import { ReactComponent as ResPodcastIcon } from "../../../static/svg/respod.svg";
+import { ReactComponent as LeftBtn } from "../../../static/svg/left-btn.svg";
+import { ReactComponent as RightBtn } from "../../../static/svg/right-btn.svg";
 
 type ResProps = {
   image?: string;
@@ -86,8 +88,22 @@ const ResPodcast = (props: ResProps) => {
           The Podcast
         </Typography>
 
-        <Box className="mx-auto pt-10 bg-white px-6 pb-4">
+        <Box className="mx-auto pt-10 bg-white px-6 pb-4 relative">
           <Grid container spacing={2}>
+            <Box className="flex ">
+              <Box className="absolute top-[30%] z-10 left-0">
+                <LeftBtn
+                  className="cursor-pointer"
+                  onClick={() => console.log("left")}
+                />
+              </Box>
+              <Box className="absolute top-[30%] z-10 right-0">
+                <RightBtn
+                  className="cursor-pointer"
+                  onClick={() => console.log("right")}
+                />
+              </Box>
+            </Box>
             {slice.map((res, index) => (
               <Grid item xs={12} md={6} lg={3} key={index}>
                 <ResCard

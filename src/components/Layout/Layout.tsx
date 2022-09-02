@@ -28,7 +28,7 @@ const Layout: FnComponent = (props) => {
           {props.children}
         </Box>
 
-        <SecondarySidebar />
+        {/* <SecondarySidebar /> */}
       </Box>
     </Box>
   );

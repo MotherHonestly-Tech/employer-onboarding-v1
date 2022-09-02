@@ -7,6 +7,8 @@ import ResCard from "../SubComponents/ResCard";
 import { useHistory, useLocation, useRouteMatch } from "react-router-dom";
 
 import { ReactComponent as ResToolkitIcon } from "../../../static/svg/resdot.svg";
+import { ReactComponent as LeftBtn } from "../../../static/svg/left-btn.svg";
+import { ReactComponent as RightBtn } from "../../../static/svg/right-btn.svg";
 
 type ResProps = {
   image?: string;
@@ -87,8 +89,23 @@ const ResToolkit = (props: ResProps) => {
           Resources To Make Life Easier
         </Typography>
 
-        <Box className="mx-auto mt-10">
-          <Grid container spacing={12} className="gap-16 px-12">
+        <Box className="mx-auto mt-10 ">
+          <Grid container spacing={2} className="gap-16 px-2 relative">
+            <Box className="flex ">
+              <Box className="absolute top-[40%] z-10 left-12">
+                <LeftBtn
+                  className="cursor-pointer"
+                  onClick={() => console.log("left")}
+                />
+              </Box>
+              <Box className="absolute top-[40%] z-10 right-6">
+                <RightBtn
+                  className="cursor-pointer"
+                  onClick={() => console.log("right")}
+                />
+              </Box>
+            </Box>
+
             {slice.map((res, index) => (
               <Grid item xs={3} key={index}>
                 <ResCard
