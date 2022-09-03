@@ -1,6 +1,7 @@
 import { Box, Grid, Typography } from "@mui/material";
 import { Fragment } from "react";
 import React, { useEffect, useState } from "react";
+import Slider from "react-slick";
 
 import { useHistory, useLocation, useRouteMatch } from "react-router-dom";
 
@@ -23,6 +24,26 @@ type ResProps = {
   updatedAt?: string;
 };
 
+type ArrowProps = {
+  onClick?: (e: React.MouseEvent) => void;
+};
+
+function SampleNextArrow(props: ArrowProps) {
+  return (
+    <Box className="absolute top-[30%] z-10 -right-6">
+      <RightBtn className="cursor-pointer" onClick={props.onClick} />
+    </Box>
+  );
+}
+
+function SamplePrevArrow(props: ArrowProps) {
+  return (
+    <Box className="absolute top-[30%] z-10 -left-8">
+      <LeftBtn className="cursor-pointer" onClick={props.onClick} />
+    </Box>
+  );
+}
+
 const DashToolkit = (props: ResProps) => {
   const location = useLocation();
   const [resources, setResources] = useState<ResProps[]>([]);
@@ -38,7 +59,19 @@ const DashToolkit = (props: ResProps) => {
     history.push(`resources/toolkits`);
   };
 
-  // console.log(location.pathname);
+  const settings = {
+    centerMode: true,
+    centerPadding: "0px",
+    dots: false,
+    infinite: true,
+    slidesToShow: 2,
+    slidesToScroll: 1,
+    speed: 500,
+    autoplay: true,
+    autoplaySpeed: 1100,
+    nextArrow: <SampleNextArrow />,
+    prevArrow: <SamplePrevArrow />,
+  };
 
   const getResource = async () => {
     try {
@@ -90,39 +123,29 @@ const DashToolkit = (props: ResProps) => {
           Resources To Make Life Easier
         </Typography>
 
-        <Box className="mx-auto mt-10">
-          <Grid container spacing={12} className="gap-16 px-12 relative">
-            <Box className="flex ">
-              <Box className="absolute top-[50%] z-10 left-[165px]">
-                <LeftBtn
-                  className="cursor-pointer"
-                  onClick={() => console.log("left")}
-                />
-              </Box>
-              <Box className="absolute top-[50%] z-10 right-12">
-                <RightBtn
-                  className="cursor-pointer"
-                  onClick={() => console.log("right")}
-                />
-              </Box>
+        <Box className="mx-auto pt-10  px-20 relative">
+          <Grid container spacing={0}>
+            <Box className="w-[95%]  mx-auto ">
+              <Slider {...settings}>
+                {resources.map((res, index) => (
+                  <Grid item xs={4} key={index}>
+                    <ResCard
+                      cardClass="relative w-[320px] h-[440px] shadow-sm object-cover bg-cream-100"
+                      iconClass="hidden"
+                      imgBg="bg-cream-200 "
+                      bodyBg="bg-white"
+                      imageSrc={res.image}
+                      // top={res.tops}
+                      title={res.titles}
+                      // text={res.texts}
+                      category={res.categ}
+                      titleUrl={`resources/toolkits/${res.slugs}`}
+                      playUrl={`resources/toolkits/${res.slugs}`}
+                    />
+                  </Grid>
+                ))}
+              </Slider>
             </Box>
-            {slice.map((res, index) => (
-              <Grid item xs={4} key={index}>
-                <ResCard
-                  cardClass="relative w-[320px] h-[440px] object-cover bg-cream-100"
-                  iconClass="hidden"
-                  imgBg="bg-cream-200 "
-                  bodyBg="bg-cream-100"
-                  imageSrc={res.image}
-                  // top={res.tops}
-                  title={res.titles}
-                  // text={res.texts}
-                  category={res.categ}
-                  titleUrl={`resources/toolkits/${res.slugs}`}
-                  playUrl={`resources/toolkits/${res.slugs}`}
-                />
-              </Grid>
-            ))}
           </Grid>
 
           <div className="flex justify-center py-8">

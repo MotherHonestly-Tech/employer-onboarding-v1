@@ -80,7 +80,7 @@ const BackgroundOverlay = styled((props) => (
     </Box>
 
     <img
-      src="https://res.cloudinary.com/mother-honestly/image/upload/v1658521647/image_bjlqcn.png"
+      src="https://res.cloudinary.com/mother-honestly/image/upload/v1662201263/image_1_qvv1u8.png"
       alt="Consultant"
       className="w-64 h-auto bottom-0 right-24 overflow-visible absolute object-cover object-center"
     />

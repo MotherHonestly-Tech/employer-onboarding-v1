@@ -1,6 +1,7 @@
 import { Box, Grid, Typography } from "@mui/material";
 import { Fragment } from "react";
 import React, { useEffect, useState } from "react";
+import Slider from "react-slick";
 
 import ResCard from "../Resources/SubComponents/ResCard";
 import MHButton from "../Button/MHButton";
@@ -22,6 +23,26 @@ type ResProps = {
   updatedAt?: string;
 };
 
+type ArrowProps = {
+  onClick?: (e: React.MouseEvent) => void;
+};
+
+function SampleNextArrow(props: ArrowProps) {
+  return (
+    <Box className="absolute top-[30%] z-10 -right-6">
+      <RightBtn className="cursor-pointer" onClick={props.onClick} />
+    </Box>
+  );
+}
+
+function SamplePrevArrow(props: ArrowProps) {
+  return (
+    <Box className="absolute top-[30%] z-10 -left-8">
+      <LeftBtn className="cursor-pointer" onClick={props.onClick} />
+    </Box>
+  );
+}
+
 const DashArticle = (props: ResProps) => {
   const location = useLocation();
   const [resources, setResources] = useState<ResProps[]>([]);
@@ -35,7 +56,20 @@ const DashArticle = (props: ResProps) => {
   const handleClickOpen = () => {
     history.push(`resources/articles`);
   };
-  // console.log(location.pathname);
+
+  const settings = {
+    centerMode: true,
+    centerPadding: "0px",
+    dots: false,
+    infinite: true,
+    slidesToShow: 3,
+    slidesToScroll: 1,
+    speed: 500,
+    autoplay: true,
+    autoplaySpeed: 1400,
+    nextArrow: <SampleNextArrow />,
+    prevArrow: <SamplePrevArrow />,
+  };
 
   const getResource = async () => {
     try {
@@ -86,39 +120,29 @@ const DashArticle = (props: ResProps) => {
           Over 456+ Articles on All Things Caregiving
         </Typography>
 
-        <Box className="mx-auto pt-10 pb-4">
-          <Grid container spacing={1} className=" relative">
-            <Box className="flex ">
-              <Box className="absolute top-[40%] z-10 -left-6">
-                <LeftBtn
-                  className="cursor-pointer"
-                  onClick={() => console.log("left")}
-                />
-              </Box>
-              <Box className="absolute top-[40%] z-10 -right-3">
-                <RightBtn
-                  className="cursor-pointer"
-                  onClick={() => console.log("right")}
-                />
-              </Box>
+        <Box className="mx-auto pt-10 px-0 relative">
+          <Grid container spacing={1}>
+            <Box className="w-[95%] mx-auto">
+              <Slider {...settings}>
+                {resources.map((res, index) => (
+                  <Grid item xs={12} md={6} lg={4} key={index}>
+                    <ResCard
+                      cardClass="relative w-[260px] h-[440px] shadow-sm object-cover bg-cream-100 rounded-md"
+                      iconClass="hidden"
+                      imgBg="bg-cream-200 "
+                      bodyBg="bg-white"
+                      imageSrc={res.image}
+                      top={res.tops}
+                      title={res.titles}
+                      text={res.texts}
+                      category={res.categ}
+                      titleUrl={`resources/articles/${res.slugs}`}
+                      playUrl={`resources/articles/${res.slugs}`}
+                    />
+                  </Grid>
+                ))}
+              </Slider>
             </Box>
-            {slice.map((res, index) => (
-              <Grid item xs={12} md={6} lg={4} key={index}>
-                <ResCard
-                  cardClass="relative w-[260px] h-[440px] object-cover bg-cream-100 rounded-md"
-                  iconClass="hidden"
-                  imgBg="bg-cream-200 "
-                  bodyBg="bg-cream-100"
-                  imageSrc={res.image}
-                  top={res.tops}
-                  title={res.titles}
-                  text={res.texts}
-                  category={res.categ}
-                  titleUrl={`resources/articles/${res.slugs}`}
-                  playUrl={`resources/articles/${res.slugs}`}
-                />
-              </Grid>
-            ))}
           </Grid>
           <div className="flex justify-center py-12">
             <MHButton onClick={() => handleClickOpen()} sx={{ width: "113px" }}>

@@ -1,6 +1,7 @@
 import { Box, Grid, Typography } from "@mui/material";
 import { Fragment } from "react";
 import React, { useEffect, useState } from "react";
+import Slider from "react-slick";
 
 import { ReactComponent as ResVidIcon } from "../../../static/svg/resvid.svg";
 import { ReactComponent as LeftBtn } from "../../../static/svg/left-btn.svg";
@@ -21,6 +22,26 @@ type ResProps = {
   updatedAt?: string;
 };
 
+type ArrowProps = {
+  onClick?: (e: React.MouseEvent) => void;
+};
+
+function SampleNextArrow(props: ArrowProps) {
+  return (
+    <Box className="absolute top-[30%] z-10 -right-6">
+      <RightBtn className="cursor-pointer" onClick={props.onClick} />
+    </Box>
+  );
+}
+
+function SamplePrevArrow(props: ArrowProps) {
+  return (
+    <Box className="absolute top-[30%] z-10 -left-6">
+      <LeftBtn className="cursor-pointer" onClick={props.onClick} />
+    </Box>
+  );
+}
+
 const ResVideo = (props: ResProps) => {
   const location = useLocation();
   const [resources, setResources] = useState<ResProps[]>([]);
@@ -33,6 +54,20 @@ const ResVideo = (props: ResProps) => {
 
   const handleClickOpen = () => {
     history.push(`${path}/videos`);
+  };
+
+  const settings = {
+    centerMode: true,
+    centerPadding: "0px",
+    dots: false,
+    infinite: true,
+    slidesToShow: 4,
+    slidesToScroll: 1,
+    speed: 500,
+    autoplay: true,
+    autoplaySpeed: 1200,
+    nextArrow: <SampleNextArrow />,
+    prevArrow: <SamplePrevArrow />,
   };
 
   console.log(resUrl);
@@ -88,38 +123,28 @@ const ResVideo = (props: ResProps) => {
           On-Demand Resources
         </Typography>
 
-        <Box className="mx-auto pt-10 bg-white px-6 pb-4 relative">
-          <Grid container spacing={2}>
-            <Box className="flex ">
-              <Box className="absolute top-[30%] z-10 left-0">
-                <LeftBtn
-                  className="cursor-pointer"
-                  onClick={() => console.log("left")}
-                />
-              </Box>
-              <Box className="absolute top-[30%] z-10 right-0">
-                <RightBtn
-                  className="cursor-pointer"
-                  onClick={() => console.log("right")}
-                />
-              </Box>
+        <Box className="mx-auto pt-10 bg-white px-0 relative">
+          <Grid container spacing={1}>
+            <Box className="w-[95%] bg-white mx-auto ">
+              <Slider {...settings}>
+                {resources.map((res, index) => (
+                  <Grid item xs={12} md={6} lg={3} key={index}>
+                    <ResCard
+                      cardClass="relative w-[280px] shadow-none h-[420px] object-cover bg-cream-100 rounded-md"
+                      iconClass="absolute top-10 ml-20 mt-12 w-20 h-20"
+                      imgBg="bg-cream-200 "
+                      bodyBg="bg-cream-100"
+                      imageSrc={res.image}
+                      top={res.tops}
+                      title={res.titles}
+                      category={res.categ}
+                      titleUrl={`${location.pathname}/videos/${res.slugs}`}
+                      playUrl={`${location.pathname}/videos/${res.slugs}`}
+                    />
+                  </Grid>
+                ))}
+              </Slider>
             </Box>
-            {slice.map((res, index) => (
-              <Grid item xs={12} md={6} lg={3} key={index}>
-                <ResCard
-                  cardClass="relative w-[280px] h-[420px] object-cover bg-cream-100 rounded-md"
-                  iconClass="absolute top-10 ml-20 mt-12 w-20 h-20"
-                  imgBg="bg-cream-200 "
-                  bodyBg="bg-cream-100"
-                  imageSrc={res.image}
-                  top={res.tops}
-                  title={res.titles}
-                  category={res.categ}
-                  titleUrl={`${location.pathname}/videos/${res.slugs}`}
-                  playUrl={`${location.pathname}/videos/${res.slugs}`}
-                />
-              </Grid>
-            ))}
           </Grid>
           <div className="flex justify-center py-12">
             <MHButton onClick={() => handleClickOpen()} sx={{ width: "113px" }}>

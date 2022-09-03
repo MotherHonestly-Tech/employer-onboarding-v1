@@ -1,6 +1,7 @@
 import { Box, Grid, Typography } from "@mui/material";
 import { Fragment } from "react";
 import React, { useEffect, useState } from "react";
+import Slider from "react-slick";
 
 import MHButton from "../../Button/MHButton";
 import ResCard from "../SubComponents/ResCard";
@@ -22,6 +23,26 @@ type ResProps = {
   updatedAt?: string;
 };
 
+type ArrowProps = {
+  onClick?: (e: React.MouseEvent) => void;
+};
+
+function SampleNextArrow(props: ArrowProps) {
+  return (
+    <Box className="absolute top-[30%] z-10 -right-6">
+      <RightBtn className="cursor-pointer" onClick={props.onClick} />
+    </Box>
+  );
+}
+
+function SamplePrevArrow(props: ArrowProps) {
+  return (
+    <Box className="absolute top-[30%] z-10 -left-6">
+      <LeftBtn className="cursor-pointer" onClick={props.onClick} />
+    </Box>
+  );
+}
+
 const ResPodcast = (props: ResProps) => {
   const location = useLocation();
   const [resources, setResources] = useState<ResProps[]>([]);
@@ -37,7 +58,19 @@ const ResPodcast = (props: ResProps) => {
     history.push(`${path}/podcasts`);
   };
 
-  // console.log(location.pathname);
+  const settings = {
+    centerMode: true,
+    centerPadding: "0px",
+    dots: false,
+    infinite: true,
+    slidesToShow: 4,
+    slidesToScroll: 1,
+    speed: 500,
+    autoplay: true,
+    autoplaySpeed: 1500,
+    nextArrow: <SampleNextArrow />,
+    prevArrow: <SamplePrevArrow />,
+  };
 
   const getResource = async () => {
     try {
@@ -88,39 +121,29 @@ const ResPodcast = (props: ResProps) => {
           The Podcast
         </Typography>
 
-        <Box className="mx-auto pt-10 bg-white px-6 pb-4 relative">
-          <Grid container spacing={2}>
-            <Box className="flex ">
-              <Box className="absolute top-[30%] z-10 left-0">
-                <LeftBtn
-                  className="cursor-pointer"
-                  onClick={() => console.log("left")}
-                />
-              </Box>
-              <Box className="absolute top-[30%] z-10 right-0">
-                <RightBtn
-                  className="cursor-pointer"
-                  onClick={() => console.log("right")}
-                />
-              </Box>
+        <Box className="mx-auto pt-10 bg-white px-0 relative">
+          <Grid container spacing={1}>
+            <Box className="w-[95%] bg-white mx-auto ">
+              <Slider {...settings}>
+                {resources.map((res, index) => (
+                  <Grid item xs={12} md={6} lg={3} key={index}>
+                    <ResCard
+                      cardClass="relative w-[280px] h-[465px] shadow-none object-cover bg-cream-100 rounded-md"
+                      iconClass="hidden"
+                      imgBg="bg-cream-200 "
+                      bodyBg="bg-cream-100"
+                      imageSrc={res.image}
+                      top={res.tops}
+                      title={res.titles}
+                      text={res.texts}
+                      category={res.categ}
+                      titleUrl={`${location.pathname}/podcasts/${res.slugs}`}
+                      playUrl={`${location.pathname}/podcasts/${res.slugs}`}
+                    />
+                  </Grid>
+                ))}
+              </Slider>
             </Box>
-            {slice.map((res, index) => (
-              <Grid item xs={12} md={6} lg={3} key={index}>
-                <ResCard
-                  cardClass="relative w-[280px] h-[465px] object-cover bg-cream-100 rounded-md"
-                  iconClass="hidden"
-                  imgBg="bg-cream-200 "
-                  bodyBg="bg-cream-100"
-                  imageSrc={res.image}
-                  top={res.tops}
-                  title={res.titles}
-                  text={res.texts}
-                  category={res.categ}
-                  titleUrl={`${location.pathname}/podcasts/${res.slugs}`}
-                  playUrl={`${location.pathname}/podcasts/${res.slugs}`}
-                />
-              </Grid>
-            ))}
           </Grid>
           <div className="flex justify-center py-12">
             <MHButton onClick={() => handleClickOpen()} sx={{ width: "113px" }}>
