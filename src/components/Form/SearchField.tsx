@@ -1,30 +1,43 @@
-import React from 'react';
+import React from "react";
 
-import Box from '@mui/material/Box';
+import Box from "@mui/material/Box";
 
-import MHTextInput from '../Form/MHTextInput';
-import MHButton from '../Button/MHButton';
-import InputAdornment from './InputAdornment';
-import IconButtonUnstyled from '../Button/IconButtonStyled';
-import useInput from '../../hooks/use-input';
+import MHTextInput from "../Form/MHTextInput";
+import MHButton from "../Button/MHButton";
+import InputAdornment from "./InputAdornment";
+import IconButtonUnstyled from "../Button/IconButtonStyled";
+import useInput from "../../hooks/use-input";
 
-import { ReactComponent as FilterIcon } from '../../static/svg/filter.svg';
-import * as validators from '../../utils/validators';
+import { ReactComponent as FilterIcon } from "../../static/svg/filter.svg";
+import * as validators from "../../utils/validators";
 
-const SearchField = ({ icon, placeholder, bgcolor }: { icon?: React.ReactElement, placeholder: string, bgcolor?: string }) => {
+const SearchField = ({
+  icon,
+  placeholder,
+  bgcolor,
+}: {
+  icon?: React.ReactElement;
+  placeholder: string;
+  bgcolor?: string;
+}) => {
   const {
     value: searchValue,
     valid: searchValid,
     onChange: searchOnChange,
-    onBlur: searchOnBlur
+    onBlur: searchOnBlur,
   } = useInput([
     {
-      validator: (value: string) => validators.required(value)
-    }
+      validator: (value: string) => validators.required(value),
+    },
   ]);
 
   return (
-    <Box component={'form'} width={250} display="flex" bgcolor={bgcolor || '#F1F1F1'}>
+    <Box
+      component={"form"}
+      width={250}
+      display="flex"
+      bgcolor={bgcolor || "#F1F1F1"}
+    >
       <MHTextInput
         id="search-interest"
         type="text"
@@ -43,16 +56,17 @@ const SearchField = ({ icon, placeholder, bgcolor }: { icon?: React.ReactElement
       />
       <MHButton
         sx={{
-          minWidth: 'auto',
-          '& svg': {
-            stroke: 'grey.500',
-            width: '1rem'
+          minWidth: "auto",
+          "& svg": {
+            stroke: "grey.500",
+            width: "1rem",
           },
-          '&.MuiButton-root:hover svg': {
-            stroke: 'primary'
-          }
-        }}>
-          {icon && icon}
+          "&.MuiButton-root:hover svg": {
+            stroke: "primary",
+          },
+        }}
+      >
+        {icon && icon}
       </MHButton>
     </Box>
   );
