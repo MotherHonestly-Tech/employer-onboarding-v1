@@ -1,15 +1,14 @@
-import { Box, Grid, Typography } from "@mui/material";
-import { Fragment } from "react";
-import React, { useEffect, useState } from "react";
-import Slider from "react-slick";
+import { Box, Grid, Typography } from '@mui/material';
+import React, { useEffect, useState } from 'react';
+import Slider from 'react-slick';
 
-import MHButton from "../../Button/MHButton";
-import ResCard from "../SubComponents/ResCard";
-import { useHistory, useLocation, useRouteMatch } from "react-router-dom";
+import MHButton from '../../Button/MHButton';
+import ResCard from '../SubComponents/ResCard';
+import { useHistory, useLocation, useRouteMatch } from 'react-router-dom';
 
-import { ReactComponent as ResToolkitIcon } from "../../../static/svg/resdot.svg";
-import { ReactComponent as LeftBtn } from "../../../static/svg/left-btn.svg";
-import { ReactComponent as RightBtn } from "../../../static/svg/right-btn.svg";
+import { ReactComponent as ResToolkitIcon } from '../../../static/svg/resdot.svg';
+import { ReactComponent as LeftBtn } from '../../../static/svg/left-btn.svg';
+import { ReactComponent as RightBtn } from '../../../static/svg/right-btn.svg';
 
 type ResProps = {
   image?: string;
@@ -52,7 +51,7 @@ const ResToolkit = (props: ResProps) => {
 
   const settings = {
     centerMode: true,
-    centerPadding: "0px",
+    centerPadding: '0px',
     dots: false,
     infinite: true,
     slidesToShow: 3,
@@ -61,7 +60,7 @@ const ResToolkit = (props: ResProps) => {
     autoplay: true,
     autoplaySpeed: 1100,
     nextArrow: <SampleNextArrow />,
-    prevArrow: <SamplePrevArrow />,
+    prevArrow: <SamplePrevArrow />
   };
 
   let history = useHistory();
@@ -77,7 +76,7 @@ const ResToolkit = (props: ResProps) => {
   const getResource = async () => {
     try {
       const response = await fetch(resUrl, {
-        method: "GET",
+        method: 'GET'
       });
       const jsonData = await response.json();
       setResources(jsonData);
@@ -94,69 +93,64 @@ const ResToolkit = (props: ResProps) => {
   }, []);
 
   return (
-    <Fragment>
-      <Box className="bg-lilac-200">
-        <Box className=" overscroll-x-hidden mt-6 gap-2 flex px-8" sx={{}}>
-          <ResToolkitIcon className="" height="24px" width="25px" />
-          <Typography
-            variant="body2"
-            className="text-center mt-1 font-normal uppercase "
-            color="primary"
-            sx={{
-              fontWeight: 900,
-              fontSize: "12px",
-              fontFamily: "Area-Extended",
-            }}
-          >
-            The Toolkits
-          </Typography>
-        </Box>
+    <Box bgcolor="#F6F8F5" paddingTop={5}>
+      <Box display="flex" paddingX={3} className=" overscroll-x-hidden gap-2">
+        <ResToolkitIcon className="" height="24px" width="25px" />
         <Typography
-          variant="h3"
-          className="text-left my-2 px-8"
+          variant="body2"
           color="primary"
-          sx={{
-            fontWeight: 500,
-            fontSize: "28px",
-            fontFamily: "Columbia-Sans",
-          }}
-        >
-          Resources To Make Life Easier
+          fontWeight="900"
+          fontSize="12px"
+          fontFamily="Area-Extended"
+          textAlign="center"
+          textTransform="uppercase">
+          The Toolkits
         </Typography>
-
-        <Box className="mx-auto pt-10 bg-white px-20 relative">
-          <Grid container spacing={0}>
-            <Box className="w-[95%] bg-white mx-auto ">
-              <Slider {...settings}>
-                {resources.map((res, index) => (
-                  <Grid item xs={3} key={index}>
-                    <ResCard
-                      cardClass="relative w-[300px] shadow-none h-[420px] object-cover bg-cream-100"
-                      iconClass="hidden"
-                      imgBg="bg-cream-200 "
-                      bodyBg="bg-cream-100"
-                      imageSrc={res.image}
-                      // top={res.tops}
-                      title={res.titles}
-                      // text={res.texts}
-                      category={res.categ}
-                      titleUrl={`${location.pathname}/toolkits/${res.slugs}`}
-                      playUrl={`${location.pathname}/toolkits/${res.slugs}`}
-                    />
-                  </Grid>
-                ))}
-              </Slider>
-            </Box>
-          </Grid>
-
-          <div className="flex justify-center py-8">
-            <MHButton onClick={() => handleClickOpen()} sx={{ width: "113px" }}>
-              View All
-            </MHButton>
-          </div>
-        </Box>
       </Box>
-    </Fragment>
+      <Typography
+        variant="h3"
+        className="text-left my-2 px-8"
+        color="primary"
+        sx={{
+          fontWeight: 500,
+          fontSize: '28px',
+          fontFamily: 'Columbia-Sans'
+        }}>
+        Resources To Make Life Easier
+      </Typography>
+
+      <Box className="mx-auto pt-10 px-20 relative">
+        <Grid container spacing={0}>
+          <Box className="w-[95%] mx-auto ">
+            <Slider {...settings}>
+              {resources.map((res, index) => (
+                <Grid item xs={3} key={index}>
+                  <ResCard
+                    cardClass="relative w-[300px] shadow-none h-[420px] object-cover bg-cream-100"
+                    iconClass="hidden"
+                    imgBg="bg-cream-200 "
+                    bodyBg="bg-cream-100"
+                    imageSrc={res.image}
+                    // top={res.tops}
+                    title={res.titles}
+                    // text={res.texts}
+                    category={res.categ}
+                    titleUrl={`${location.pathname}/toolkits/${res.slugs}`}
+                    playUrl={`${location.pathname}/toolkits/${res.slugs}`}
+                  />
+                </Grid>
+              ))}
+            </Slider>
+          </Box>
+        </Grid>
+
+        <div className="flex justify-center py-8">
+          <MHButton onClick={() => handleClickOpen()} sx={{ width: '113px' }}>
+            View All
+          </MHButton>
+        </div>
+      </Box>
+    </Box>
   );
 };
 
