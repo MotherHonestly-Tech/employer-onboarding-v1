@@ -12,6 +12,8 @@ import useInput from '../../hooks/use-input';
 
 import * as validators from '../../utils/validators';
 import OnboardingContext from '../../store/context/onboarding-context';
+import { Divider, Typography } from '@mui/material';
+import { formatAmount } from '../../utils/utils';
 
 const SelectTag = styled('span')(
   ({ theme }) => `
@@ -23,12 +25,24 @@ const SelectTag = styled('span')(
 `
 );
 
+const GridItem = styled(Box)(({ theme }) => ({
+  // ...theme.typography.body2,
+  backgroundColor: '#ffffff',
+  padding: theme.spacing(3),
+  color: theme.palette.text.secondary,
+  // flex: '1 1 auto',
+  display: 'flex',
+  justifyContent: 'center'
+}));
+
 const FinalStep = (props: {
   activeIndex: number;
   onNext: () => void;
   onPrevious: (e: React.MouseEvent) => void;
 }) => {
   const onboardingCtx = React.useContext(OnboardingContext);
+  const [monthlyAllocation, setMonthlyAllocation] = React.useState(0);
+  const [quarterlyAllocation, setQuarterlyAllocation] = React.useState(0);
 
   const {
     value: enteredJobTitle,
@@ -141,14 +155,14 @@ const FinalStep = (props: {
   function submitHandler(e: React.ChangeEvent<HTMLFormElement>) {
     e.preventDefault();
 
-    if (!formIsValid) {
-      markJobTitleInputAsTouched();
-      markPositionInputAsTouched();
-      markDepartmentInputAsTouched();
-      return;
-    }
+    // if (!formIsValid) {
+    //   markJobTitleInputAsTouched();
+    //   markPositionInputAsTouched();
+    //   markDepartmentInputAsTouched();
+    //   return;
+    // }
 
-    updateEmployeeData();
+    // updateEmployeeData();
     onNext();
   }
 
@@ -164,36 +178,74 @@ const FinalStep = (props: {
       <Box component={'form'} onSubmit={submitHandler}>
         <MHFormControl
           id="jobTitle"
-          type="text"
-          label="Job Title"
-          placeholder="Tell us your role in the company"
+          type="number"
+          label="Allocation Funds Per Employee ($)"
+          placeholder="Amount ($)"
           value={enteredJobTitle}
-          onChange={jobTitleInputChangeHandler}
+          onChange={(e) => {
+              setMonthlyAllocation(30 * +e.target.value);
+              setQuarterlyAllocation((30 * +e.target.value) * 3);
+              jobTitleInputChangeHandler(e);
+          }}
           onBlur={jobTitleInputBlurHandler}
-          error={jobTitleErrorTip}
         />
 
-        <MHFormControl
-          id="position"
-          type="text"
-          label="Level/Position"
-          placeholder="What position do you hold in the company?"
-          value={enteredPosition}
-          onChange={positionInputChangeHandler}
-          onBlur={positionInputBlurHandler}
-          error={positionErrorTip}
-        />
+        <Stack
+          direction="row"
+          alignItems={'center'}
+          justifyContent="space-evenly"
+          border={1}
+          borderColor="#BBBBBB"
+          divider={
+            <Divider
+              orientation="vertical"
+              variant="middle"
+              flexItem
+              sx={{
+                height: '60px',
+                alignSelf: 'center'
+              }}
+            />
+          }
+          spacing={2}
+          overflow="hidden"
+          my={4}>
+          <GridItem>
+            <Box>
+              <Typography variant="body2" fontSize={12} color="primary">
+                Monthly Total Allocation
+              </Typography>
+              <Typography
+                variant="body1"
+                fontSize={24}
+                fontFamily="Area-Normal-Black"
+                color="primary">
+                {formatAmount(monthlyAllocation)}
+              </Typography>
+            </Box>
+          </GridItem>
+          <GridItem>
+            <Box>
+              <Typography variant="body2" fontSize={12} color="primary">
+                Allocation for a quarter
+              </Typography>
+              <Typography
+                variant="body1"
+                fontSize={24}
+                fontFamily="Area-Normal-Black"
+                color="primary">
+                {formatAmount(quarterlyAllocation)}
+              </Typography>
+            </Box>
+          </GridItem>
+        </Stack>
 
-        <MHFormControl
-          id="department"
-          type="text"
-          label="Department"
-          placeholder="What department do you work in?"
-          value={enteredDepartment}
-          onChange={departmentInputChangeHandler}
-          onBlur={departmentInputBlurHandler}
-          error={departmentErrorTip}
-        />
+        <Box bgcolor="#F5F5F5" p={2} mt={2}>
+          <Typography variant="body1" align="center" color="primary.main">
+            Quarterly billing starting from period dated 19th Sept 2022 to 19th
+            Dec 2022
+          </Typography>
+        </Box>
 
         {/* <MHMultiSelect
           label="Care Responsibilities"

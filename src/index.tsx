@@ -8,20 +8,17 @@ import { BrowserRouter } from 'react-router-dom';
 import { ThemeProvider } from '@mui/material/styles';
 
 import { theme } from './theme/mui/dashboard.theme';
-import { AuthContextProvider } from './store/context/auth-context';
 
 const root = ReactDOM.createRoot(
   document.getElementById('root') as HTMLElement
 );
 root.render(
   <BrowserRouter>
-    <AuthContextProvider>
       <ThemeProvider theme={theme}>
         <React.StrictMode>
           <App />
         </React.StrictMode>
       </ThemeProvider>
-    </AuthContextProvider>
   </BrowserRouter>
 );
 

@@ -2,7 +2,7 @@ import React from 'react';
 
 import Stepper from '@mui/material/Stepper';
 import Step from '@mui/material/Step';
-import StepLabel from '@mui/material/StepLabel';
+import StepLabel, { stepLabelClasses } from '@mui/material/StepLabel';
 import StepConnector, {
   stepConnectorClasses
 } from '@mui/material/StepConnector';
@@ -10,6 +10,7 @@ import { StepIconProps } from '@mui/material/StepIcon';
 import { styled } from '@mui/material/styles';
 
 import { FnComponent } from '../../models/component.model';
+import { Typography } from '@mui/material';
 
 const ColorlibConnector = styled(StepConnector)(({ theme }) => ({
   //   [`&.${stepConnectorClasses.alternativeLabel}`]: {
@@ -39,26 +40,23 @@ const ColorlibConnector = styled(StepConnector)(({ theme }) => ({
 const ColorlibStepIconRoot = styled('div')<{
   ownerState: { completed?: boolean; active?: boolean };
 }>(({ theme, ownerState }) => ({
-  backgroundColor:
-    theme.palette.mode === 'dark' ? theme.palette.grey[700] : '#ccc',
+  backgroundColor: '#CBCBCB',
   padding: 0,
   zIndex: 1,
-  color: '#fff',
-  width: 35,
-  height: 35,
+  color: '#FFFFFF',
+  width: 25,
+  height: 25,
   display: 'flex',
-  borderRadius: '10%',
+  borderRadius: '50%',
   justifyContent: 'center',
   alignItems: 'center',
-  fontFamily: 'Area-Normal-Semibold',
+  fontFamily: 'Area-Normal-Bold',
   ...(ownerState.active && {
-    backgroundImage:
-      'linear-gradient( 136deg, rgba(2,98,89) 0%, rgba(2,98,89) 40%, rgb(40,64,74) 100%)',
+    backgroundColor: theme.palette.primary.main,
     boxShadow: '0 4px 10px 0 rgba(0,0,0,.25)'
   }),
   ...(ownerState.completed && {
-    backgroundImage:
-      'linear-gradient( 136deg, rgba(2,98,89) 0%, rgba(2,98,89) 40%, rgb(40,64,74) 100%)'
+    // backgroundColor: theme.palette.primary.main
   })
 }));
 
@@ -74,12 +72,15 @@ function ColorlibStepIcon(props: StepIconProps) {
   );
 }
 
-const Steps: FnComponent<{ activeStep: number; steps: number[] }> = ({
+const Steps: FnComponent<{ activeStep: number; steps: string[] }> = ({
   activeStep,
   steps
 }) => {
   return (
-    <Stepper activeStep={activeStep} connector={<ColorlibConnector />} sx={{mb: 3}}>
+    <Stepper
+      activeStep={activeStep}
+      connector={<ColorlibConnector />}
+      sx={{ height: 64 }}>
       {steps.map((label, index) => {
         const stepProps: { completed?: boolean } = {};
         const labelProps: {
@@ -87,10 +88,40 @@ const Steps: FnComponent<{ activeStep: number; steps: number[] }> = ({
         } = {};
 
         return (
-          <Step key={label} {...stepProps}>
+          <Step
+            key={label}
+            {...stepProps}
+            sx={{
+              height: 80,
+              position: 'relative',
+              mr: 7
+            }}>
             <StepLabel
               StepIconComponent={ColorlibStepIcon}
-              {...labelProps}></StepLabel>
+              {...labelProps}
+              sx={{
+                height: '100%',
+                justifyContent: 'center',
+                '&::after': {
+                  ...(activeStep === index && {
+                    position: 'absolute',
+                    bottom: 0,
+                    content: '""',
+                    display: 'block',
+                    height: '2px',
+                    backgroundColor: 'primary.main',
+                    width: '100%'
+                  })
+                }
+              }}>
+              <Typography
+                variant="body2"
+                fontFamily="Area-Normal-Bold"
+                fontSize="12"
+                color={activeStep === index ? 'primary.main' : '#CBCBCB'}>
+                {label}
+              </Typography>
+            </StepLabel>
           </Step>
         );
       })}

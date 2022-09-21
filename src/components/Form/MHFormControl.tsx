@@ -30,6 +30,7 @@ type InputProps = {
   fullWidth?: boolean;
   multiline?: boolean;
   rows?: number;
+  minRows?: number;
   maxRows?: number;
   email?: boolean;
   min?: number;
@@ -67,7 +68,10 @@ const Label = styled(
       <label
         className={clsx(className, error || showRequiredError ? 'invalid' : '')}
         style={{
-          color: '#21392E'
+          fontSize: 12,
+          color: '#A7A7A7',
+          marginBottom: '10px',
+          display: 'block'
         }}>
         {children}
         {/* {required ? ' *' : ''} */}
@@ -76,7 +80,6 @@ const Label = styled(
   }
 )`
   font-size: 0.8rem;
-  margin-bottom: 4px;
   font-family: Area-Normal-Semibold;
 `;
 
@@ -147,6 +150,8 @@ const MHFormControl = (props: InputProps) => {
     error,
     multiline,
     rows,
+    minRows,
+    maxRows,
     min,
     max,
     onChange,
@@ -173,10 +178,12 @@ const MHFormControl = (props: InputProps) => {
         autoFocus={autoFocus}
         multiline={multiline}
         rows={rows}
+        minRows={minRows}
+        maxRows={maxRows}
         componentsProps={{
           input: {
             min: min,
-            max: max,
+            max: max
           }
         }}
         style={{

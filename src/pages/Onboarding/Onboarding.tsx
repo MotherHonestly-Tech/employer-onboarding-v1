@@ -17,18 +17,23 @@ import useHttp from '../../hooks/use-http';
 import MHLogoIcon from '../../theme/icons/MHLogo';
 import { theme } from '../../theme/mui/dashboard.theme';
 import OnboardingContext from '../../store/context/onboarding-context';
-import AuthContext from '../../store/context/auth-context';
 import { HttpResponse } from '../../models/api.interface';
 import { constructDateFormat } from '../../utils/utils';
 import geoData from '../../data/georef-united-states-of-america-state.json';
+import Layout from '../../components/Layout/Layout';
+import SummaryStep from '../../components/Onboarding/SummaryStep';
 
-const steps = [1, 2, 3];
+const STEPS = [
+  'About you',
+  'Employer Details',
+  'Billing Information',
+  'Billing  Summary'
+];
 
-const Onboarding = ({ isOnboarded }: { isOnboarded: () => boolean }) => {
+const Onboarding = () => {
   const [activeStepIndex, setActiveStepIndex] = React.useState(0);
   const [completed, setCompleted] = React.useState(false);
   const onboardingCtx = React.useContext(OnboardingContext);
-  const authCtx = React.useContext(AuthContext);
 
   const history = useHistory();
 
@@ -47,7 +52,10 @@ const Onboarding = ({ isOnboarded }: { isOnboarded: () => boolean }) => {
       ActiveFormComponent = FinalStep;
       break;
     case 3:
-      ActiveFormComponent = FinalStep;
+      ActiveFormComponent = SummaryStep;
+      break;
+    case 4:
+      ActiveFormComponent = SummaryStep;
       break;
     default:
       ActiveFormComponent = InitialStep;
@@ -56,10 +64,10 @@ const Onboarding = ({ isOnboarded }: { isOnboarded: () => boolean }) => {
 
   const nextStepHandler = () => {
     setActiveStepIndex((prevIndex) =>
-      prevIndex < steps.length - 1 ? prevIndex + 1 : prevIndex
+      prevIndex < STEPS.length - 1 ? prevIndex + 1 : prevIndex
     );
 
-    if (activeStepIndex === steps.length - 1) {
+    if (activeStepIndex === STEPS.length - 1) {
       setCompleted(true);
     }
   };
@@ -68,53 +76,9 @@ const Onboarding = ({ isOnboarded }: { isOnboarded: () => boolean }) => {
     setActiveStepIndex((prevIndex) => prevIndex - 1);
   };
 
-  const { userId, token, user, updateUserData } = authCtx;
   const { employee, configureStates } = onboardingCtx;
 
   const empData = React.useMemo(() => employee, [employee]);
-
-  const completeOnboarding = React.useCallback(() => {
-    const reqPayload = {
-      uuid: userId,
-      employeeEmail: user?.email,
-      firstName: empData?.firstName,
-      lastName: empData?.lastName,
-      state: empData?.state,
-      zipCode: empData?.zipCode,
-      relationShipStatus: empData?.relationshipStatus,
-      houseHoldSize: +empData?.householdSize!,
-      numberOfKids: empData?.numberOfKids,
-      identity: empData?.identity,
-      dateOfBirth: constructDateFormat(empData?.dateOfBirth as Date),
-      race: empData?.race,
-      jobTitle: empData?.jobTitle,
-      position: empData?.position,
-      workDepartment: empData?.department
-      // careResponsibility: (empData?.careResponsibilities as Array<string>).join(
-      //   ','
-      // )
-    };
-
-    onboardEmployee(
-      process.env.REACT_APP_API_BASE_URL + 'employee/dashboard/employee',
-      {
-        method: 'PUT',
-        headers: {
-          'Content-Type': 'application/json',
-          'Authorization': `Bearer ${token?.accessToken}`
-        },
-        body: JSON.stringify(reqPayload)
-      },
-      (response: HttpResponse<any>) => {
-        updateUserData({
-          firstName: String(empData?.firstName),
-          lastName: String(empData?.lastName)
-        });
-
-        history.push('/onboarding/interests');
-      }
-    );
-  }, [empData, onboardEmployee, userId, token, user, history, updateUserData]);
 
   React.useEffect(() => {
     configureStates(geoData);
@@ -122,109 +86,78 @@ const Onboarding = ({ isOnboarded }: { isOnboarded: () => boolean }) => {
 
   React.useEffect(() => {
     if (completed) {
-      completeOnboarding();
     }
-  }, [completed, completeOnboarding]);
+  }, [completed]);
 
   if (error) {
     setCompleted(false);
-  }
-  
-  if (isOnboarded()) {
-    return (
-      <Redirect
-        to={{
-          pathname: '/organization/dashboard',
-          state: { from: { pathname: '/onboarding' } }
-        }}
-      />
-    );
   }
 
   return (
     <React.Fragment>
       {loading && <BackdropLoader />}
-      <Grid container spacing={0} sx={{ minHeight: '100vh' }}>
-        <Grid
-          item
-          xs={6}
-          sx={{
-            backgroundColor: theme.palette.common.white,
-            position: 'relative'
-          }}
-          py={6}>
-          <Stack
-            direction="column"
-            minHeight="100vh"
-            mx="auto"
-            px={12}
-            width="100%"
-            maxWidth="sm">
-            <Box mb={6}>
-              <MHLogoIcon />
-            </Box>
+      <Layout
+        onboardingSteps={<Steps steps={STEPS} activeStep={activeStepIndex} />}>
+        {!completed && (
+          <Grid container spacing={0} sx={{ minHeight: '100vh' }}>
+            {activeStepIndex < 3 && (
+              <Grid
+                item
+                xs={6}
+                position="sticky"
+                height="100vh"
+                sx={{
+                  top: 0
+                }}>
+                <Box
+                  component="div"
+                  position="relative"
+                  sx={{
+                    height: '100vh',
+                    overflow: 'hidden',
+                    pt: 10,
+                    width: '70%',
+                    mx: 'auto'
+                  }}>
+                  <Typography variant="h1" align="center" gutterBottom>
+                    We're looking forward to speaking with you soon.
+                  </Typography>
+                  <Typography variant="body1" align="center" gutterBottom>
+                    In the meantime, claim your account and start your
+                    application. It takes 5 minutes.
+                  </Typography>
+                </Box>
+              </Grid>
+            )}
 
-            <Typography
-              variant="h1"
-              component="div"
-              align="center"
-              gutterBottom>
-              Tell us a little about yourself
-            </Typography>
-
-            <Box
+            <Grid
+              item
+              xs={activeStepIndex > 2 ? 12 : 6}
               sx={{
-                mt: 3
-              }}>
-              <Steps steps={steps} activeStep={activeStepIndex} />
-
-              {ActiveFormComponent && (
-                <Slide
-                  direction="left"
-                  in={steps.includes(activeStepIndex + 1)}
-                  mountOnEnter
-                  unmountOnExit>
-                  <Box>
-                    <ActiveFormComponent
-                      activeIndex={activeStepIndex}
-                      onNext={nextStepHandler}
-                      onPrevious={previousStepHandler}
-                    />
-                  </Box>
-                </Slide>
-              )}
-            </Box>
-          </Stack>
-        </Grid>
-
-        <Grid
-          item
-          xs={6}
-          position="sticky"
-          height="100vh"
-          sx={{
-            top: 0
-          }}>
-          <Box
-            component="div"
-            position="relative"
-            sx={{
-              height: '100vh',
-              overflow: 'hidden'
-            }}>
-            <img
-              src="https://res.cloudinary.com/mother-honestly/image/upload/v1657836331/alex-lvrs-4N5huJDOydQ-unsplash_1_1_qubnfw.png"
-              alt="alex-lvrs"
-              style={{
-                width: '100%',
-                height: '100%',
-                objectFit: 'cover',
-                objectPosition: 'center'
+                backgroundColor: theme.palette.common.white,
+                position: 'relative'
               }}
-            />
-          </Box>
-        </Grid>
-      </Grid>
+              py={6}>
+              <Stack
+                direction="column"
+                mx="auto"
+                px={6}>
+                {ActiveFormComponent && (
+                  <Slide direction="left" in mountOnEnter unmountOnExit>
+                    <Box>
+                      <ActiveFormComponent
+                        activeIndex={activeStepIndex}
+                        onNext={nextStepHandler}
+                        onPrevious={previousStepHandler}
+                      />
+                    </Box>
+                  </Slide>
+                )}
+              </Stack>
+            </Grid>
+          </Grid>
+        )}
+      </Layout>
     </React.Fragment>
   );
 };

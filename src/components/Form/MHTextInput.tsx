@@ -25,22 +25,19 @@ const StyledInputRoot = styled('div')(
   ({ theme }) => `
     display: flex;
     font-weight: 400;
-    border: 1px solid ${grey[200]};
     align-items: center;
     justify-content: center;
     transition: all 0.4s ease-in;
     position: relative;
     
     .Mui-focused > &.MuiInput-root.MuiInput-formControl {
-      border: 1px solid ${grey[500]};
+
     }
 
     &.MuiInput-root.Mui-focused {
-      border: 1px solid ${grey[300]};
     }
 
     &.MuiInput-root:hover {
-      border-color: ${grey[300]};
     }
   `
 );
@@ -51,7 +48,7 @@ const StyledInputElement = styled('input')`
   line-height: 1.5;
   flex-grow: 1;
   color: ${grey[900]};
-  background: inherit;
+  background: #F5F5F5;
   border: none;
   border-radius: inherit;
   padding: 12px 12px;
@@ -59,10 +56,17 @@ const StyledInputElement = styled('input')`
   box-sizing: border-box;
 `;
 
-const StyledTextareaElement = styled('textarea', {
-  shouldForwardProp: (prop) =>
-    !['ownerState', 'minRows', 'maxRows'].includes(prop.toString())
-})(
+const StyledTextareaElement = styled(
+  React.forwardRef(
+    ({ ...props }, ref: React.ForwardedRef<HTMLInputElement>) => (
+      <textarea {...props} rows={4}></textarea>
+    )
+  ),
+  {
+    shouldForwardProp: (prop) =>
+      !['ownerState', 'minRows', 'maxRows', 'rows'].includes(prop.toString())
+  }
+)(
   ({ theme }) => `
   display: block;
   font-size: 0.75rem;
@@ -80,7 +84,7 @@ const StyledTextareaElement = styled('textarea', {
 
 const MHTextInput = React.forwardRef(
   (props: InputUnstyledProps, ref: React.ForwardedRef<HTMLDivElement>) => {
-    const { components, ...others } = props;
+    const { components, rows, ...others } = props;
 
     // const formControlContext = useFormControlUnstyledContext();
     React.useEffect(() => {

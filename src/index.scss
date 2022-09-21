@@ -1,12 +1,4 @@
-@import 'tailwindcss/base';
-@import 'tailwindcss/components';
-@import 'tailwindcss/utilities';
-
-
 $primary-color: #28404a;
-
-@import "~slick-carousel/slick/slick.css";
-@import "~slick-carousel/slick/slick-theme.css";
 
 // Columbia-Sans (used for headers)
 @font-face {
@@ -65,6 +57,7 @@ $primary-color: #28404a;
   font-family: 'Area-Normal-Semibold', sans-serif;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
+  text-rendering: optimizeLegibility;
 }
 
 code {

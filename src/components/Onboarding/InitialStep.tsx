@@ -47,12 +47,12 @@ const InitialStep = React.forwardRef(
     ]);
 
     const {
-      value: enteredState,
-      valid: enteredStateIsValid,
-      error: enteredStateHasError,
-      onChange: stateInputChangeHandler,
-      onBlur: stateInputBlurHandler,
-      markAsTouched: markStateInputAsTouched
+      value: enteredEmail,
+      valid: enteredEmailIsValid,
+      error: enteredEmailHasError,
+      onChange: emailInputChangeHandler,
+      onBlur: emailInputBlurHandler,
+      markAsTouched: markEmailInputAsTouched
     } = useInput([
       {
         validator: (value: string) => validators.required(value)
@@ -60,12 +60,12 @@ const InitialStep = React.forwardRef(
     ]);
 
     const {
-      value: enteredZipCode,
-      valid: enteredZipCodeIsValid,
-      error: enteredZipCodeHasError,
-      onChange: zipCodeInputChangeHandler,
-      onBlur: zipCodeInputBlurHandler,
-      markAsTouched: markZipCodeInputAsTouched
+      value: enteredState,
+      valid: enteredStateIsValid,
+      error: enteredStateHasError,
+      onChange: stateInputChangeHandler,
+      onBlur: stateInputBlurHandler,
+      markAsTouched: markStateInputAsTouched
     } = useInput([
       {
         validator: (value: string) => validators.required(value)
@@ -118,13 +118,11 @@ const InitialStep = React.forwardRef(
     ]);
 
     let formIsValid =
-      enteredFirstNameIsValid &&
-      enteredLastNameIsValid &&
-      enteredStateIsValid &&
-      enteredZipCodeIsValid &&
-      enteredStatusIsValid &&
-      enteredHouseholdSizeIsValid &&
-      enteredNumberOfKidsIsValid;
+      enteredFirstNameIsValid && enteredLastNameIsValid && enteredEmailIsValid;
+    // enteredStateIsValid &&
+    // enteredStatusIsValid &&
+    // enteredHouseholdSizeIsValid &&
+    // enteredNumberOfKidsIsValid;
 
     const { states, employee, updateEmployee } = onboardingCtx;
     const { activeIndex, onNext } = props;
@@ -135,11 +133,6 @@ const InitialStep = React.forwardRef(
 
       firstNameInputChangeHandler(employee.firstName || '');
       lastNameInputChangeHandler(employee.lastName || '');
-      stateInputChangeHandler(employee.state || '');
-      zipCodeInputChangeHandler(employee.zipCode || '');
-      statusInputChangeHandler(employee.relationshipStatus || '');
-      householdSizeInputChangeHandler(employee.householdSize || '');
-      numberOfKidsInputChangeHandler(employee.numberOfKids || '');
     }, []);
 
     function renderKidsSelectValue(option: SelectOption<string> | null) {
@@ -150,29 +143,29 @@ const InitialStep = React.forwardRef(
       return <span>{option?.value + ' kid(s)'}</span>;
     }
 
-    function renderParentsSelectValue(option: SelectOption<string> | null) {
-      let content = null;
+    // function renderParentsSelectValue(option: SelectOption<string> | null) {
+    //   let content = null;
 
-      if (!option) {
-        return content;
-      }
+    //   if (!option) {
+    //     return content;
+    //   }
 
-      switch (option.value) {
-        case 'yes':
-          content = <span>{option.label} (I have living parents)</span>;
-          break;
-        case 'no':
-          content = <span>{option.label} (I have no living parents)</span>;
-          break;
-        default:
-          content = null;
-          break;
-      }
+    //   switch (option.value) {
+    //     case 'yes':
+    //       content = <span>{option.label} (I have living parents)</span>;
+    //       break;
+    //     case 'no':
+    //       content = <span>{option.label} (I have no living parents)</span>;
+    //       break;
+    //     default:
+    //       content = null;
+    //       break;
+    //   }
 
-      return content;
-    }
+    //   return content;
+    // }
 
-    let firstNameErrorTip =  enteredFirstNameHasError
+    let firstNameErrorTip = enteredFirstNameHasError
       ? 'Please enter your first name'
       : undefined;
 
@@ -180,25 +173,21 @@ const InitialStep = React.forwardRef(
       ? 'Please enter your last name'
       : undefined;
 
-    let stateErrorTip = enteredStateHasError
-      ? 'Please select your state of residence'
-      : undefined;
+    // let stateErrorTip = enteredStateHasError
+    //   ? 'Please select your state of residence'
+    //   : undefined;
 
-    let zipCodeErrorTip = enteredZipCodeHasError
-      ? 'Please enter your zip code'
-      : undefined;
+    // let statusErrorTip = enteredStatusHasError
+    //   ? 'Please select a value'
+    //   : undefined;
 
-    let statusErrorTip = enteredStatusHasError
-      ? 'Please select a value'
-      : undefined;
+    // let householdSizeErrorTip = enteredHouseholdSizeHasError
+    //   ? 'Please enter number of people in household'
+    //   : undefined;
 
-    let householdSizeErrorTip = enteredHouseholdSizeHasError
-      ? 'Please enter number of people in household'
-      : undefined;
-
-    let numberOfKidsErrorTip = enteredNumberOfKidsHasError
-      ? 'Please select a value'
-      : undefined;
+    // let numberOfKidsErrorTip = enteredNumberOfKidsHasError
+    //   ? 'Please select a value'
+    //   : undefined;
 
     const preventDefault = (e: React.SyntheticEvent) => {
       e.preventDefault();
@@ -207,26 +196,24 @@ const InitialStep = React.forwardRef(
     function submitHandler(e: React.ChangeEvent<HTMLFormElement>) {
       preventDefault(e);
 
-      if (!formIsValid) {
-        markFirstNameInputAsTouched();
-        markLastNameInputAsTouched();
-        markStateInputAsTouched();
-        markZipCodeInputAsTouched();
-        markStatusInputAsTouched();
-        markHouseholdSizeInputAsTouched();
-        markNumberOfKidsInputAsTouched();
-        return;
-      }
+      // if (!formIsValid) {
+      //   markFirstNameInputAsTouched();
+      //   markLastNameInputAsTouched();
+      //   markStateInputAsTouched();
+      //   markStatusInputAsTouched();
+      //   markHouseholdSizeInputAsTouched();
+      //   markNumberOfKidsInputAsTouched();
+      //   return;
+      // }
 
-      updateEmployee({
-        firstName: enteredFirstName,
-        lastName: enteredLastName,
-        state: enteredState,
-        zipCode: enteredZipCode,
-        relationshipStatus: enteredStatus,
-        householdSize: enteredHouseholdSize,
-        numberOfKids: enteredNumberOfKids,
-      });
+      // updateEmployee({
+      //   firstName: enteredFirstName,
+      //   lastName: enteredLastName,
+      //   state: enteredState,
+      //   relationshipStatus: enteredStatus,
+      //   householdSize: enteredHouseholdSize,
+      //   numberOfKids: enteredNumberOfKids
+      // });
       onNext();
     }
 
@@ -235,29 +222,44 @@ const InitialStep = React.forwardRef(
     return (
       <React.Fragment>
         <Box component={'form'} onSubmit={submitHandler}>
-          <MHFormControl
-            id="firstName"
-            type="text"
-            label="First Name"
-            placeholder="First Name"
-            value={enteredFirstName}
-            onChange={firstNameInputChangeHandler}
-            onBlur={firstNameInputBlurHandler}
-            error={firstNameErrorTip}
-          />
+          <Grid container spacing={2}>
+            <Grid item xs={6}>
+              <MHFormControl
+                id="firstName"
+                type="text"
+                label="First Name"
+                placeholder="First Name"
+                value={enteredFirstName}
+                onChange={firstNameInputChangeHandler}
+                onBlur={firstNameInputBlurHandler}
+                error={firstNameErrorTip}
+              />
+            </Grid>
+            <Grid item xs={6}>
+              <MHFormControl
+                id="lastName"
+                type="text"
+                label="Last Name"
+                placeholder="Last Name"
+                value={enteredLastName}
+                onChange={lastNameInputChangeHandler}
+                onBlur={lastNameInputBlurHandler}
+                error={lastNameErrorTip}
+              />
+            </Grid>
+          </Grid>
 
           <MHFormControl
-            id="lastName"
+            id="zipCode"
             type="text"
-            label="Last Name"
-            placeholder="Last Name"
-            value={enteredLastName}
-            onChange={lastNameInputChangeHandler}
-            onBlur={lastNameInputBlurHandler}
-            error={lastNameErrorTip}
+            label="Work Email"
+            placeholder="mail@domain"
+            value={enteredEmail}
+            onChange={emailInputChangeHandler}
+            onBlur={emailInputBlurHandler}
           />
 
-          <MHSelect
+          {/* <MHSelect
             label="State"
             placeholder="Select State"
             options={states}
@@ -265,17 +267,6 @@ const InitialStep = React.forwardRef(
             onChange={(val) => stateInputChangeHandler(val as string)}
             onBlur={stateInputBlurHandler}
             error={stateErrorTip}
-          />
-
-          <MHFormControl
-            id="zipCode"
-            type="text"
-            label="Zip Code"
-            placeholder="Zip Code"
-            value={enteredZipCode}
-            onChange={zipCodeInputChangeHandler}
-            onBlur={zipCodeInputBlurHandler}
-            error={zipCodeErrorTip}
           />
 
           <MHSelect
@@ -330,7 +321,7 @@ const InitialStep = React.forwardRef(
                 />
               </Grid>
             )}
-          </Grid>
+          </Grid> */}
 
           <Stack spacing={2} mt={3}>
             <MHButton type="submit">{'Next'}</MHButton>

@@ -15,6 +15,7 @@ import * as utils from '../../utils/utils';
 import * as validators from '../../utils/validators';
 import * as constants from '../../utils/constants';
 import OnboardingContext from '../../store/context/onboarding-context';
+import MHFormControl from '../Form/MHFormControl';
 
 const generateDateOptions = () => {
   let dateOptions: SelectOption<string>[] = [];
@@ -175,14 +176,14 @@ const IntermediateStep = (props: {
   function submitHandler(e: React.FormEvent<HTMLFormElement>) {
     e.preventDefault();
 
-    if (!formIsValid) {
-      markIdentityInputAsTouched();
-      markDateInputAsTouched();
-      markRaceInputAsTouched();
-      return;
-    }
+    // if (!formIsValid) {
+    //   markIdentityInputAsTouched();
+    //   markDateInputAsTouched();
+    //   markRaceInputAsTouched();
+    //   return;
+    // }
 
-    updateEmployeeData();
+    // updateEmployeeData();
     onNext();
   }
 
@@ -195,7 +196,132 @@ const IntermediateStep = (props: {
   return (
     <React.Fragment>
       <Box component={'form'} onSubmit={submitHandler}>
-        <MHSelect
+      <Grid container spacing={2}>
+            <Grid item xs={6}>
+              <MHFormControl
+                id="firstName"
+                type="text"
+                label="Domain"
+                placeholder="unilever.mhatwork.com"
+                value={enteredIdentity}
+                onChange={identityInputChangeHandler}
+                onBlur={identityInputBlurHandler}
+              />
+            </Grid>
+            <Grid item xs={6}>
+              <MHFormControl
+                id="lastName"
+                type="text"
+                label="No of employees"
+                placeholder="No of employees"
+                value={enteredDate}
+                onChange={dateInputChangeHandler}
+                onBlur={dateInputBlurHandler}
+              />
+            </Grid>
+          </Grid>
+
+      <Grid container spacing={2}>
+            <Grid item xs={6}>
+              <MHFormControl
+                id="firstName"
+                type="text"
+                label="State of Incorporation"
+                placeholder="State of Incorporation"
+                value={enteredIdentity}
+                onChange={identityInputChangeHandler}
+                onBlur={identityInputBlurHandler}
+              />
+            </Grid>
+            <Grid item xs={6}>
+              <MHFormControl
+                id="lastName"
+                type="text"
+                label="Type of Business"
+                placeholder="Type of Business"
+                value={enteredDate}
+                onChange={dateInputChangeHandler}
+                onBlur={dateInputBlurHandler}
+              />
+            </Grid>
+          </Grid>
+
+      <Grid container spacing={2}>
+            <Grid item xs={6}>
+              <MHFormControl
+                id="firstName"
+                type="text"
+                label="Region"
+                placeholder="Region"
+                value={enteredIdentity}
+                onChange={identityInputChangeHandler}
+                onBlur={identityInputBlurHandler}
+              />
+            </Grid>
+            <Grid item xs={6}>
+              <MHFormControl
+                id="lastName"
+                type="text"
+                label="Business phone no."
+                placeholder="Business phone no."
+                value={enteredDate}
+                onChange={dateInputChangeHandler}
+                onBlur={dateInputBlurHandler}
+              />
+            </Grid>
+          </Grid>
+
+          <MHFormControl
+            id="zipCode"
+            type="text"
+            label="Business address"
+            placeholder="Business address"
+            value={enteredRace}
+            onChange={raceInputChangeHandler}
+            onBlur={raceInputBlurHandler}
+          />
+
+          
+      <Grid container spacing={2}>
+            <Grid item xs={6}>
+              <MHFormControl
+                id="firstName"
+                type="text"
+                label="Zip Code"
+                placeholder="Zip Code"
+                value={enteredIdentity}
+                onChange={identityInputChangeHandler}
+                onBlur={identityInputBlurHandler}
+              />
+            </Grid>
+            <Grid item xs={6}>
+              <MHFormControl
+                id="lastName"
+                type="text"
+                label="City"
+                placeholder="City"
+                value={enteredDate}
+                onChange={dateInputChangeHandler}
+                onBlur={dateInputBlurHandler}
+              />
+            </Grid>
+          </Grid>
+          
+      <Grid container spacing={2}>
+            <Grid item xs={6}>
+              <MHFormControl
+                id="firstName"
+                type="text"
+                label="State"
+                placeholder="State"
+                value={enteredIdentity}
+                onChange={identityInputChangeHandler}
+                onBlur={identityInputBlurHandler}
+              />
+            </Grid>
+        
+          </Grid>
+        {/* <MHSelect
           label={'I identify as...'}
           placeholder="I identify as..."
           options={constants.IDENTITY_OPTIONS}
@@ -250,7 +376,7 @@ const IntermediateStep = (props: {
           }}
           onBlur={raceInputBlurHandler}
           error={raceErrorTip}
-        />
+        /> */}
 
         <Stack spacing={2} mt={3}>
           <MHButton type="submit">{'Next'}</MHButton>
