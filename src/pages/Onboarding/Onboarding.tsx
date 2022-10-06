@@ -213,67 +213,68 @@ const Onboarding = () => {
       {loading && <BackdropLoader />}
       <Layout
         onboardingSteps={<Steps steps={STEPS} activeStep={activeStepIndex} />}>
-          <Grid container spacing={0} sx={{ minHeight: '100vh' }}>
-            {activeStepIndex < 3 && (
-              <Grid
-                item
-                xs={6}
-                position="sticky"
-                height="100vh"
-                sx={{
-                  top: 0
-                }}>
-                <Box
-                  component="div"
-                  position="relative"
-                  sx={{
-                    overflow: 'hidden',
-                    pt: 10,
-                    width: '70%',
-                    mx: 'auto'
-                  }}>
-                  <Typography
-                    variant="h1"
-                    fontSize="3rem"
-                    align="center"
-                    gutterBottom>
-                    MH Elevates Care In The Workplace
-                  </Typography>
-                  <Typography
-                    variant="body1"
-                    fontSize="1rem"
-                    align="center"
-                    gutterBottom>
-                    Please fill out all required fields to start enjoying our
-                    care benefits
-                  </Typography>
-                </Box>
-              </Grid>
-            )}
-
+        <Grid container spacing={0} sx={{ minHeight: '100vh' }}>
+          {activeStepIndex < 3 && (
             <Grid
               item
-              xs={activeStepIndex > 2 ? 12 : 6}
+              xs={6}
+              position="sticky"
+              height="100vh"
               sx={{
-                backgroundColor: theme.palette.common.white,
-                position: 'relative'
-              }}
-              py={6}>
-              <Stack direction="column" mx="auto" px={6}>
-                {ActiveFormComponent && (
-                  <Slide direction="left" in mountOnEnter unmountOnExit>
-                    <Box>
-                      <ActiveFormComponent
-                        activeIndex={activeStepIndex}
-                        onNext={nextStepHandler}
-                        onPrevious={previousStepHandler}
-                      />
-                    </Box>
-                  </Slide>
-                )}
-              </Stack>
+                top: 0
+              }}>
+              <Box
+                component="div"
+                position="relative"
+                sx={{
+                  overflow: 'hidden',
+                  pt: 10,
+                  width: '70%',
+                  mx: 'auto'
+                }}>
+                <Typography
+                  variant="h1"
+                  fontSize="3rem"
+                  align="center"
+                  gutterBottom>
+                  Work-Life Care is for your Entire Workforce
+                </Typography>
+                <Typography
+                  variant="body1"
+                  fontSize="1rem"
+                  align="center"
+                  gutterBottom>
+                  MH’s caregiving and work solutions help your employees live
+                  happier lives & improves their productivity at lower costs to
+                  you.
+                </Typography>
+              </Box>
             </Grid>
+          )}
+
+          <Grid
+            item
+            xs={activeStepIndex > 2 ? 12 : 6}
+            sx={{
+              backgroundColor: theme.palette.common.white,
+              position: 'relative'
+            }}
+            py={6}>
+            <Stack direction="column" mx="auto" px={6}>
+              {ActiveFormComponent && (
+                <Slide direction="left" in mountOnEnter unmountOnExit>
+                  <Box>
+                    <ActiveFormComponent
+                      activeIndex={activeStepIndex}
+                      onNext={nextStepHandler}
+                      onPrevious={previousStepHandler}
+                    />
+                  </Box>
+                </Slide>
+              )}
+            </Stack>
           </Grid>
+        </Grid>
       </Layout>
     </React.Fragment>
   );

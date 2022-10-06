@@ -179,9 +179,12 @@ const SummaryStep = (props: {
       item: 'MH Care Wallet Subscription',
       employeeSize: employer?.employeeSize as number,
       walletAllocation: employer?.quarterlyAllocation as number,
-      serviceCharge: 20,
-      tax: 15,
-      total: 1500
+      serviceCharge: 200,
+      tax: 150,
+      total:
+        (employer?.quarterlyAllocation ? employer.quarterlyAllocation : 0) +
+        20 +
+        15
     }
   ];
 
