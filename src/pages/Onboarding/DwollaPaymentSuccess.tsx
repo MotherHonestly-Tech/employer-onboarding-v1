@@ -53,7 +53,7 @@ const DwollaPaymentSuccess = () => {
       </Typography> */}
 
       <Typography variant="body2" mt={3}>
-        We're still processing your payment, this typically takes around 1-2 workings days.
+        We're still processing your payment, this typically takes around 1-2 workings days. Please check your email for confirmation and next steps.
       </Typography>
     </Box>
   );

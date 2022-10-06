@@ -212,7 +212,7 @@ const SummaryStep = (props: {
             <OrgLogo />
           </ListItemAvatar>
           <ListItemText>
-            <Typography
+            {/* <Typography
               variant="body1"
               fontSize="12px"
               color="primary.main"
@@ -222,7 +222,7 @@ const SummaryStep = (props: {
 
             <Typography variant="body2" fontSize={'.6rem'} color="#989898">
               michael@motherhonestly.com
-            </Typography>
+            </Typography> */}
           </ListItemText>
         </ListItem>
       </Box>
@@ -237,13 +237,13 @@ const SummaryStep = (props: {
         <Box>
           <TextWidget title="Invoice Number" />
           <TextWidget title="INV-2022-010" />
-          <TextWidget title="Issued Date: " description="19 Sept 2022" />
-          <TextWidget title="Due Date: " description="27 Dec 2022" />
+          {/* <TextWidget title="Issued Date: " description="19 Sept 2022" />
+          <TextWidget title="Due Date: " description="27 Dec 2022" /> */}
         </Box>
         <Box>
           <TextWidget title="Billed to" />
           <TextWidget description="Uniliver" />
-          <TextWidget description="Moonlight Sunlight" />
+          {/* <TextWidget description="Moonlight Sunlight" /> */}
         </Box>
       </Stack>
 
