@@ -21,16 +21,16 @@ const DwollaPaymentSuccess = () => {
       <UnileverLogoIcon />
 
       <Typography variant="body1" mt={6} fontSize=".85rem" gutterBottom>
-        Thank you for your payment
+        Payment Ref: #RE4543643
       </Typography>
 
       <Typography variant="h3" fontSize="1.75rem">
-        Payment Pending
+      Thank you for your payment
       </Typography>
 
       <PendingPaymentIcon width="320" />
 
-      <Typography variant="body1" fontSize="1rem" gutterBottom>
+      {/* <Typography variant="body1" fontSize="1rem" gutterBottom>
         <Typography
           component="span"
           display="inline"
@@ -39,9 +39,9 @@ const DwollaPaymentSuccess = () => {
           Transaction Amount:
         </Typography>{' '}
         $7,260
-      </Typography>
+      </Typography> */}
 
-      <Typography variant="body1" fontSize="1rem" gutterBottom>
+      {/* <Typography variant="body1" fontSize="1rem" gutterBottom>
         <Typography
           component="span"
           display="inline"
@@ -50,11 +50,10 @@ const DwollaPaymentSuccess = () => {
           Transaction Date:
         </Typography>{' '}
         22 Sep 2022
-      </Typography>
+      </Typography> */}
 
       <Typography variant="body2" mt={3}>
-        We're still processing your payment. If the account is not debited
-        within 24 hours please reach out to us at hello@motherhonestly.com
+        We're still processing your payment, this typically takes around 1-2 workings days.
       </Typography>
     </Box>
   );

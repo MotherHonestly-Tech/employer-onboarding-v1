@@ -81,7 +81,7 @@ const PricingGrid = ({ title, amount }: { title: string; amount: number }) => (
   </Grid>
 );
 
-const Pricing = () => {
+const Pricing = ({ total }: { total: number }) => {
   return (
     <Box width={200}>
       <Typography
@@ -96,7 +96,7 @@ const Pricing = () => {
 
       <Divider light sx={{ mb: 1 }} />
 
-      <PricingGrid title="Total" amount={1500} />
+      <PricingGrid title="Total" amount={total} />
     </Box>
   );
 };
@@ -280,7 +280,15 @@ const SummaryStep = (props: {
         </Box>
 
         <Box>
-          <Pricing />
+          <Pricing
+            total={
+              (employer?.quarterlyAllocation
+                ? employer.quarterlyAllocation
+                : 0) +
+              20 +
+              15
+            }
+          />
         </Box>
       </Stack>
 

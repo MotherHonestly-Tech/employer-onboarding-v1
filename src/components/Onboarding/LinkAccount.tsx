@@ -30,6 +30,8 @@ const LinkAccount = ({
   onClose: () => void;
   onCustomerConnected: (accountId: string) => void;
 }) => {
+  const history = useHistory();
+
   const onboardingCtx = React.useContext(OnboardingContext);
   const { employer } = onboardingCtx;
 
@@ -62,25 +64,26 @@ const LinkAccount = ({
           customerId: employer!.customerId
         },
         (response: HttpResponse<unknown>) => {
-          createCustomer(
-            process.env.REACT_APP_PLAID_API_URL + 'dwo/customer/create',
-            {
-              method: 'POST',
-              body: JSON.stringify({
-                publicToken: public_token,
-                accountId: metadata.accounts[0].id,
-                mask: metadata.accounts[0].mask,
-                BusinessName: metadata.institution?.name,
-                email: employer?.employeeEmail,
-                firstName: employer?.firstName,
-                lastName: employer?.lastName,
-                type: 'EMPLOYER'
-              })
-            },
-            (response: HttpResponse<unknown>) => {
-              onCustomerConnected(metadata.accounts[0].id);
-            }
-          );
+          history.push('/employer/allocation');
+          // createCustomer(
+          //   process.env.REACT_APP_PLAID_API_URL + 'dwo/customer/create',
+          //   {
+          //     method: 'POST',
+          //     body: JSON.stringify({
+          //       publicToken: public_token,
+          //       accountId: metadata.accounts[0].id,
+          //       mask: metadata.accounts[0].mask,
+          //       BusinessName: metadata.institution?.name,
+          //       email: employer?.employeeEmail,
+          //       firstName: employer?.firstName,
+          //       lastName: employer?.lastName,
+          //       type: 'EMPLOYER'
+          //     })
+          //   },
+          //   (response: HttpResponse<unknown>) => {
+          //     onCustomerConnected(metadata.accounts[0].id);
+          //   }
+          // );
         }
       );
       // window.history.pushState('', '', '/');

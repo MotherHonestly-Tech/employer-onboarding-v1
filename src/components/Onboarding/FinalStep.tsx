@@ -127,7 +127,7 @@ const FinalStep = (props: {
         <MHFormControl
           id="allocation"
           type="number"
-          label="Allocation Funds Per Employee ($)"
+          label={'Work Life Care Funds Per Employee Per Month ($)'}
           placeholder="Amount ($)"
           value={enteredAllocation}
           onChange={(e) => {
@@ -146,6 +146,10 @@ const FinalStep = (props: {
             'Please enter your allocation per employee'
           )}
         />
+
+        <Typography variant="body2" fontFamily="Area-Normal-Bold">
+          Total Number of Employees: {employer?.employeeSize}
+        </Typography>
 
         <Stack
           direction="row"
