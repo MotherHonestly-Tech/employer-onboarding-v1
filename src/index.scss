@@ -98,6 +98,10 @@ h6 {
   background: #f4ee46;
 }
 
+::placeholder {
+  color:#A6A6A6;
+}
+
 a:link,
 a:visited,
 a:hover,
@@ -138,6 +142,14 @@ a:active {
   border-radius: 15px;
 }
 
+.required::after {
+  content: '*';
+  color: rgb(246, 6, 6);
+  margin-left: 1px;
+  font-size: .8rem;
+  line-height: .7;
+}
+
 .fade-enter {
   opacity: 0;
   z-index: 1;
@@ -158,6 +170,68 @@ a:active {
   opacity: 0;
   z-index: 0;
   display: none;
+}
+
+// Loading Icon
+@-webkit-keyframes spin {
+  0% {
+    -webkit-transform: rotate(0deg);
+    transform: rotate(0deg);
+  }
+
+  100% {
+    -webkit-transform: rotate(360deg);
+    transform: rotate(360deg);
+  }
+}
+
+@keyframes spin {
+  0% {
+    -webkit-transform: rotate(0deg);
+    transform: rotate(0deg);
+  }
+
+  100% {
+    -webkit-transform: rotate(360deg);
+    transform: rotate(360deg);
+  }
+}
+
+.loading-icon-container {
+  width: 80px;
+
+  display: flex;
+  justify-content: space-around;
+  align-items: center;
+}
+
+.loading-icon {
+  border-radius: 50%;
+  width: 80px;
+  height: 80px;
+  border: 5px solid rgba(25, 64, 73, .2);
+  border-top-color: #f8f246;
+  display: inline-block;
+  // margin: 0 8px;
+
+  -webkit-animation-name: spin;
+  -webkit-animation-duration: 1s;
+  -webkit-animation-iteration-count: infinite;
+
+  animation-name: spin;
+  animation-duration: 1s;
+  animation-iteration-count: infinite;
+  position: relative;
+}
+
+.overshot {
+  -webkit-animation-timing-function: cubic-bezier(0.65, 1.5, 0.6, 0.95);
+  animation-timing-function: cubic-bezier(0.65, 1.5, 0.6, 0.95);
+}
+
+.downhill {
+  -webkit-animation-timing-function: cubic-bezier(0.3, 0.1, 0.3, 0.85);
+  animation-timing-function: cubic-bezier(0.3, 0.1, 0.3, 0.85);
 }
 
 // react-transition classes below-

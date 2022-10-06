@@ -1,5 +1,5 @@
 import React from 'react';
-import { Redirect, useHistory } from 'react-router-dom';
+import { useLocation } from 'react-router-dom';
 
 import Box from '@mui/material/Box';
 import Grid from '@mui/material/Grid';
@@ -11,17 +11,20 @@ import Steps from '../../components/Steps/Steps';
 import InitialStep from '../../components/Onboarding/InitialStep';
 import IntermediateStep from '../../components/Onboarding/IntermediateStep';
 import FinalStep from '../../components/Onboarding/FinalStep';
+import Layout from '../../components/Layout/Layout';
+import SummaryStep from '../../components/Onboarding/SummaryStep';
 import BackdropLoader from '../../components/UI/BackdropLoader';
 import useHttp from '../../hooks/use-http';
 
 import MHLogoIcon from '../../theme/icons/MHLogo';
 import { theme } from '../../theme/mui/dashboard.theme';
-import OnboardingContext from '../../store/context/onboarding-context';
-import { HttpResponse } from '../../models/api.interface';
-import { constructDateFormat } from '../../utils/utils';
+import OnboardingContext, {
+  EmployerOnboarding
+} from '../../store/context/onboarding-context';
 import geoData from '../../data/georef-united-states-of-america-state.json';
-import Layout from '../../components/Layout/Layout';
-import SummaryStep from '../../components/Onboarding/SummaryStep';
+import NotificationContext from '../../store/context/notifications.context';
+import { getURLWithQueryParams } from '../../utils/utils';
+import { HttpResponse } from '../../models/api.interface';
 
 const STEPS = [
   'About you',
@@ -35,9 +38,10 @@ const Onboarding = () => {
   const [completed, setCompleted] = React.useState(false);
   const onboardingCtx = React.useContext(OnboardingContext);
 
-  const history = useHistory();
+  const notificationCtx = React.useContext(NotificationContext);
+  const { pushNotification } = notificationCtx;
 
-  const { loading, error, sendHttpRequest: onboardEmployee } = useHttp();
+  const { loading, error, sendHttpRequest: onboardEmployer } = useHttp();
 
   let ActiveFormComponent: React.ElementType | null = null;
 
@@ -63,34 +67,145 @@ const Onboarding = () => {
   }
 
   const nextStepHandler = () => {
+    console.log(activeStepIndex);
     setActiveStepIndex((prevIndex) =>
-      prevIndex < STEPS.length - 1 ? prevIndex + 1 : prevIndex
+      prevIndex < STEPS.length - 2 ? prevIndex + 1 : prevIndex
     );
 
-    if (activeStepIndex === STEPS.length - 1) {
+    if (activeStepIndex === STEPS.length - 2) {
       setCompleted(true);
     }
+    window.scrollTo(0, 0);
   };
 
   const previousStepHandler = (event: React.MouseEvent) => {
+    setCompleted(false);
     setActiveStepIndex((prevIndex) => prevIndex - 1);
+    window.scrollTo(0, 0);
   };
 
-  const { employee, configureStates } = onboardingCtx;
-
-  const empData = React.useMemo(() => employee, [employee]);
+  const { employer, configureStates, updateEmployerData } = onboardingCtx;
+  const employerData = React.useMemo(() => employer, [employer]);
 
   React.useEffect(() => {
     configureStates(geoData);
+
+    // localStorage.setItem('onboardingToken', token);
   }, []);
 
   React.useEffect(() => {
+    if (!employerData) {
+      return;
+    }
+
+    const token = localStorage.getItem('oToken');
+
+    const payload = {
+      employerToken: token,
+      employerRefId: employerData.employerRefId,
+      employeeEmail: employerData.employeeEmail,
+      firstName: employerData.firstName,
+      lastName: employerData.lastName,
+      numberOfEligibleEmployee: employerData.employeeSize,
+      stateOfIncorporation: employerData.stateOfIncorporation,
+      businessType: employerData.businessType,
+      mailingAddress: employerData.businessAddress,
+      telephoneNumber: employerData.businessPhone,
+      zipCode: employerData.zipCode,
+      city: employerData.city,
+      region: employerData.region,
+      state: employerData.state,
+      monthlyAllocation: employerData.monthlyAllocation,
+      fundPerEmployeePerQuarter: employerData.quarterlyAllocation
+    };
+
     if (completed) {
+      onboardEmployer(
+        process.env.REACT_APP_API_BASE_URL + 'employee/dashboard/employee',
+        {
+          method: 'POST',
+          body: JSON.stringify(payload)
+        },
+        (response) => {
+          setActiveStepIndex((prevIndex) => prevIndex + 1);
+        }
+      );
     }
   }, [completed]);
 
-  if (error) {
-    setCompleted(false);
+  React.useEffect(() => {
+    if (completed && error) {
+      setCompleted(false);
+      pushNotification({
+        type: 'error',
+        message: error ? error.message : 'An unexpected error occured'
+      });
+    }
+  }, [error]);
+
+  const location = useLocation();
+  const queryParams = React.useMemo(
+    () => new URLSearchParams(location.search),
+    [location.search]
+  );
+
+  const token = queryParams.get('token');
+
+  const {
+    loading: fetchingEmployer,
+    error: errorGettingEmployer,
+    sendHttpRequest: getEmployer
+  } = useHttp();
+
+  React.useEffect(() => {
+    getEmployer(
+      getURLWithQueryParams(
+        process.env.REACT_APP_API_BASE_URL +
+          'employer/dashboard/employer/correspondent',
+        {
+          ...(token && { token: token })
+        }
+      ),
+      {
+        method: 'GET'
+      },
+      (response: HttpResponse<any>) => {
+        localStorage.setItem('oToken', token as string);
+        updateEmployerData({
+          employerToken: token,
+          employerRefId: response.data.employerRefId,
+          customerId: response.data.customerId
+        } as EmployerOnboarding);
+      }
+    );
+  }, []);
+
+  React.useEffect(() => {
+    if (errorGettingEmployer) {
+      setCompleted(false);
+      pushNotification({
+        type: 'error',
+        message: errorGettingEmployer.message
+      });
+    }
+  }, [errorGettingEmployer]);
+
+  if (fetchingEmployer) {
+    return <BackdropLoader />;
+  }
+
+  if (errorGettingEmployer) {
+    return (
+      <Box
+        display="flex"
+        justifyContent="center"
+        alignItems="center"
+        minHeight="80vh">
+        <Typography variant="body1" align="center" fontSize="1.5rem">
+          An unexpected error occured
+        </Typography>
+      </Box>
+    );
   }
 
   return (
@@ -98,7 +213,6 @@ const Onboarding = () => {
       {loading && <BackdropLoader />}
       <Layout
         onboardingSteps={<Steps steps={STEPS} activeStep={activeStepIndex} />}>
-        {!completed && (
           <Grid container spacing={0} sx={{ minHeight: '100vh' }}>
             {activeStepIndex < 3 && (
               <Grid
@@ -113,18 +227,25 @@ const Onboarding = () => {
                   component="div"
                   position="relative"
                   sx={{
-                    height: '100vh',
                     overflow: 'hidden',
                     pt: 10,
                     width: '70%',
                     mx: 'auto'
                   }}>
-                  <Typography variant="h1" align="center" gutterBottom>
-                    We're looking forward to speaking with you soon.
+                  <Typography
+                    variant="h1"
+                    fontSize="3rem"
+                    align="center"
+                    gutterBottom>
+                    MH Elevates Care In The Workplace
                   </Typography>
-                  <Typography variant="body1" align="center" gutterBottom>
-                    In the meantime, claim your account and start your
-                    application. It takes 5 minutes.
+                  <Typography
+                    variant="body1"
+                    fontSize="1rem"
+                    align="center"
+                    gutterBottom>
+                    Please fill out all required fields to start enjoying our
+                    care benefits
                   </Typography>
                 </Box>
               </Grid>
@@ -138,10 +259,7 @@ const Onboarding = () => {
                 position: 'relative'
               }}
               py={6}>
-              <Stack
-                direction="column"
-                mx="auto"
-                px={6}>
+              <Stack direction="column" mx="auto" px={6}>
                 {ActiveFormComponent && (
                   <Slide direction="left" in mountOnEnter unmountOnExit>
                     <Box>
@@ -156,7 +274,6 @@ const Onboarding = () => {
               </Stack>
             </Grid>
           </Grid>
-        )}
       </Layout>
     </React.Fragment>
   );

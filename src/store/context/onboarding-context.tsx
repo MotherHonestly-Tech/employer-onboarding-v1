@@ -2,34 +2,39 @@ import React from 'react';
 
 import { SelectOption } from '@mui/base';
 
-export type EmployeeOnboarding = {
-  firstName: string;
-  lastName: string;
-  state: string;
-  zipCode: string;
-  relationshipStatus: string;
-  householdSize: string;
-  numberOfKids: string;
-  identity: string;
-  dateOfBirth: string | Date;
-  race: string;
-  jobTitle: string;
-  position: string;
-  department: string;
-  careResponsibilities: string[];
+export type EmployerOnboarding = {
+  customerId:                number;
+  employerRefId:             number;
+  employerToken:             string;
+  employeeEmail:             string;
+  firstName:                 string;
+  lastName:                  string;
+  domain:                    string;
+  employeeSize:              number;
+  stateOfIncorporation:      string;
+  allocationPerEmployee:     number;
+  monthlyAllocation:         number;
+  quarterlyAllocation:       number;
+  businessPhone:             string;
+  businessAddress:           string;
+  businessType:              string;
+  region:                    string;
+  city:                      string;
+  zipCode:                   string;
+  state:                     string;
 };
 
-type OnboardingCtxType = {
+type OnboardingCtxShape = {
   states: SelectOption<string>[];
-  employee: Partial<EmployeeOnboarding> | null;
-  updateEmployee: (emp: Partial<EmployeeOnboarding>) => void;
+  employer: EmployerOnboarding | null;
+  updateEmployerData: (emp: EmployerOnboarding) => void;
   configureStates: (geoData: any) => void;
 };
 
-const OnboardingContext = React.createContext<OnboardingCtxType>({
+const OnboardingContext = React.createContext<OnboardingCtxShape>({
   states: [],
-  employee: null,
-  updateEmployee: (emp: Partial<EmployeeOnboarding>) => {},
+  employer: null,
+  updateEmployerData: (emp: EmployerOnboarding) => {},
   configureStates: (geoData: any) => {}
 });
 
@@ -38,9 +43,8 @@ export const OnboardingContextProvider = ({
 }: {
   children: React.ReactNode;
 }) => {
-  const [employee, setEmployee] = React.useState<Partial<
-    EmployeeOnboarding
-  > | null>(null);
+  const [employer, setEmployer] = React.useState<
+    EmployerOnboarding | null>(null);
   const [states, setStates] = React.useState<Array<SelectOption<string>>>([]);
 
   const configureStates = (geoData: Array<unknown>) => {
@@ -64,18 +68,18 @@ export const OnboardingContextProvider = ({
     setStates(mappedStates);
   };
 
-  const updateEmployee = (empDetails: Partial<EmployeeOnboarding>) => {
-    setEmployee((prevState) => ({
+  const updateEmployerData = (empDetails: EmployerOnboarding) => {
+    setEmployer((prevState) => ({
       ...prevState,
       ...empDetails
     }));
   };
 
-  const contextValue: OnboardingCtxType = {
+  const contextValue: OnboardingCtxShape = {
     states,
-    employee: employee,
-    configureStates,
-    updateEmployee: updateEmployee
+    employer: employer,
+    updateEmployerData,
+    configureStates
   };
 
   return (

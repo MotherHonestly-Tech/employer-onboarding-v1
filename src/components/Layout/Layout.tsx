@@ -22,7 +22,9 @@ const Layout: FnComponent<{
             backgroundColor: (theme) => '#fefefe',
             flexGrow: 1,
             overflow: 'auto',
-            paddingBlockStart: 4
+            paddingBlockStart: 4,
+            maxWidth: '100vw',
+            overflowX: 'hidden'
           }}>
           <Toolbar />
           {props.children}

@@ -47,7 +47,7 @@ const MHDatePicker = () => {
   return (
     <LocalizationProvider dateAdapter={AdapterMoment}>
       <DatePicker
-        label="Basic example"
+        label="date-picker"
         value={value}
         onChange={(newValue) => {
           setValue(newValue);

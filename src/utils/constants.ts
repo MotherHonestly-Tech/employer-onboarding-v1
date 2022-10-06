@@ -160,3 +160,10 @@ const FILE_TYPES: Array<string> = [
   'image/webp',
   'image/x-icon'
 ];
+
+export const BUSINESS_TYPES_OPTIONS: SelectOption<string>[] = [
+  {
+    label: 'Incorporated',
+    value: 'Incorporated'
+  }
+];

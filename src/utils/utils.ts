@@ -45,7 +45,7 @@ export const getURLWithQueryParams = (
   return `${base}?${query}`;
 };
 
-export const formatAmount = (amount: number) => {
+export const formatAmount = (amount: number, precision: number = 2) => {
   if (typeof amount === 'string') {
     amount = parseFloat(amount);
   }
@@ -57,15 +57,42 @@ export const formatAmount = (amount: number) => {
   const options = {
     style: 'currency',
     currency: 'USD',
-    minimumFractionDigits: 2
+    minimumFractionDigits: precision
   };
 
   return new Intl.NumberFormat('en-US', options).format(amount);
 };
 
+export const formatNumber = (figure: number, precision: number = 2) => {
+  if (typeof figure === 'string') {
+    figure = parseFloat(figure);
+  }
+
+  if (isNaN(figure)) {
+    return '0.00';
+  }
+
+  return new Intl.NumberFormat('en-US').format(figure);
+};
+
 export const constructDateFormat = (date: Date) => {
   return `${date.getFullYear()}-${date.getMonth() + 1}-${date.getDate()}`;
 };
+
+export const constructBillingDateFormat = (date: Date) => {
+  const day = date.getDate();
+  const month = date.toLocaleString('default', {
+    month: 'short'
+  });
+  const year = date.getFullYear();
+  return `${day} ${month} ${year}`;
+};
+
+export function addDaysToDate(date: Date, days: number) {
+  date = new Date(date.valueOf());
+  date.setDate(date.getDate() + days);
+  return date;
+}
 
 export function formatDate(date: Date): string {
   date = date instanceof Date ? date : new Date(date);
@@ -147,7 +174,7 @@ export function getIsDocumentHidden() {
   return !(document as any)[getBrowserDocumentHiddenProp()];
 }
 
-export const parseAmount = (amount: string) => {
+export const parseAmount = (amount: string): string => {
   amount = amount.replace(/,/g, '').trim();
   return amount;
 };

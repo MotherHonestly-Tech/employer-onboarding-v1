@@ -2,18 +2,28 @@ import React from 'react';
 
 import Stack from '@mui/material/Stack';
 import Box from '@mui/material/Box';
-import { styled } from '@mui/material/styles';
+import Divider from '@mui/material/Divider';
+import Typography from '@mui/material/Typography';
 import { SelectOption } from '@mui/base';
+import { styled } from '@mui/material/styles';
 
 import MHFormControl from '../Form/MHFormControl';
 import MHButton from '../Button/MHButton';
-import { MHMultiSelect } from '../Form/MHSelect';
+import InputAdornment from '../Form/InputAdornment';
 import useInput from '../../hooks/use-input';
 
 import * as validators from '../../utils/validators';
-import OnboardingContext from '../../store/context/onboarding-context';
-import { Divider, Typography } from '@mui/material';
-import { formatAmount } from '../../utils/utils';
+import OnboardingContext, {
+  EmployerOnboarding
+} from '../../store/context/onboarding-context';
+import {
+  addDaysToDate,
+  constructBillingDateFormat,
+  formatAmount,
+  parseAmount,
+  resolveErrorMessage
+} from '../../utils/utils';
+import { ReactComponent as DollarIcon } from '../../static/svg/dollar.svg';
 
 const SelectTag = styled('span')(
   ({ theme }) => `
@@ -45,131 +55,69 @@ const FinalStep = (props: {
   const [quarterlyAllocation, setQuarterlyAllocation] = React.useState(0);
 
   const {
-    value: enteredJobTitle,
-    valid: enteredJobTitleIsValid,
-    error: enteredJobTitleHasError,
-    onChange: jobTitleInputChangeHandler,
-    onBlur: jobTitleInputBlurHandler,
-    markAsTouched: markJobTitleInputAsTouched
+    value: enteredAllocation,
+    valid: enteredAllocationIsValid,
+    error: enteredAllocationHasError,
+    onChange: allocationInputChangeHandler,
+    onBlur: allocationInputBlurHandler,
+    markAsTouched: markAllocationInputAsTouched
   } = useInput([
     {
       validator: (value: string) => validators.required(value)
     }
   ]);
 
-  const {
-    value: enteredPosition,
-    valid: enteredPositionIsValid,
-    error: enteredPositionHasError,
-    onChange: positionInputChangeHandler,
-    onBlur: positionInputBlurHandler,
-    markAsTouched: markPositionInputAsTouched
-  } = useInput([{ validator: (value: string) => validators.required(value) }]);
-
-  const {
-    value: enteredDepartment,
-    valid: enteredDepartmentIsValid,
-    error: enteredDepartmentHasError,
-    onChange: departmentInputChangeHandler,
-    onBlur: departmentInputBlurHandler,
-    markAsTouched: markDepartmentInputAsTouched
-  } = useInput([
-    {
-      validator: (value: string) => validators.required(value)
-    }
-  ]);
-
-  const [careResponsibilites, setCareResponsibilites] = React.useState<
-    string[] | null
-  >([]);
-
-  const careResInputChangeHandler = (values: string[] | null) => {
-    setCareResponsibilites(values);
-  };
-
-  let formIsValid =
-    enteredJobTitleIsValid &&
-    enteredPositionIsValid &&
-    enteredDepartmentIsValid;
-  // &&
-  // careResponsibilites?.length;
-
-  const { employee, updateEmployee } = onboardingCtx;
+  const { employer, updateEmployerData } = onboardingCtx;
   const { activeIndex, onNext, onPrevious } = props;
 
   React.useEffect(() => {
     window.scrollTo(0, 0);
-    if (!employee) return;
+    if (!employer) {
+      return;
+    }
 
-    jobTitleInputChangeHandler(employee.jobTitle || '');
-    positionInputChangeHandler(employee.position || '');
-    departmentInputChangeHandler(employee.department || '');
-    // careResInputChangeHandler(employee.careResponsibilities || []);
+    const emAllocation = employer.allocationPerEmployee
+      ? employer.allocationPerEmployee.toString()
+      : '';
+
+    allocationInputChangeHandler(emAllocation);
+    computeAllocation(+parseAmount(emAllocation));
   }, []);
 
-  function updateEmployeeData() {
-    updateEmployee({
-      jobTitle: enteredJobTitle,
-      position: enteredPosition,
-      department: enteredDepartment
-      // careResponsibilities: careResponsibilites as Array<string>
-    });
-  }
-
-  function renderValue(options: SelectOption<string>[] | null) {
-    let content = null;
-
-    if (!options) return content;
-
-    return (
-      <Stack
-        direction="row"
-        spacing={1}
-        maxWidth="320px"
-        overflow={'auto'}
-        sx={{
-          whiteSpace: 'nowrap',
-          '::-webkit-scrollbar': {
-            height: '0px'
-          }
-        }}>
-        {options.map((item) => (
-          <SelectTag key={item.value}>{item.label}</SelectTag>
-        ))}
-      </Stack>
-    );
-  }
-
-  let jobTitleErrorTip = enteredJobTitleHasError
-    ? 'Please enter your job title'
-    : undefined;
-
-  let positionErrorTip = enteredPositionHasError
-    ? 'Please enter your position'
-    : undefined;
-
-  let departmentErrorTip = enteredDepartmentHasError
-    ? 'Please enter your department'
-    : undefined;
+  const computeAllocation = (allocation: number) => {
+    const employeePopulation =
+      employer && employer?.employeeSize ? employer.employeeSize : 0;
+    const allocationPerMonth = employeePopulation * allocation;
+    setMonthlyAllocation(allocationPerMonth);
+    setQuarterlyAllocation(allocationPerMonth * 3);
+  };
 
   function submitHandler(e: React.ChangeEvent<HTMLFormElement>) {
     e.preventDefault();
 
-    // if (!formIsValid) {
-    //   markJobTitleInputAsTouched();
-    //   markPositionInputAsTouched();
-    //   markDepartmentInputAsTouched();
-    //   return;
-    // }
+    if (!enteredAllocationIsValid) {
+      markAllocationInputAsTouched();
+      return;
+    }
 
-    // updateEmployeeData();
+    updateEmployerData({
+      allocationPerEmployee: +parseAmount(enteredAllocation),
+      monthlyAllocation: monthlyAllocation,
+      quarterlyAllocation: quarterlyAllocation
+    } as EmployerOnboarding);
+
+    console.warn(employer);
     onNext();
   }
 
   function previousStepHandler(e: React.MouseEvent) {
     e.preventDefault();
 
-    updateEmployeeData();
+    updateEmployerData({
+      allocationPerEmployee: +parseAmount(enteredAllocation),
+      monthlyAllocation: monthlyAllocation,
+      quarterlyAllocation: quarterlyAllocation
+    } as EmployerOnboarding);
     onPrevious(e);
   }
 
@@ -177,17 +125,26 @@ const FinalStep = (props: {
     <React.Fragment>
       <Box component={'form'} onSubmit={submitHandler}>
         <MHFormControl
-          id="jobTitle"
+          id="allocation"
           type="number"
           label="Allocation Funds Per Employee ($)"
           placeholder="Amount ($)"
-          value={enteredJobTitle}
+          value={enteredAllocation}
           onChange={(e) => {
-              setMonthlyAllocation(30 * +e.target.value);
-              setQuarterlyAllocation((30 * +e.target.value) * 3);
-              jobTitleInputChangeHandler(e);
+            allocationInputChangeHandler(e);
+            computeAllocation(+parseAmount(e.target.value));
           }}
-          onBlur={jobTitleInputBlurHandler}
+          onBlur={allocationInputBlurHandler}
+          precision={2}
+          startAdornment={
+            <InputAdornment>
+              <DollarIcon width="1rem" />
+            </InputAdornment>
+          }
+          autoComplete="off"
+          error={resolveErrorMessage(enteredAllocationHasError)(
+            'Please enter your allocation per employee'
+          )}
         />
 
         <Stack
@@ -242,8 +199,20 @@ const FinalStep = (props: {
 
         <Box bgcolor="#F5F5F5" p={2} mt={2}>
           <Typography variant="body1" align="center" color="primary.main">
-            Quarterly billing starting from period dated 19th Sept 2022 to 19th
-            Dec 2022
+            Quarterly billing starting from period dated{' '}
+            <Typography
+              component="span"
+              fontFamily={'Area-Normal-Black'}
+              color="primary.main">
+              {constructBillingDateFormat(new Date())}
+            </Typography>{' '}
+            to{' '}
+            <Typography
+              component="span"
+              fontFamily={'Area-Normal-Black'}
+              color="primary.main">
+              {constructBillingDateFormat(addDaysToDate(new Date(), 90))}
+            </Typography>
           </Typography>
         </Box>
 

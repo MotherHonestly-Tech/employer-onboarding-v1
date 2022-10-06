@@ -38,15 +38,19 @@ type InputProps = {
   minLength?: number;
   maxLength?: number;
   readOnly?: boolean;
+  precision?: number;
+  autoComplete?: string;
 };
 
 const Label = styled(
   ({
     children,
-    className
+    className,
+    required
   }: {
     children?: React.ReactNode;
     className?: string;
+    required?: boolean;
   }) => {
     const formControlContext = useFormControlUnstyledContext();
     const [dirty, setDirty] = React.useState(false);
@@ -61,12 +65,12 @@ const Label = styled(
       return <p>{children}</p>;
     }
 
-    const { error, required, filled } = formControlContext;
+    const { error, required: requiredField, filled } = formControlContext;
     const showRequiredError = dirty && required && !filled;
 
     return (
       <label
-        className={clsx(className, error || showRequiredError ? 'invalid' : '')}
+        className={clsx(className, error || showRequiredError ? 'invalid' : '', required && 'required')}
         style={{
           fontSize: 12,
           color: '#A7A7A7',
@@ -144,6 +148,7 @@ const MHFormControl = (props: InputProps) => {
     label,
     required,
     placeholder,
+    disabled,
     startAdornment,
     endAdornment,
     autoFocus,
@@ -155,24 +160,28 @@ const MHFormControl = (props: InputProps) => {
     min,
     max,
     onChange,
-    onBlur
+    onBlur,
+    precision,
+    autoComplete
   } = props;
 
   return (
     <FormControlUnstyled
       defaultValue=""
       value={value}
-      required={required}
+      // required={required}
+      disabled={disabled}
       style={{
         marginBottom: '1.25rem'
       }}>
-      {label && <Label>{label}</Label>}
+      {label && <Label required={required}>{label}</Label>}
       <MHTextInput
         id={id}
         startAdornment={startAdornment}
         endAdornment={endAdornment}
         placeholder={placeholder}
         type={type}
+        autoComplete={autoComplete}
         onChange={onChange}
         onBlur={onBlur}
         autoFocus={autoFocus}
@@ -180,6 +189,7 @@ const MHFormControl = (props: InputProps) => {
         rows={rows}
         minRows={minRows}
         maxRows={maxRows}
+        precision={precision}
         componentsProps={{
           input: {
             min: min,

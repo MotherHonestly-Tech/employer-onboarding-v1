@@ -106,7 +106,7 @@ export const ToastNotification = ({
         alignItems="center"
         background={toast.background}>
         {toast.iconEl}
-        <Typography variant="body1" color="textPrimary">
+        <Typography variant="body1" color="primary.main">
           {message}
         </Typography>
       </Toast>

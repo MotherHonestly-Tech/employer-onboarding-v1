@@ -1,14 +1,20 @@
-import {styled} from '@mui/system';
+import { styled } from '@mui/system';
+import clsx from 'clsx';
 
-const Label = styled('label')(
-  ({ theme, style }) => `
-    display: inline-block;
+const Label = styled((props: any) => (
+  <label
+    {...props}
+    className={clsx(props.className, props.required ? 'required' : '')}></label>
+))(
+  ({ theme }) => `
     font-family: Area-Normal-Semibold;
-    font-size: 0.8rem;
     width: 100%;
     min-width: 320px;
     margin-bottom: 4px;
-    color: #21392E;
+    font-size: 12px;
+    color: #A7A7A7;
+    margin-bottom: 10px;
+    display: block;
     ...({
         ...style
     })

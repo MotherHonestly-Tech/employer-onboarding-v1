@@ -86,8 +86,6 @@ const StyledTableContainer = styled(TableContainer)<{
   overflowX: 'auto',
   overflowY: 'auto',
   maxHeight: '100%',
-  border: '1px solid #E0E0E0',
-  borderRadius: '12px',
   backgroundColor: '#fff',
   ...(containerstyles && containerstyles)
   // '&:last-child': {
@@ -101,10 +99,10 @@ const StyledTableCell = styled(TableCell)<{
 }>(({ theme, headerstyles, bodystyles }) => ({
   fontFamily: theme.typography.fontFamily,
   padding: 10,
-  borderBottom: '1px solid rgb(241 245 249)',
+  borderBottom: '1px solid #E1E1E1',
   //   mb: 3,
   [`&.${tableCellClasses.head}`]: {
-    borderTop: '10px solid #fbf78d',
+    borderTop: '1px solid #E1E1E1',
     background: '#fff',
     color: '#A1A1A1',
     fontSize: '0.8rem',
@@ -213,7 +211,7 @@ export default function MHDataTable({
 }: {
   rows: any[];
   columns: GridColDef[];
-  frontEndPagination: boolean;
+  frontEndPagination?: boolean;
   containerStyles?: object;
   headerStyles?: object;
   bodyStyles?: object;
@@ -282,7 +280,10 @@ export default function MHDataTable({
                       key={i}
                       width={width}
                       align={align || 'left'}
-                      bodystyles={props.bodyStyles}>
+                      bodystyles={props.bodyStyles}
+                      sx={{
+                        fontFamily: 'Area-Normal-Bold'
+                      }}>
                       {cellRenderer ? cellRenderer(row) : value}
                       {/* {description && <Typography variant="body2">{description}</Typography>} */}
                     </StyledTableCell>
@@ -292,6 +293,7 @@ export default function MHDataTable({
             ))}
           </TableBody>
         </Table>
+
         {slicedRows.length === 0 && (
           <Stack
             justifyContent="center"
@@ -300,20 +302,20 @@ export default function MHDataTable({
             minWidth="100%">
             <EmptyDataIcon />
             <Typography variant="body2" mt={2}>
-              No transactions data
+              No data
             </Typography>
           </Stack>
         )}
       </StyledTableContainer>
 
-      {slicedRows.length > 0 && (
+      {/* {slicedRows.length > 0 && (
         <TablePaginationActions
           count={rows.length}
           rowsPerPage={rowsPerPage}
           page={page}
           onPageChange={handleChangePage}
         />
-      )}
+      )} */}
     </React.Fragment>
   );
 }

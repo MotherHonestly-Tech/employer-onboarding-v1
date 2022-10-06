@@ -6,7 +6,7 @@ import InputUnstyled, {
 } from '@mui/base/InputUnstyled';
 import { useFormControlUnstyledContext } from '@mui/base/FormControlUnstyled';
 import { styled } from '@mui/system';
-import { parseAmount } from '../../utils/utils';
+import { formatAmount, formatNumber, parseAmount } from '../../utils/utils';
 
 const grey = {
   50: '#F3F6F9',
@@ -29,7 +29,12 @@ const StyledInputRoot = styled('div')(
     justify-content: center;
     transition: all 0.4s ease-in;
     position: relative;
-    
+    border: 1px solid #F5F5F5;
+
+    &.MuiInput-root::placeholder {
+      color: #A6A6A6;
+    }
+  
     .Mui-focused > &.MuiInput-root.MuiInput-formControl {
 
     }
@@ -48,7 +53,7 @@ const StyledInputElement = styled('input')`
   line-height: 1.5;
   flex-grow: 1;
   color: ${grey[900]};
-  background: #F5F5F5;
+  background: #f5f5f5;
   border: none;
   border-radius: inherit;
   padding: 12px 12px;
@@ -74,7 +79,7 @@ const StyledTextareaElement = styled(
   line-height: 1.5;
   flex-grow: 1;
   color: ${grey[900]};
-  background: inherit;
+  background: #F5F5F5;
   border: none;
   border-radius: inherit;
   padding: 12px 12px;
@@ -82,8 +87,15 @@ const StyledTextareaElement = styled(
 `
 );
 
+type NumberInputProps = {
+  precision?: number;
+};
+
 const MHTextInput = React.forwardRef(
-  (props: InputUnstyledProps, ref: React.ForwardedRef<HTMLDivElement>) => {
+  (
+    props: InputUnstyledProps & NumberInputProps,
+    ref: React.ForwardedRef<HTMLDivElement>
+  ) => {
     const { components, rows, ...others } = props;
 
     // const formControlContext = useFormControlUnstyledContext();
@@ -99,9 +111,12 @@ const MHTextInput = React.forwardRef(
 
     const inputBlurHandler = (event: React.FocusEvent<HTMLInputElement>) => {
       if (others.type === 'number' && event.target.value) {
-        let formattedValue = parseFloat(parseAmount(event.target.value))
-          .toFixed(2)
-          .replace(/\d(?=(\d{3})+\.)/g, '$&,');
+        let formattedValue =
+          others.precision && others.precision > 0
+            ? parseFloat(parseAmount(event.target.value))
+                .toFixed(2)
+                .replace(/\d(?=(\d{3})+\.)/g, '$&,')
+            : formatNumber(+parseAmount(event.target.value));
         event.target.value = formattedValue;
         others.onChange &&
           others.onChange(event as React.ChangeEvent<HTMLInputElement>);
@@ -124,9 +139,11 @@ const MHTextInput = React.forwardRef(
           onChange={inputChangeHandler}
           onBlur={inputBlurHandler}
           ref={ref}
+          disabled={others.disabled}
           componentsProps={{
             input: {
-              type: others.type === 'number' ? 'text' : others.type
+              type: others.type === 'number' ? 'text' : others.type,
+              // disabled: others.disabled
             }
           }}
         />

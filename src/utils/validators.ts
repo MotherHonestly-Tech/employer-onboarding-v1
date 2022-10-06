@@ -20,12 +20,12 @@ export const required = (value: string) => {
 };
 
 export const min = (min: number) => (value: string) => {
-  value = parseAmount(value);
+  value = parseAmount(value).toString();
   return +value >= min;
 };
 
 export const max = (max: number) => (value: string) => {
-  value = parseAmount(value);
+  value = parseAmount(value).toString();
   return +value <= max;
 };
 
@@ -38,7 +38,7 @@ export const maxLength = (maxLength: number) => (value: string) => {
 };
 
 export const isNumber = (value: string) => {
-  value = parseAmount(value);
+  value = parseAmount(value).toString();
   return !isNaN(+value);
 };
 

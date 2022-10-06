@@ -64,8 +64,8 @@ const StyledButton = styled('button')<{
     box-sizing: border-box;
     min-height: calc(1.5em + 22px);
     width: 100%;
-    background: ${theme.palette.mode === 'dark' ? grey[900] : '#fff'};
-    border: 1px solid ${grey[100]};
+    background: #F5F5F5;
+    border: 1px solid #F5F5F5;
     margin-bottom: 1.25rem;
     padding: 10px;
     text-align: left;
@@ -231,9 +231,12 @@ type ExtraProps = {
   onBlur?: () => void;
   popperWidth?: string;
   error?: string;
+  required?: boolean;
 };
 
-function CustomSelect<T extends {}>(props: SelectUnstyledProps<T> & ExtraProps) {
+function CustomSelect<T extends {}>(
+  props: SelectUnstyledProps<T> & ExtraProps
+) {
   const components: SelectUnstyledProps<T>['components'] = {
     Root: StyledButton,
     Listbox: StyledListbox,
@@ -253,7 +256,7 @@ function CustomSelect<T extends {}>(props: SelectUnstyledProps<T> & ExtraProps) 
           placeholder: props.placeholder || 'Select an option',
           onBlur: props.onBlur,
           style: {
-            borderColor: props.error ? theme.palette.error.main : `${grey[100]}`
+            borderColor: props.error ? theme.palette.error.main : `#F5F5F5`
           }
         },
         popper: {
@@ -270,15 +273,14 @@ function CustomSelect<T extends {}>(props: SelectUnstyledProps<T> & ExtraProps) 
 export function MHSelect(props: SelectProps<string>) {
   return (
     <>
-      {props.label && <Label>{props.label}</Label>}
+      {props.label && <Label required={props.required}>{props.label}</Label>}
       <CustomSelect
         placeholder={props.placeholder}
         value={props.value}
         onChange={props.onChange}
         onBlur={props.onBlur}
         renderValue={props.renderValue}
-        popperWidth={props.popperWidth}
-       >
+        popperWidth={props.popperWidth}>
         {props.options.map((opt) => (
           <StyledOption key={opt.value} value={opt.value}>
             {opt.label}

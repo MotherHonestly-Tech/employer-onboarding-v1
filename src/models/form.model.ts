@@ -26,6 +26,7 @@ export interface SelectProps<T> {
   renderValue?: (option: SelectOption<T> | null) => React.ReactNode;
   popperWidth?: string;
   error?: string;
+  required?: boolean;
 }
 
 export interface MultiSelectProps<T> {

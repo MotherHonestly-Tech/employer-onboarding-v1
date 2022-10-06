@@ -6,14 +6,12 @@ import Grid from '@mui/material/Grid';
 import { SelectOption } from '@mui/base';
 
 import MHFormControl from '../Form/MHFormControl';
-import { MHSelect } from '../Form/MHSelect';
 import MHButton from '../../components/Button/MHButton';
 import useInput from '../../hooks/use-input';
 
 import * as validators from '../../utils/validators';
-import * as constants from '../../utils/constants';
 import OnboardingContext, {
-  EmployeeOnboarding
+  EmployerOnboarding
 } from '../../store/context/onboarding-context';
 
 const InitialStep = React.forwardRef(
@@ -56,114 +54,28 @@ const InitialStep = React.forwardRef(
     } = useInput([
       {
         validator: (value: string) => validators.required(value)
-      }
-    ]);
-
-    const {
-      value: enteredState,
-      valid: enteredStateIsValid,
-      error: enteredStateHasError,
-      onChange: stateInputChangeHandler,
-      onBlur: stateInputBlurHandler,
-      markAsTouched: markStateInputAsTouched
-    } = useInput([
+      },
       {
-        validator: (value: string) => validators.required(value)
-      }
-    ]);
-
-    const {
-      value: enteredStatus,
-      valid: enteredStatusIsValid,
-      error: enteredStatusHasError,
-      onChange: statusInputChangeHandler,
-      onBlur: statusInputBlurHandler,
-      markAsTouched: markStatusInputAsTouched
-    } = useInput([
-      {
-        validator: (value: string) => validators.required(value)
-      }
-    ]);
-
-    const {
-      value: enteredHouseholdSize,
-      valid: enteredHouseholdSizeIsValid,
-      error: enteredHouseholdSizeHasError,
-      onChange: householdSizeInputChangeHandler,
-      onBlur: householdSizeInputBlurHandler,
-      markAsTouched: markHouseholdSizeInputAsTouched
-    } = useInput([
-      {
-        validator: (value: string) => validators.required(value)
-      }
-    ]);
-
-    const {
-      value: enteredNumberOfKids,
-      valid: enteredNumberOfKidsIsValid,
-      error: enteredNumberOfKidsHasError,
-      onChange: numberOfKidsInputChangeHandler,
-      onBlur: numberOfKidsInputBlurHandler,
-      markAsTouched: markNumberOfKidsInputAsTouched
-    } = useInput([
-      {
-        validator: (value: string) => {
-          if (+enteredHouseholdSize < 3) {
-            return true;
-          }
-
-          return validators.required(value);
-        }
+        validator: (value: string) => validators.email(value)
       }
     ]);
 
     let formIsValid =
       enteredFirstNameIsValid && enteredLastNameIsValid && enteredEmailIsValid;
-    // enteredStateIsValid &&
-    // enteredStatusIsValid &&
-    // enteredHouseholdSizeIsValid &&
-    // enteredNumberOfKidsIsValid;
 
-    const { states, employee, updateEmployee } = onboardingCtx;
+    const { employer, updateEmployerData } = onboardingCtx;
     const { activeIndex, onNext } = props;
 
     // to set the values of the form when component is mounted
     React.useEffect(() => {
-      if (!employee) return;
+      window.scrollTo(0, 0);
 
-      firstNameInputChangeHandler(employee.firstName || '');
-      lastNameInputChangeHandler(employee.lastName || '');
+      if (!employer) return;
+
+      firstNameInputChangeHandler(employer.firstName || '');
+      lastNameInputChangeHandler(employer.lastName || '');
+      emailInputChangeHandler(employer.employeeEmail || '');
     }, []);
-
-    function renderKidsSelectValue(option: SelectOption<string> | null) {
-      if (!option) {
-        return null;
-      }
-
-      return <span>{option?.value + ' kid(s)'}</span>;
-    }
-
-    // function renderParentsSelectValue(option: SelectOption<string> | null) {
-    //   let content = null;
-
-    //   if (!option) {
-    //     return content;
-    //   }
-
-    //   switch (option.value) {
-    //     case 'yes':
-    //       content = <span>{option.label} (I have living parents)</span>;
-    //       break;
-    //     case 'no':
-    //       content = <span>{option.label} (I have no living parents)</span>;
-    //       break;
-    //     default:
-    //       content = null;
-    //       break;
-    //   }
-
-    //   return content;
-    // }
 
     let firstNameErrorTip = enteredFirstNameHasError
       ? 'Please enter your first name'
@@ -173,47 +85,29 @@ const InitialStep = React.forwardRef(
       ? 'Please enter your last name'
       : undefined;
 
-    // let stateErrorTip = enteredStateHasError
-    //   ? 'Please select your state of residence'
-    //   : undefined;
-
-    // let statusErrorTip = enteredStatusHasError
-    //   ? 'Please select a value'
-    //   : undefined;
-
-    // let householdSizeErrorTip = enteredHouseholdSizeHasError
-    //   ? 'Please enter number of people in household'
-    //   : undefined;
-
-    // let numberOfKidsErrorTip = enteredNumberOfKidsHasError
-    //   ? 'Please select a value'
-    //   : undefined;
+    let emailErrorTip = enteredEmailHasError
+      ? 'Please enter a valid work email'
+      : undefined;
 
     const preventDefault = (e: React.SyntheticEvent) => {
       e.preventDefault();
     };
 
-    function submitHandler(e: React.ChangeEvent<HTMLFormElement>) {
+    function submitHandler(e: React.SyntheticEvent<HTMLFormElement>) {
       preventDefault(e);
 
-      // if (!formIsValid) {
-      //   markFirstNameInputAsTouched();
-      //   markLastNameInputAsTouched();
-      //   markStateInputAsTouched();
-      //   markStatusInputAsTouched();
-      //   markHouseholdSizeInputAsTouched();
-      //   markNumberOfKidsInputAsTouched();
-      //   return;
-      // }
+      if (!formIsValid) {
+        markFirstNameInputAsTouched();
+        markLastNameInputAsTouched();
+        markEmailInputAsTouched();
+        return;
+      }
 
-      // updateEmployee({
-      //   firstName: enteredFirstName,
-      //   lastName: enteredLastName,
-      //   state: enteredState,
-      //   relationshipStatus: enteredStatus,
-      //   householdSize: enteredHouseholdSize,
-      //   numberOfKids: enteredNumberOfKids
-      // });
+      updateEmployerData({
+        firstName: enteredFirstName,
+        lastName: enteredLastName,
+        employeeEmail: enteredEmail
+      } as EmployerOnboarding);
       onNext();
     }
 
@@ -233,8 +127,10 @@ const InitialStep = React.forwardRef(
                 onChange={firstNameInputChangeHandler}
                 onBlur={firstNameInputBlurHandler}
                 error={firstNameErrorTip}
+                required
               />
             </Grid>
+
             <Grid item xs={6}>
               <MHFormControl
                 id="lastName"
@@ -245,6 +141,7 @@ const InitialStep = React.forwardRef(
                 onChange={lastNameInputChangeHandler}
                 onBlur={lastNameInputBlurHandler}
                 error={lastNameErrorTip}
+                required
               />
             </Grid>
           </Grid>
@@ -257,71 +154,9 @@ const InitialStep = React.forwardRef(
             value={enteredEmail}
             onChange={emailInputChangeHandler}
             onBlur={emailInputBlurHandler}
+            error={emailErrorTip}
+            required
           />
-
-          {/* <MHSelect
-            label="State"
-            placeholder="Select State"
-            options={states}
-            value={enteredState}
-            onChange={(val) => stateInputChangeHandler(val as string)}
-            onBlur={stateInputBlurHandler}
-            error={stateErrorTip}
-          />
-
-          <MHSelect
-            label="Relationship"
-            options={constants.RELATIONSHIP_STATUS_OPTIONS}
-            placeholder="Relationship"
-            value={enteredStatus}
-            onChange={(val) => statusInputChangeHandler(val as string)}
-            onBlur={statusInputBlurHandler}
-            error={statusErrorTip}
-          />
-
-          <Grid container spacing={2}>
-            <Grid
-              item
-              xs={6}
-              sx={{
-                transition: 'all 0.3s ease-in-out'
-              }}>
-              <MHFormControl
-                id="householdSize"
-                type="number"
-                label="Household Size"
-                placeholder="Household Size"
-                value={enteredHouseholdSize}
-                onChange={(event) => {
-                  numberOfKidsInputChangeHandler('');
-                  householdSizeInputChangeHandler(event);
-                }}
-                onBlur={householdSizeInputBlurHandler}
-                error={householdSizeErrorTip}
-              />
-            </Grid>
-            {+enteredHouseholdSize > 2 && (
-              <Grid
-                item
-                xs={6}
-                sx={{
-                  transition: 'all 0.3s ease-in-out'
-                }}>
-                <MHSelect
-                  label="Number of Kids"
-                  options={constants.QUANTITY_OPTIONS}
-                  placeholder="Number of Kids"
-                  value={enteredNumberOfKids}
-                  onChange={(val) =>
-                    numberOfKidsInputChangeHandler(val as string)
-                  }
-                  onBlur={numberOfKidsInputBlurHandler}
-                  renderValue={renderKidsSelectValue}
-                  error={numberOfKidsErrorTip}
-                />
-              </Grid>
-            )}
-          </Grid> */}
 
           <Stack spacing={2} mt={3}>
             <MHButton type="submit">{'Next'}</MHButton>
