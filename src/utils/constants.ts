@@ -165,5 +165,21 @@ export const BUSINESS_TYPES_OPTIONS: SelectOption<string>[] = [
   {
     label: 'Incorporated',
     value: 'Incorporated'
+  },
+  {
+    label: 'Cooperative',
+    value: 'Cooperative'
+  },
+  {
+    label: 'Sole proprietorship',
+    value: 'Sole proprietorship'
+  },
+  {
+    label: 'Limited liability company (LLC)',
+    value: 'Limited liability company (LLC)'
+  },
+  {
+    label: 'Partnership',
+    value: 'Partnership'
   }
 ];
