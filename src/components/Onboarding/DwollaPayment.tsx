@@ -1,4 +1,5 @@
 import React from 'react';
+import { useHistory } from 'react-router-dom';
 
 import Typography from '@mui/material/Typography';
 import Box from '@mui/material/Box';
@@ -24,6 +25,7 @@ const DwollaPayment = ({
   };
 }) => {
   const [customer, setCustomer] = React.useState(null);
+  const history = useHistory();
 
   const { loading: authorizing, sendHttpRequest: authorizeDebit } = useHttp();
 
@@ -37,13 +39,16 @@ const DwollaPayment = ({
           accountId: employerData.accountId
         })
       },
-      (response: HttpResponse<unknown>) => {}
+      (response: HttpResponse<unknown>) => {
+        history.push('/employer/allocation');
+      }
     );
   };
 
   return (
     <React.Fragment>
       {authorizing && <BackdropLoader />}
+      
       <MHDialog
         open={open}
         title={''}

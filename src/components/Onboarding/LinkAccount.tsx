@@ -6,15 +6,13 @@ import {
   usePlaidLink
 } from 'react-plaid-link';
 
-import Typography from '@mui/material/Typography';
 import Box from '@mui/material/Box';
+import Typography from '@mui/material/Typography';
 
-import MHButton from '../Button/MHButton';
 import MHDialog from '../Dialog/MHDialog';
 import BackdropLoader from '../UI/BackdropLoader';
 import useHttp from '../../hooks/use-http';
 
-import { ReactComponent as CheckMarkRoundedLargeIcon } from '../../static/svg/check-mark-rounded-lg.svg';
 import { HttpResponse } from '../../models/api.interface';
 import { LinkSuccessMetadata } from '../../models/plaid.model';
 import PlaidLinkContext from '../../services/plaid-link';
@@ -64,26 +62,26 @@ const LinkAccount = ({
           customerId: employer!.customerId
         },
         (response: HttpResponse<unknown>) => {
-          history.push('/employer/allocation');
-          // createCustomer(
-          //   process.env.REACT_APP_PLAID_API_URL + 'dwo/customer/create',
-          //   {
-          //     method: 'POST',
-          //     body: JSON.stringify({
-          //       publicToken: public_token,
-          //       accountId: metadata.accounts[0].id,
-          //       mask: metadata.accounts[0].mask,
-          //       BusinessName: metadata.institution?.name,
-          //       email: employer?.employeeEmail,
-          //       firstName: employer?.firstName,
-          //       lastName: employer?.lastName,
-          //       type: 'EMPLOYER'
-          //     })
-          //   },
-          //   (response: HttpResponse<unknown>) => {
-          //     onCustomerConnected(metadata.accounts[0].id);
-          //   }
-          // );
+          // history.push('/employer/allocation');
+          createCustomer(
+            process.env.REACT_APP_PLAID_API_URL + 'dwo/customer/create',
+            {
+              method: 'POST',
+              body: JSON.stringify({
+                publicToken: public_token,
+                accountId: metadata.accounts[0].id,
+                mask: metadata.accounts[0].mask,
+                BusinessName: metadata.institution?.name,
+                email: employer?.employeeEmail,
+                firstName: employer?.firstName,
+                lastName: employer?.lastName,
+                type: 'EMPLOYER'
+              })
+            },
+            (response: HttpResponse<unknown>) => {
+              onCustomerConnected(metadata.accounts[0].id);
+            }
+          );
         }
       );
       // window.history.pushState('', '', '/');
@@ -143,6 +141,7 @@ const LinkAccount = ({
 
   return (
     <React.Fragment>
+      {creatingCustomer && <BackdropLoader />}
       <MHDialog
         open={open}
         title={''}

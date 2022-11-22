@@ -67,7 +67,7 @@ const Onboarding = () => {
   }
 
   const nextStepHandler = () => {
-    console.log(activeStepIndex);
+    // console.log(activeStepIndex);
     setActiveStepIndex((prevIndex) =>
       prevIndex < STEPS.length - 2 ? prevIndex + 1 : prevIndex
     );
@@ -103,7 +103,7 @@ const Onboarding = () => {
     const payload = {
       employerToken: token,
       employerRefId: employerData.employerRefId,
-      employeeEmail: employerData.employeeEmail,
+      workEmail: employerData.employeeEmail,
       firstName: employerData.firstName,
       lastName: employerData.lastName,
       numberOfEligibleEmployee: employerData.employeeSize,
@@ -213,7 +213,7 @@ const Onboarding = () => {
       {loading && <BackdropLoader />}
       <Layout
         onboardingSteps={<Steps steps={STEPS} activeStep={activeStepIndex} />}>
-        <Grid container spacing={0} sx={{ minHeight: '100vh' }}>
+        <Grid container spacing={0} sx={{ minHeight: '91vh' }}>
           {activeStepIndex < 3 && (
             <Grid
               item

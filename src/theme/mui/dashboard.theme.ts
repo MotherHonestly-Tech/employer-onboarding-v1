@@ -2,7 +2,7 @@ import { createTheme } from '@mui/material/styles';
 import { red, common } from '@mui/material/colors';
 import { buttonClasses } from '@mui/material/Button';
 
-const primaryColor = '#28404A';
+const primaryColor = '#194049';
 
 export const theme = createTheme({
   palette: {

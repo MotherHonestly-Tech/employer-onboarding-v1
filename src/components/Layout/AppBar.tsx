@@ -7,8 +7,9 @@ import Stack from '@mui/material/Stack';
 import Typography from '@mui/material/Typography';
 import { styled } from '@mui/material/styles';
 
-import MHPrimaryLogo from '../../theme/icons/MHPrimaryLogo';
 import IconButtonUnstyled from '../Button/IconButtonStyled';
+import MHPrimaryLogo from '../../theme/icons/MHPrimaryLogo';
+import MHLogo from '../../theme/icons/MHLogo';
 
 import { ReactComponent as OrgLogo } from '../../static/svg/unilever-logo.svg';
 
@@ -39,8 +40,7 @@ const AppBar = ({ steps }: { steps: React.ReactElement }) => {
       <AppBarStyled position="fixed" open={true}>
         <Toolbar disableGutters>
           <Box aria-label="menu" sx={{ ml: 5 }} flexGrow={1}>
-            {/* <MHPrimaryLogo className="mx-0" /> */}
-            <OrgLogo />
+            <MHLogo style={{ width: '3.4rem' }} />
           </Box>
 
           <Stack direction="row" alignItems="center" spacing={6} minHeight={80}>

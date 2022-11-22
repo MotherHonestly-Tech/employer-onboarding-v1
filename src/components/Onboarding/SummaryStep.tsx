@@ -12,18 +12,19 @@ import MuiLink from '@mui/material/Link';
 
 import MHButton from '../Button/MHButton';
 import MHDataTable, { GridColDef } from '../DataTable/MHDataTable';
+import BackdropLoader from '../UI/BackdropLoader';
 import DwollaPayment from './DwollaPayment';
+import LinkAccount from './LinkAccount';
 import useHttp from '../../hooks/use-http';
 
+import MHLogo from '../../theme/icons/MHLogo';
 import { ReactComponent as OrgLogo } from '../../static/svg/unilever-logo.svg';
 import { formatAmount } from '../../utils/utils';
 import { HttpResponse } from '../../models/api.interface';
 import { LinkSuccessMetadata } from '../../models/plaid.model';
 import PlaidLinkContext from '../../services/plaid-link';
 import OnboardingContext from '../../store/context/onboarding-context';
-import BackdropLoader from '../UI/BackdropLoader';
 import NotificationContext from '../../store/context/notifications.context';
-import LinkAccount from './LinkAccount';
 
 type Subscription = {
   id: number;
@@ -176,7 +177,7 @@ const SummaryStep = (props: {
   const rows: Subscription[] = [
     {
       id: 1,
-      item: 'MH Care Wallet Subscription',
+      item: 'MH Work-Life Wallet Subscription',
       employeeSize: employer?.employeeSize as number,
       walletAllocation: employer?.quarterlyAllocation as number,
       serviceCharge: 200,
@@ -207,12 +208,12 @@ const SummaryStep = (props: {
           Back to Billing Information
         </MuiLink>
 
-        <ListItem disableGutters>
+        {/* <ListItem disableGutters>
           <ListItemAvatar>
-            <OrgLogo />
+            <MHLogo style={{ width: '3.4rem' }} />
           </ListItemAvatar>
           <ListItemText>
-            {/* <Typography
+            <Typography
               variant="body1"
               fontSize="12px"
               color="primary.main"
@@ -222,9 +223,9 @@ const SummaryStep = (props: {
 
             <Typography variant="body2" fontSize={'.6rem'} color="#989898">
               michael@motherhonestly.com
-            </Typography> */}
+            </Typography>
           </ListItemText>
-        </ListItem>
+        </ListItem> */}
       </Box>
 
       <Stack
@@ -242,7 +243,7 @@ const SummaryStep = (props: {
         </Box>
         <Box>
           <TextWidget title="Billed to" />
-          <TextWidget description="Uniliver" />
+          <TextWidget description="Mother Honestly" />
           {/* <TextWidget description="Moonlight Sunlight" /> */}
         </Box>
       </Stack>

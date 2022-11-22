@@ -20,7 +20,7 @@ const AppNavigator: FnComponent<{}> = (props) => {
                 pathname: '/onboarding',
                 state: { from: routeProps.location },
                 search:
-                  '?token=eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJhdXRob3JpemVkIjp0cnVlLCJlbWFpbCI6InR1bmppQG1vdGhlcmhvbmVzdGx5LmNvbSIsImVtcGxveWVyUmVmSWQiOjE5Mzk0NDYwNzcsImV4cCI6IjIwMjItMDktMjlUMDk6NDU6NDUuOTYwOTUwMVoiLCJyb2xlIjoiRW1wbG95ZWUiLCJ0eXBlIjoiRU1QTE9ZRVJEQVNIQk9BUkQiLCJ1c2VyIjowfQ.VMn1aRECFmV86jWSupKJUX3b9h94FFkdmj81bNz9Y1Y'
+                  'token=eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJhdXRob3JpemVkIjp0cnVlLCJlbWFpbCI6Im9kZWxhZGV0dW5qaUBnbWFpbC5jb20iLCJlbXBsb3llclJlZklkIjozOTcwNTcxNDQsImV4cCI6IjIwMjMtMDItMDFUMTg6MjY6MTQuOTM4NDY5MTE3WiIsInJvbGUiOiJFTVBMT1lFUl9BRE1JTiIsInR5cGUiOiJFTVBMT1lFUkRBU0hCT0FSRCIsInVzZXIiOjM5NzA1NzE0NH0.zU2RqJZQjwaCypiz6BK2Y5s1l_j0u8pOGBjevZEk7P8'
               }}
             />
           )}

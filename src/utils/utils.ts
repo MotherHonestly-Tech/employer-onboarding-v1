@@ -75,7 +75,12 @@ export const formatNumber = (figure: number, precision: number = 2) => {
   return new Intl.NumberFormat('en-US').format(figure);
 };
 
-export const constructDateFormat = (date: Date) => {
+export const parseAmount = (amount: string): string => {
+  amount = amount.replace(/,/g, '').trim();
+  return amount;
+};
+
+export const constructHyphenatedDateFormat = (date: Date) => {
   return `${date.getFullYear()}-${date.getMonth() + 1}-${date.getDate()}`;
 };
 
@@ -94,7 +99,7 @@ export function addDaysToDate(date: Date, days: number) {
   return date;
 }
 
-export function formatDate(date: Date): string {
+export function constructSlashSeperatedDateFormat(date: Date): string {
   date = date instanceof Date ? date : new Date(date);
   const month =
     date.getMonth() + 1 < 10
@@ -173,8 +178,3 @@ export function getBrowserDocumentHiddenProp() {
 export function getIsDocumentHidden() {
   return !(document as any)[getBrowserDocumentHiddenProp()];
 }
-
-export const parseAmount = (amount: string): string => {
-  amount = amount.replace(/,/g, '').trim();
-  return amount;
-};
