@@ -34,7 +34,7 @@ const AppBarStyled = styled(MuiAppBar, {
   })
 }));
 
-const AppBar = ({ steps }: { steps: React.ReactElement }) => {
+const AppBar = ({ steps }: { steps?: React.ReactElement }) => {
   return (
     <Box sx={{ flexGrow: 1 }}>
       <AppBarStyled position="fixed" open={true}>

@@ -73,9 +73,10 @@ const Label = styled(
         className={clsx(className, error || showRequiredError ? 'invalid' : '', required && 'required')}
         style={{
           fontSize: 12,
-          color: '#A7A7A7',
+          color: '#194049',
           marginBottom: '10px',
-          display: 'block'
+          display: 'block',
+          // fontFamily: 'Area-Normal-Bold'
         }}>
         {children}
         {/* {required ? ' *' : ''} */}

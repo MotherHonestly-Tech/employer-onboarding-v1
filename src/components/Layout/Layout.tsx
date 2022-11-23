@@ -9,8 +9,8 @@ import AppBar from './AppBar';
 import { FnComponent } from '../../models/component.model';
 
 const Layout: FnComponent<{
-  onboardingSteps: React.ReactElement;
   children: React.ReactNode;
+  onboardingSteps?: React.ReactElement;
 }> = (props) => {
   return (
     <Box>

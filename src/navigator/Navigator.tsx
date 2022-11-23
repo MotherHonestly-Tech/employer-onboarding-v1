@@ -3,6 +3,7 @@ import { Redirect, Route, Switch } from 'react-router-dom';
 
 import Onboarding from '../pages/Onboarding/Onboarding';
 import DwollaPaymentSuccess from '../pages/Onboarding/DwollaPaymentSuccess';
+import ConsultantOnboarding from '../pages/Consultant/ConsultantOnboarding';
 import NotFound from '../pages/Error/404';
 
 import { FnComponent } from '../models/component.model';
@@ -36,6 +37,10 @@ const AppNavigator: FnComponent<{}> = (props) => {
 
         <Route path={`/employer/allocation`} exact>
           <DwollaPaymentSuccess />
+        </Route>
+
+        <Route path={'/consultant/onboarding'} exact>
+          <ConsultantOnboarding />
         </Route>
 
         <Route path="*">
