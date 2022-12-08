@@ -1,0 +1,43 @@
+{
+  "files": {
+    "main.css": "/employer-onboarding-v1/static/css/main.e6931e6b.css",
+    "main.js": "/employer-onboarding-v1/static/js/main.d7f3e5f4.js",
+    "static/js/787.df14e592.chunk.js": "/employer-onboarding-v1/static/js/787.df14e592.chunk.js",
+    "static/media/AreaNormal-Black.otf": "/employer-onboarding-v1/static/media/AreaNormal-Black.c8c490cbe3e212860e3f.otf",
+    "static/media/AreaExtended-Black.otf": "/employer-onboarding-v1/static/media/AreaExtended-Black.e6cf9ab7876f5b2ac8cb.otf",
+    "static/media/AreaNormal-Bold.otf": "/employer-onboarding-v1/static/media/AreaNormal-Bold.c871a81ff5e55f8033d0.otf",
+    "static/media/AreaNormal-Semibold.otf": "/employer-onboarding-v1/static/media/AreaNormal-Semibold.fe7c53970d8fd70f34ce.otf",
+    "static/media/mhatwork.svg": "/employer-onboarding-v1/static/media/mhatwork.879103737a3ca57be0e42bfea50c7972.svg",
+    "static/media/AreaExtended-Black.woff": "/employer-onboarding-v1/static/media/AreaExtended-Black.b96d20566fc076297e3b.woff",
+    "static/media/AreaNormal-Black.woff": "/employer-onboarding-v1/static/media/AreaNormal-Black.781f654b5508cd07c6d9.woff",
+    "static/media/AreaNormal-Bold.woff": "/employer-onboarding-v1/static/media/AreaNormal-Bold.d33c9d3895bd83fc4b96.woff",
+    "static/media/AreaNormal-Semibold.woff": "/employer-onboarding-v1/static/media/AreaNormal-Semibold.234fdf5f2964fa223f1d.woff",
+    "static/media/AreaNormal-Black.woff2": "/employer-onboarding-v1/static/media/AreaNormal-Black.bc151ea73eca4af61cd2.woff2",
+    "static/media/AreaNormal-Bold.woff2": "/employer-onboarding-v1/static/media/AreaNormal-Bold.289f7f9a928c084ccb7a.woff2",
+    "static/media/AreaNormal-Semibold.woff2": "/employer-onboarding-v1/static/media/AreaNormal-Semibold.2cd46dd8c06cc6b2569b.woff2",
+    "static/media/AreaExtended-Black.woff2": "/employer-onboarding-v1/static/media/AreaExtended-Black.903958d2536d3bd81db0.woff2",
+    "static/media/columbiasanswdisplay-medium.eot": "/employer-onboarding-v1/static/media/columbiasanswdisplay-medium.fbbc78be5bddefeec4d0.eot",
+    "static/media/columbiasanswdisplay-medium.woff2": "/employer-onboarding-v1/static/media/columbiasanswdisplay-medium.0f7b283dede5dff95ee7.woff2",
+    "static/media/pending-payment.svg": "/employer-onboarding-v1/static/media/pending-payment.af5c139fd3e34f80fb89196d0b1de316.svg",
+    "static/media/page_not_found.svg": "/employer-onboarding-v1/static/media/page_not_found.1a30ea9244ae8342edc994587fd8c448.svg",
+    "static/media/table-data.svg": "/employer-onboarding-v1/static/media/table-data.c57a7cfe7f3fc2f8ddc0c34d61747c36.svg",
+    "static/media/cloud-upload.svg": "/employer-onboarding-v1/static/media/cloud-upload.bff06fda4b2caa911e06a18fc97899d1.svg",
+    "static/media/bin.svg": "/employer-onboarding-v1/static/media/bin.ed93e84aa6db8604302be06db326e4c8.svg",
+    "static/media/check-mark-rounded-lg.svg": "/employer-onboarding-v1/static/media/check-mark-rounded-lg.b5ee970763b75b291d17898d7c646cf6.svg",
+    "index.html": "/employer-onboarding-v1/index.html",
+    "static/media/dollar.svg": "/employer-onboarding-v1/static/media/dollar.5fc3aeac0048fbedf367b11ae8b12ea7.svg",
+    "static/media/exclamation-triangle-fill.svg": "/employer-onboarding-v1/static/media/exclamation-triangle-fill.dab10c8dd2158aa5e79ab0417afc7435.svg",
+    "static/media/primary-icon.svg": "/employer-onboarding-v1/static/media/primary-icon.b407914ba05595fd843482d5cb9386d0.svg",
+    "static/media/x-circle-fill.svg": "/employer-onboarding-v1/static/media/x-circle-fill.5d22680f86668e10574e5118ab292646.svg",
+    "static/media/check-circle-fill.svg": "/employer-onboarding-v1/static/media/check-circle-fill.62328d386b9989ccc63d893605a3d91b.svg",
+    "static/media/plus.svg": "/employer-onboarding-v1/static/media/plus.65c461bdb36af83d916d15c1d7effc8b.svg",
+    "static/media/cancel.svg": "/employer-onboarding-v1/static/media/cancel.9bf8ba4051191471b04d5dcab0892c78.svg",
+    "main.e6931e6b.css.map": "/employer-onboarding-v1/static/css/main.e6931e6b.css.map",
+    "main.d7f3e5f4.js.map": "/employer-onboarding-v1/static/js/main.d7f3e5f4.js.map",
+    "787.df14e592.chunk.js.map": "/employer-onboarding-v1/static/js/787.df14e592.chunk.js.map"
+  },
+  "entrypoints": [
+    "static/css/main.e6931e6b.css",
+    "static/js/main.d7f3e5f4.js"
+  ]
+}
