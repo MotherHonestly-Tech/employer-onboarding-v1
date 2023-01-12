@@ -1,7 +1,7 @@
 {
   "files": {
     "main.css": "/employer-onboarding-v1/static/css/main.e6931e6b.css",
-    "main.js": "/employer-onboarding-v1/static/js/main.8bf90279.js",
+    "main.js": "/employer-onboarding-v1/static/js/main.18a58e29.js",
     "static/js/787.df14e592.chunk.js": "/employer-onboarding-v1/static/js/787.df14e592.chunk.js",
     "static/media/AreaNormal-Black.otf": "/employer-onboarding-v1/static/media/AreaNormal-Black.c8c490cbe3e212860e3f.otf",
     "static/media/AreaExtended-Black.otf": "/employer-onboarding-v1/static/media/AreaExtended-Black.e6cf9ab7876f5b2ac8cb.otf",
@@ -21,23 +21,26 @@
     "static/media/pending-payment.svg": "/employer-onboarding-v1/static/media/pending-payment.af5c139fd3e34f80fb89196d0b1de316.svg",
     "static/media/page_not_found.svg": "/employer-onboarding-v1/static/media/page_not_found.1a30ea9244ae8342edc994587fd8c448.svg",
     "static/media/table-data.svg": "/employer-onboarding-v1/static/media/table-data.c57a7cfe7f3fc2f8ddc0c34d61747c36.svg",
+    "static/media/users-group.svg": "/employer-onboarding-v1/static/media/users-group.0f5fa87011dd25885e748acad11c33bd.svg",
     "static/media/cloud-upload.svg": "/employer-onboarding-v1/static/media/cloud-upload.bff06fda4b2caa911e06a18fc97899d1.svg",
     "static/media/bin.svg": "/employer-onboarding-v1/static/media/bin.ed93e84aa6db8604302be06db326e4c8.svg",
+    "static/media/info-rounded.svg": "/employer-onboarding-v1/static/media/info-rounded.63898685215bd796abf730f089447a43.svg",
     "static/media/check-mark-rounded-lg.svg": "/employer-onboarding-v1/static/media/check-mark-rounded-lg.b5ee970763b75b291d17898d7c646cf6.svg",
     "index.html": "/employer-onboarding-v1/index.html",
-    "static/media/dollar.svg": "/employer-onboarding-v1/static/media/dollar.5fc3aeac0048fbedf367b11ae8b12ea7.svg",
+    "static/media/dollar.svg": "/employer-onboarding-v1/static/media/dollar.49ef7ad4ad796e81a33bd351ccadb3df.svg",
     "static/media/exclamation-triangle-fill.svg": "/employer-onboarding-v1/static/media/exclamation-triangle-fill.dab10c8dd2158aa5e79ab0417afc7435.svg",
     "static/media/primary-icon.svg": "/employer-onboarding-v1/static/media/primary-icon.b407914ba05595fd843482d5cb9386d0.svg",
     "static/media/x-circle-fill.svg": "/employer-onboarding-v1/static/media/x-circle-fill.5d22680f86668e10574e5118ab292646.svg",
     "static/media/check-circle-fill.svg": "/employer-onboarding-v1/static/media/check-circle-fill.62328d386b9989ccc63d893605a3d91b.svg",
     "static/media/plus.svg": "/employer-onboarding-v1/static/media/plus.65c461bdb36af83d916d15c1d7effc8b.svg",
+    "static/media/arrow-left.svg": "/employer-onboarding-v1/static/media/arrow-left.0483347183608ebc10cd6a0ea81d6ddf.svg",
     "static/media/cancel.svg": "/employer-onboarding-v1/static/media/cancel.9bf8ba4051191471b04d5dcab0892c78.svg",
     "main.e6931e6b.css.map": "/employer-onboarding-v1/static/css/main.e6931e6b.css.map",
-    "main.8bf90279.js.map": "/employer-onboarding-v1/static/js/main.8bf90279.js.map",
+    "main.18a58e29.js.map": "/employer-onboarding-v1/static/js/main.18a58e29.js.map",
     "787.df14e592.chunk.js.map": "/employer-onboarding-v1/static/js/787.df14e592.chunk.js.map"
   },
   "entrypoints": [
     "static/css/main.e6931e6b.css",
-    "static/js/main.8bf90279.js"
+    "static/js/main.18a58e29.js"
   ]
 }
